@@ -6,6 +6,7 @@ import { TextPlugin } from 'gsap/TextPlugin'
 import { Canvas } from '@react-three/fiber'
 import {OrbitControls } from '@react-three/drei'
 import Model from './components/Model'
+import SlideWraper from './components/SlideWraper'
 
 function App() {
   const ref = useRef(null)
@@ -23,14 +24,17 @@ function App() {
 
   const AnimatedLink = ({name}: {name: string})=>{
     const underline = useRef(null)
+    gsap.set(underline.current, {scaleX:0, width: 0})
     function mouseEnter(){
+      gsap.set(underline.current, {scaleX: 1, width: '100%'})
       gsap.to(ballRef.current, {width: 60, height: 60, border: 2, borderColor: 'white', backgroundColor: 'transparent'})
-      gsap.to(underline.current, {width: '100%' })
+      gsap.from(underline.current, {scaleX: '0', transformOrigin: 'left' })
     }
-  
+    
     function mouseLeave(){
       gsap.to(ballRef.current, {width: 20, height: 20, backgroundColor: 'white',})
-      gsap.to(underline.current, {width: '0%'})
+      gsap.to(underline.current, {scaleX: '0', transformOrigin: 'right' })
+      gsap.set(underline.current, {scaleX: 1})
     }
   
     return (
@@ -43,31 +47,39 @@ function App() {
 
   const NameTitle = ()=>{
     const mouseEnter = ()=>{
-      gsap.to(titleRef.current, {text: 'the dev.', delay:0.3})
+      gsap.to('.titleWraper .first', {text: 'the', delay:0.3})
+      gsap.to('.titleWraper .last', {text: 'dev.', delay:0.3})
       gsap.to(ballRef.current, {width: 100, height: 100})
     }
   
     const mouseLeave = ()=>{
-      gsap.to(titleRef.current, {text: 'rey mooy', delay:0.3})
+      gsap.to('.titleWraper .first', {text: 'rey', delay:0.3})
+      gsap.to('.titleWraper .last', {text: 'mooy', delay:0.3})
       gsap.to(ballRef.current, {width: 20, height: 20})
     }
 
     return(
-      <h1 id='name' ref={titleRef} onMouseEnter={mouseEnter} onMouseLeave={mouseLeave} className='text-[120px] font-bold leading-[0.9]'>rey mooy</h1>
+      <div className='titleWraper' ref={titleRef} onMouseEnter={mouseEnter} onMouseLeave={mouseLeave} >
+        <SlideWraper>
+          <h1 className='first text-[120px] font-bold leading-[0.9]'>rey</h1>
+        </SlideWraper>
+        <SlideWraper className='mt-4'>
+          <h1 className='last text-[120px] font-bold leading-[0.9]'>mooy</h1>
+        </SlideWraper>
+      </div>
     )
   }
-
-  
 
 
   useLayoutEffect(() => {
     let ctx = gsap.context(()=>{
       gsap.set("#ball", {xPercent: -50, yPercent: -50});
-      tl.from('#name', {duration: 1, y: 1000, ease: 'power2.inOut'})
-        .from('.parg', {duration: 1, y: 1000, ease: 'power2.inOut'}, '-=0.8' )
-        .from('.horizontalLine', {width: '0%', duration: 1,  }, '+=0.2' )
 
-
+      tl
+      .from('.test', {scaleX: 0, duration: 0.7, transformOrigin: 'left',}, 1)
+      .to('.children', {opacity: 1,}, '>')
+      .to('.test', {scaleX: 0, duration: 0.7, transformOrigin: 'right',}, '-=0.2')
+      .from('.horizontalLine', {width: '0%', duration: 1})
 
       const xSet = gsap.quickSetter('#ball', "x", "px");
       const ySet = gsap.quickSetter('#ball', "y", "px");
@@ -77,9 +89,7 @@ function App() {
         mouse.y = e.y;  
       });
 
-
       gsap.ticker.add(() => {
-        
         // adjust speed for higher refresh monitors
         const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio()); 
         
@@ -103,35 +113,51 @@ function App() {
         <div className='w-full h-screen px-4 relative'>
         
           <div ref={ballRef} id='ball' className='bg-white rounded-full w-[20px] h-[20px] fixed top-0 left-0 pointer-events-none mix-blend-difference z-[999]'></div>
-          <header className='flex justify-between pt-[30px]'>
-            <div className='flex gap-4'>
-              <AnimatedLink name='about'/>
-              <AnimatedLink name='projects'/>
-              <AnimatedLink name='contact'/>
-            </div>
-            <div className='flex gap-3'>
-              <AnimatedLink name='gdrrey@gmail.com'/>
-              <span>Rey Mooy</span>
+          <header className='pt-[30px] fixed top-0 left-0 w-full z-[999]'>
+            <div className='flex justify-between px-3'>
+              <div className='flex gap-4'>
+                <SlideWraper>
+                  <AnimatedLink name='about'/>
+                </SlideWraper>
+                <SlideWraper>
+                  <AnimatedLink name='projects'/>
+                </SlideWraper>
+                <SlideWraper>
+                  <AnimatedLink name='contact'/>
+                </SlideWraper>
+              </div>
+              <div className='flex gap-3'>
+                <SlideWraper>
+                  <AnimatedLink name='gdrrey@gmail.com'/>
+                </SlideWraper>
+                <SlideWraper>
+                  <span>Rey Mooy</span>
+                </SlideWraper>
+              </div>
             </div>
           </header>
 
           <section className='w-full flex mt-[200px]'>
             <div className='w-1/3 p-4'>
-              <NameTitle/>
+                <NameTitle/>
             </div>
-            <div className='w-1/3 p-4 flex items-end justify-end parg'>
-              <p>I am a dedicated web developer. </p>
+            <div className='w-1/3 p-4 flex items-end justify-end'>
+                <SlideWraper>
+                  <p className=''>I am a dedicated web developer. </p>
+                </SlideWraper>
             </div>
             <div className='w-1/3 p-4 flex flex-col justify-end'>
-              <Canvas >
-                <OrbitControls enableZoom={false}/>
-                <Model/>
-              </Canvas>
+             
             </div>
           </section>
 
           <div className='horizontalLine w-full bg-white h-[0.5px] mt-[40px]'></div>
-
+        </div>
+        <div className='mt-[100px]'>
+          {/* <Canvas >
+            <OrbitControls enableZoom={false}/>
+            <Model/>
+          </Canvas> */}
         </div>
       </div>
     </div>

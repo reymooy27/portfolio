@@ -3,7 +3,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+::-moz-selection { /* Code for Firefox */
+  color: black;
+  background: white;
+}
 
+::selection {
+  color: black;
+  background: white;
+}
 body{
   scroll-behavior: smooth;
   margin: 0;
@@ -20,3 +28,8 @@ body{
 a{
   /* pointer-events: none; */
 }
+/* 
+.test{
+  height: -webkit-fill-available;
+  padding: 5px;
+} */
