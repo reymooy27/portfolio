@@ -3,10 +3,10 @@ export default function SlideWraper(props) {
 
   return (
     <div {...props} className={`relative ${props.className}`}>
-      <div className="children opacity-0">
+      <div className="children">
         {props.children}
       </div>
-      <div className='absolute bg-white test left-0 top-0 w-full h-full'></div>
+      <div className='slider absolute bg-[#ECECEC] left-0 top-0 w-full h-full'></div>
     </div>
   )
 }
