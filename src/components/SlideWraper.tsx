@@ -1,8 +1,14 @@
+import { ReactNode } from "react"
 
-export default function SlideWraper(props) {
+type SlideWraper = {
+  children: ReactNode
+}
+
+
+export default function SlideWraper(props: SlideWraper) {
 
   return (
-    <div {...props} className={`relative ${props.className}`}>
+    <div {...props} className={`relative`}>
       <div className="children">
         {props.children}
       </div>
