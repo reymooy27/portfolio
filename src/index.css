@@ -5,12 +5,12 @@
 /* 351A7A */
 /* 602A2e */
 @font-face {
-  font-family: Roobert;
-  src: url('./fonts/Roobert-Regular.otf');
+  font-family: "Roobert";
+  src: url('./assets/fonts/Roobert-Regular.otf');
 }
 @font-face {
-  font-family: Roobert;
-  src: url('./fonts/Roobert-Bold.otf');
+  font-family: "Roobert";
+  src: url('./assets/fonts/Roobert-Bold.otf');
   font-weight: bold;
 }
 

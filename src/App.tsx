@@ -193,7 +193,7 @@ function App() {
             </div>
             <div className='col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1'>
               {data.map(project=>(
-                <div className='border-b first:border-t border-black w-full py-2 pl-2'>
+                <div key={project.id} className='border-b first:border-t border-black w-full py-2 pl-2'>
                   <a target="_blank" href={project.siteLink}>
                     <h1 className='text-black text-[2em] font-bold '>{project.name}</h1>
                   </a>
