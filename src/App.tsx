@@ -42,7 +42,6 @@ function App() {
     gsap.set(underline.current, {scaleX: 1, width: '100%'})
     gsap.to(ballRef.current, {width: 60, height: 60, border: 2, borderColor: 'white', backgroundColor: 'transparent'})
     gsap.from(underline.current, {scaleX: '0', transformOrigin: 'left' })
-    console.log(underline.current)
   }
   
   function animatedLinkMouseLeave(){
@@ -62,6 +61,30 @@ function App() {
       .to('.slider', {scaleX: 0, duration: 0.3, transformOrigin: 'right', ease: 'sine'}, '+=0.1')
       .fromTo('.children', {opacity: 0, y: 10} ,{opacity: 1, stagger: 0.1, y: 0, duration: 0.6, ease: 'sine'}, '-=0.8')
       .from('.horizontalLine', {width: '0%', duration: 1})
+
+      gsap.from('#title-project',{
+        scrollTrigger: {
+          trigger: '#title-project',
+          // markers: true,
+          start: 'top bottom',
+          toggleActions: 'restart',
+          // once: false
+        },
+        y: 70,
+        duration: '1'
+      })
+
+      gsap.from('#title-about',{
+        scrollTrigger: {
+          trigger: '#title-about',
+          // markers: true,
+          start: 'top bottom',
+          toggleActions: 'restart',
+          // once: false
+        },
+        y: 70,
+        duration: '1'
+      })
 
       const xSet = gsap.quickSetter('#ball', "x", "px");
       const ySet = gsap.quickSetter('#ball', "y", "px");
@@ -90,8 +113,8 @@ function App() {
 
 
   return (
-    <>
-    <div ref={ref} className='w-full h-full px-4'>
+    <div ref={ref}>
+    <div className='w-full h-full px-4'>
       <div id='loader1' className='fixed top-0 left-0 bg-black w-full h-full z-[5]'></div>
       <div id='loader2' className='fixed bottom-0 left-0 bg-[#ECECEC] w-full h-full z-[4]'></div>
       <div ref={ballRef} 
@@ -132,7 +155,7 @@ function App() {
 
         <div className='horizontalLine w-full bg-[#ECECEC] text-black h-[0.5px] my-[1.3rem]'></div>
         <div className='grid grid-cols-12 gap-4'>
-          <div className='grid-span-4 col-start-1 col-end-4 flex flex-col gap-4 w-fit'>
+          <div className='grid-span-2 col-start-1 col-end-3 flex flex-col gap-4 w-fit'>
             <SlideWraper>
               <AnimatedLink ref={underline} mouseEnter={animatedLinkMouseEnter} mouseLeave={animatedLinkMouseLeave} name='twitter' link='https://twitter.com/itzyaboirey'/>
             </SlideWraper>
@@ -143,7 +166,7 @@ function App() {
               <AnimatedLink ref={underline} mouseEnter={animatedLinkMouseEnter} mouseLeave={animatedLinkMouseLeave} name='whatsapp' link='https://wa.me/+6281338047308'/>
             </SlideWraper>
           </div>
-          <div className='grid-span-4 col-start-5 col-end-8 flex flex-col gap-4 w-fit'>
+          <div className='grid-span-2 col-start-5 lg:col-start-3 col-end-5 flex flex-col gap-4 w-fit'>
             <SlideWraper>
               <AnimatedLink ref={underline} mouseEnter={animatedLinkMouseEnter} mouseLeave={animatedLinkMouseLeave} name='github' link='https://github.com/reymooy27'/>
             </SlideWraper>
@@ -151,7 +174,7 @@ function App() {
               <AnimatedLink ref={underline} mouseEnter={animatedLinkMouseEnter} mouseLeave={animatedLinkMouseLeave} name='linkedin' link='https://www.linkedin.com/in/rey-mooy-1a60a01a6/'/>
             </SlideWraper>
           </div>
-          <div className='grid-span-4 row-start-2 lg:row-start-1 col-start-1 lg:col-start-9 col-end-12 flex flex-col gap-4 w-fit'>
+          <div className='grid-span-2 row-start-2 lg:row-start-1 col-start-1 lg:col-start-5 col-end-12 flex flex-col gap-4 w-fit'>
             <SlideWraper>
               <AnimatedLink ref={underline} mouseEnter={animatedLinkMouseEnter} mouseLeave={animatedLinkMouseLeave} name='gdrrey@gmail.com' link='mailto:gdrrey@gmail.com'/>
             </SlideWraper>
@@ -166,7 +189,7 @@ function App() {
 
     <div className='w-full h-full mt-10'>
       <div className='px-4'>
-        <h1 className='text-[6rem] md:text-[10rem] lg:text-[18rem] text-center font-bold leading-none'>projects</h1>
+        <h1 className='text-[6rem] md:text-[10rem] lg:text-[18rem] text-center font-bold leading-none' id='title-project'>projects</h1>
       </div>
       <div className='projectWrapper relative bg-[#ECECEC] rounded-t-[100px] rounded-b-[50px] w-full h-full pt-28 px-4 pb-28'>
 
@@ -204,7 +227,7 @@ function App() {
         </div>
 
         <div className='absolute bottom-0 left-0 right-0 w-full mb-[-1.6em] md:mb-[-2.7em] lg:mb-[-5em]'>
-          <h1 className='text-[6rem] md:text-[10rem] lg:text-[18rem] text-center font-bold text-black leading-none'>about</h1>
+          <h1 className='text-[6rem] md:text-[10rem] lg:text-[18rem] text-center font-bold text-black leading-none' id='title-about'>about</h1>
         </div>
       </div>
     </div>
@@ -226,7 +249,7 @@ function App() {
         </div>
       </div>
     </div>
-  </>
+  </div>
   )
 }
 

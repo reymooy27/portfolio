@@ -26,18 +26,15 @@ const Project = forwardRef<HTMLDivElement, PropsType>((props , ref)=>{
     let ctx = gsap.context(()=>{
     gsap.timeline({
       scrollTrigger: {
-        // trigger: projectRef.current,
-        // start: 'top 80%',
-        // toggleActions: 'restart'
+        trigger: projectRef.current,
+        start: 'top 80%',
+        toggleActions: 'restart',
+        // markers: true
       },
     })
-    .from(projectNameRef.current, {x: 100, opacity: 0, duration: 0.5})
-    .from(projectImageRef.current, {x: 50, opacity: 0, duration: 0.5}, '-=0.1')
-    
-    gsap.from(projectDetailsRef.current, {scrollTrigger: {
-      // trigger: projectDetailsRef.current,
-      // toggleActions: 'restart'
-    }, y: 30, opacity: 0, duration: 0.8})
+    .from(projectNameRef.current, {y: 100, opacity: 0, duration: 1})
+    .from(projectImageRef.current, {y: 50, opacity: 0, duration: 0.6}, '-=0.5')
+    .from(projectDetailsRef.current, {y: 30, opacity: 0, duration: 0.8}, '+0.1')
 
   }, projectRef)
 
@@ -50,7 +47,7 @@ const Project = forwardRef<HTMLDivElement, PropsType>((props , ref)=>{
   return(
     <div ref={projectRef} className='projects flex flex-col mb-[4rem] [&:nth-child(2)]:items-end'>
       <div>
-        <h1 ref={projectNameRef} className='text-[1.5rem] text-black font-bold uppercase leading-none'>{props.name}</h1>
+        <h1 ref={projectNameRef} className='text-[1rem] text-black font-bold uppercase leading-none'>{props.name}</h1>
         <div ref={projectImageRef} className='img w-fulll lg:w-[40rem] pt-4'>
           {props.siteLink ?
           <a target="_blank" href={props.siteLink}>
