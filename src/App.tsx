@@ -40,12 +40,12 @@ function App() {
 
   function animatedLinkMouseEnter(){
     gsap.set(underline.current, {scaleX: 1, width: '100%'})
-    gsap.to(ballRef.current, {width: 60, height: 60, border: 2, borderColor: 'white', backgroundColor: 'transparent'})
+    // gsap.to(ballRef.current, {width: 60, height: 60, border: 2, borderColor: 'white', backgroundColor: 'transparent'})
     gsap.from(underline.current, {scaleX: '0', transformOrigin: 'left' })
   }
   
   function animatedLinkMouseLeave(){
-    gsap.to(ballRef.current, {width: 20, height: 20, backgroundColor: 'white',})
+    // gsap.to(ballRef.current, {width: 20, height: 20, backgroundColor: 'white',})
     gsap.to(underline.current, {scaleX: '0', transformOrigin: 'right' })
     // gsap.set(underline.current, {scaleX: 1})
   }
@@ -60,15 +60,15 @@ function App() {
       .from('.slider', {scaleX: 0, duration: 1, transformOrigin: 'left', ease: 'sine'}, '+=0.4')
       .to('.slider', {scaleX: 0, duration: 0.3, transformOrigin: 'right', ease: 'sine'}, '+=0.1')
       .fromTo('.children', {opacity: 0, y: 10} ,{opacity: 1, stagger: 0.1, y: 0, duration: 0.6, ease: 'sine'}, '-=0.8')
-      .from('.horizontalLine', {width: '0%', duration: 1})
+      .from('.horizontalLine', {width: '0%', duration: 1}, '+=0.1')
 
       gsap.from('#title-project',{
         scrollTrigger: {
           trigger: '#title-project',
-          // markers: true,
+          markers: true,
           start: 'top bottom',
           toggleActions: 'restart',
-          // once: false
+          once: false
         },
         y: 70,
         duration: '1'
@@ -77,10 +77,10 @@ function App() {
       gsap.from('#title-about',{
         scrollTrigger: {
           trigger: '#title-about',
-          // markers: true,
+          markers: true,
           start: 'top bottom',
           toggleActions: 'restart',
-          // once: false
+          once: false
         },
         y: 70,
         duration: '1'
@@ -157,29 +157,29 @@ function App() {
         <div className='grid grid-cols-12 gap-4'>
           <div className='grid-span-2 col-start-1 col-end-3 flex flex-col gap-4 w-fit'>
             <SlideWraper>
-              <AnimatedLink ref={underline} mouseEnter={animatedLinkMouseEnter} mouseLeave={animatedLinkMouseLeave} name='twitter' link='https://twitter.com/itzyaboirey'/>
+              <AnimatedLink name='twitter' link='https://twitter.com/itzyaboirey'/>
             </SlideWraper>
             <SlideWraper>
-              <AnimatedLink ref={underline} mouseEnter={animatedLinkMouseEnter} mouseLeave={animatedLinkMouseLeave} name='instagram' link='https://www.instagram.com/_itzyaboirey/'/>
+              <AnimatedLink name='instagram' link='https://www.instagram.com/_itzyaboirey/'/>
             </SlideWraper>
             <SlideWraper>
-              <AnimatedLink ref={underline} mouseEnter={animatedLinkMouseEnter} mouseLeave={animatedLinkMouseLeave} name='whatsapp' link='https://wa.me/+6281338047308'/>
+              <AnimatedLink name='whatsapp' link='https://wa.me/+6281338047308'/>
             </SlideWraper>
           </div>
           <div className='grid-span-2 col-start-5 lg:col-start-3 col-end-5 flex flex-col gap-4 w-fit'>
             <SlideWraper>
-              <AnimatedLink ref={underline} mouseEnter={animatedLinkMouseEnter} mouseLeave={animatedLinkMouseLeave} name='github' link='https://github.com/reymooy27'/>
+              <AnimatedLink name='github' link='https://github.com/reymooy27'/>
             </SlideWraper>
             <SlideWraper>
-              <AnimatedLink ref={underline} mouseEnter={animatedLinkMouseEnter} mouseLeave={animatedLinkMouseLeave} name='linkedin' link='https://www.linkedin.com/in/rey-mooy-1a60a01a6/'/>
+              <AnimatedLink name='linkedin' link='https://www.linkedin.com/in/rey-mooy-1a60a01a6/'/>
             </SlideWraper>
           </div>
           <div className='grid-span-2 row-start-2 lg:row-start-1 col-start-1 lg:col-start-5 col-end-12 flex flex-col gap-4 w-fit'>
             <SlideWraper>
-              <AnimatedLink ref={underline} mouseEnter={animatedLinkMouseEnter} mouseLeave={animatedLinkMouseLeave} name='gdrrey@gmail.com' link='mailto:gdrrey@gmail.com'/>
+              <AnimatedLink name='gdrrey@gmail.com' link='mailto:gdrrey@gmail.com'/>
             </SlideWraper>
             <SlideWraper>
-              <AnimatedLink ref={underline} mouseEnter={animatedLinkMouseEnter} mouseLeave={animatedLinkMouseLeave} name='curriculum vitae' link=''/>
+              <AnimatedLink name='curriculum vitae' link=''/>
             </SlideWraper>
           </div>
         </div>
@@ -191,7 +191,7 @@ function App() {
       <div className='px-4'>
         <h1 className='text-[6rem] md:text-[10rem] lg:text-[18rem] text-center font-bold leading-none' id='title-project'>projects</h1>
       </div>
-      <div className='projectWrapper relative bg-[#ECECEC] rounded-t-[100px] rounded-b-[50px] w-full h-full pt-28 px-4 pb-28'>
+      <div className='projectWrapper relative bg-[#ECECEC] rounded-t-[50px] lg:rounded-t-[100px] rounded-b-[50px] w-full h-full pt-28 px-4 pb-28'>
 
         <div className='w-full max-w-[1200px] lg:mx-auto flex flex-col'>
           {data.map((project)=>(
@@ -210,15 +210,15 @@ function App() {
               ref={underline}
               />
           ))}
-          <div className='grid grid-cols-12 gap-4 mb-[8em] md:mb-[15em]'>
+          <div className='grid grid-cols-12 gap-4 mt-[8rem] mb-[8rem] md:mb-[15rem]'>
             <div className='col-start-1 col-end-13 md:col-end-4 md:row-start-1'>
-              <h1 className='text-black font-bold text-[1.5rem]'>another project</h1>
+              <h1 className='text-black font-bold text-[1rem] lg:text-[1.5rem]'>another project</h1>
             </div>
             <div className='col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1'>
               {data.map(project=>(
                 <div key={project.id} className='border-b first:border-t border-black w-full py-2 pl-2'>
                   <a target="_blank" href={project.siteLink}>
-                    <h1 className='text-black text-[2em] font-bold '>{project.name}</h1>
+                    <h1 className='text-black text-[1.5rem] lg:text-[2rem] font-bold '>{project.name}</h1>
                   </a>
                 </div>
               ))}
@@ -226,25 +226,57 @@ function App() {
           </div>
         </div>
 
-        <div className='absolute bottom-0 left-0 right-0 w-full mb-[-1.6em] md:mb-[-2.7em] lg:mb-[-5em]'>
+        <div className='absolute bottom-0 left-0 right-0 w-full mb-[-1.6rem] md:mb-[-2.7rem] lg:mb-[-5rem]'>
           <h1 className='text-[6rem] md:text-[10rem] lg:text-[18rem] text-center font-bold text-black leading-none' id='title-about'>about</h1>
         </div>
       </div>
     </div>
 
     <div className='mt-[8rem] px-4 lg:mx-auto w-full max-w-[1200px]'>
-      <div className='grid grid-cols-12 gap-4 mb-[8em] md:mb-[15em]'>
+      <div className='grid grid-cols-12 gap-4 mb-[4rem]'>
         <div className='col-start-1 col-end-13 md:col-end-4 md:row-start-1'>
-          <h1 className='font-bold text-[1.5rem]'>education</h1>
+          <h1 className='font-bold text-[1rem] lg:text-[1.5rem]'>education</h1>
         </div>
         <div className='col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1'>
-          <div className='border-b first:border-t border-white w-full py-2 pl-2 grid grid-cols-3'>
-            <h1 className='text-[1em] font-bold '>2015-2017</h1>
-            <h1 className='text-[1em] font-bold col-start-2 col-end-4'>SMA Negeri 1 Kupang</h1>
+          <div className='border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3'>
+            <h1 className='text-[1rem]'>2019-2023</h1>
+            <h1 className='text-[1rem] font-bold  col-start-2 col-end-4'>Universitas Citra Bangsa</h1>
           </div>
-          <div className='border-b first:border-t border-white w-full py-2 pl-2 grid grid-cols-3'>
-            <h1 className='text-[1em] font-bold '>2019-2023</h1>
-            <h1 className='text-[1em] font-bold  col-start-2 col-end-4'>Universitas Citra Bangsa</h1>
+          <div className='border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3'>
+            <h1 className='text-[1rem]'>2015-2017</h1>
+            <h1 className='text-[1rem] font-bold col-start-2 col-end-4'>SMA Negeri 1 Kupang</h1>
+          </div>
+        </div>
+      </div>
+
+      <div className='grid grid-cols-12 gap-4 mb-[4rem]'>
+        <div className='col-start-1 col-end-13 md:col-end-4 md:row-start-1'>
+          <h1 className='font-bold text-[1rem] lg:text-[1.5rem]'>experience</h1>
+        </div>
+        <div className='col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1'>
+          <div className='border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3'>
+            <h1 className='text-[1rem]'>2023 - now</h1>
+            <h1 className='text-[1rem] font-bold  col-start-2 col-end-4'>Freelance</h1>
+          </div>
+          <div className='border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3'>
+            <h1 className='text-[1rem]'>Feb 2023 - Mar 2023</h1>
+            <h1 className='text-[1rem] font-bold col-start-2'>Diskominfo Kota Kupang</h1>
+            <h1 className='text-[1rem] col-start-3'>Student Intern</h1>
+          </div>
+        </div>
+      </div>
+
+      <div className='grid grid-cols-12 gap-4'>
+        <div className='col-start-1 col-end-13 md:col-end-4 md:row-start-1'>
+          <h1 className='font-bold text-[1rem] lg:text-[1.5rem]'>skills</h1>
+        </div>
+        <div className='col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1'>
+          <div className='w-full grid grid-cols-5 gap-4'>
+            <h1 className='text-[1rem] font-bold col-start-1'>Freelance</h1>
+            <h1 className='text-[1rem] font-bold col-start-2'>Freelance</h1>
+            <h1 className='text-[1rem] font-bold col-start-3'>Freelance</h1>
+            <h1 className='text-[1rem] font-bold col-start-4'>Freelance</h1>
+            <h1 className='text-[1rem] font-bold col-start-5'>Freelance</h1>
           </div>
         </div>
       </div>
