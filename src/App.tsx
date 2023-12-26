@@ -1,291 +1,415 @@
-'use client'
+"use client";
 
-import { useLayoutEffect, useRef } from 'react'
-import gsap from 'gsap'
-import { TextPlugin } from 'gsap/TextPlugin'
-import SlideWraper from './components/SlideWraper'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import AnimatedLink from './components/AnimatedLink'
-import data from '../pojectData'
-import Project from './components/Project'
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import { TextPlugin } from "gsap/TextPlugin";
+import SlideWraper from "./components/SlideWraper";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import AnimatedLink from "./components/AnimatedLink";
+import data from "../pojectData";
+import Project from "./components/Project";
 
 function App() {
-  const ref = useRef(null)
-  const ballRef = useRef<HTMLDivElement>(null)
-  const ballTextRef = useRef(null)
-  const underline = useRef(null)
+  const ref = useRef(null);
+  const ballRef = useRef<HTMLDivElement>(null);
+  const ballTextRef = useRef(null);
+  const underline = useRef(null);
 
   // let q = gsap.utils.selector(ref);
-  gsap.registerPlugin(TextPlugin, ScrollTrigger)
+  gsap.registerPlugin(TextPlugin, ScrollTrigger);
 
-  const tl =  gsap.timeline()
+  const tl = gsap.timeline();
   const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
   const mouse = { x: pos.x, y: pos.y };
   const speed = 0.15;
 
-  const mouseEnter = (siteLink: string | undefined)=>{
-    if(siteLink){
-      gsap.to(ballRef.current, {width: 100, height: 100, backgroundColor: 'white'})
-      ballRef.current?.classList.remove('mix-blend-difference')
-      gsap.to(ballTextRef.current, {opacity: 1})
+  const mouseEnter = (siteLink: string | undefined) => {
+    if (siteLink) {
+      gsap.to(ballRef.current, {
+        width: 100,
+        height: 100,
+        backgroundColor: "white",
+      });
+      ballRef.current?.classList.remove("mix-blend-difference");
+      gsap.to(ballTextRef.current, { opacity: 1 });
     }
-  }
-  const mouseLeave = (siteLink: string | undefined)=>{
-    if(siteLink){
-      ballRef.current?.classList.add('mix-blend-difference')
-      gsap.to(ballRef.current, {width: 20, height: 20})
-      gsap.to(ballTextRef.current, {opacity: 0})
+  };
+  const mouseLeave = (siteLink: string | undefined) => {
+    if (siteLink) {
+      ballRef.current?.classList.add("mix-blend-difference");
+      gsap.to(ballRef.current, { width: 20, height: 20 });
+      gsap.to(ballTextRef.current, { opacity: 0 });
     }
+  };
+
+  function animatedLinkMouseEnter() {
+    gsap.set(underline.current, { scaleX: 1, width: "100%" });
+    // gsap.to(ballRef.current, {width: 60, height: 60, border: 2, borderColor: 'white', backgroundColor: 'transparent'})
+    gsap.from(underline.current, { scaleX: "0", transformOrigin: "left" });
   }
 
-  function animatedLinkMouseEnter(){
-    gsap.set(underline.current, {scaleX: 1, width: '100%'})
-    // gsap.to(ballRef.current, {width: 60, height: 60, border: 2, borderColor: 'white', backgroundColor: 'transparent'})
-    gsap.from(underline.current, {scaleX: '0', transformOrigin: 'left' })
-  }
-  
-  function animatedLinkMouseLeave(){
+  function animatedLinkMouseLeave() {
     // gsap.to(ballRef.current, {width: 20, height: 20, backgroundColor: 'white',})
-    gsap.to(underline.current, {scaleX: '0', transformOrigin: 'right' })
+    gsap.to(underline.current, { scaleX: "0", transformOrigin: "right" });
     // gsap.set(underline.current, {scaleX: 1})
   }
 
   useLayoutEffect(() => {
-    let ctx = gsap.context(()=>{
-      gsap.set("#ball", {xPercent: -50, yPercent: -50});
+    const ctx = gsap.context(() => {
+      gsap.set("#ball", { xPercent: -50, yPercent: -50 });
 
-      tl
-      .to('#loader1', {scaleX: 0, duration: 1, transformOrigin: 'right', ease: 'sine', delay: 1})
-      .to('#loader2', {scaleX: 0, duration: 1, transformOrigin: 'right', ease: 'sine'}, '-=0.1')
-      .from('.slider', {scaleX: 0, duration: 1, transformOrigin: 'left', ease: 'sine'}, '+=0.4')
-      .to('.slider', {scaleX: 0, duration: 0.3, transformOrigin: 'right', ease: 'sine'}, '+=0.1')
-      .fromTo('.children', {opacity: 0, y: 10} ,{opacity: 1, stagger: 0.1, y: 0, duration: 0.6, ease: 'sine'}, '-=0.8')
-      .from('.horizontalLine', {width: '0%', duration: 1}, '+=0.1')
+      tl.to("#loader1", {
+        scaleX: 0,
+        duration: 1,
+        transformOrigin: "right",
+        ease: "sine",
+        delay: 1,
+      })
+        .to(
+          "#loader2",
+          { scaleX: 0, duration: 1, transformOrigin: "right", ease: "sine" },
+          "-=0.1",
+        )
+        .from(
+          ".slider",
+          { scaleX: 0, duration: 1, transformOrigin: "left", ease: "sine" },
+          "+=0.4",
+        )
+        .to(
+          ".slider",
+          { scaleX: 0, duration: 0.3, transformOrigin: "right", ease: "sine" },
+          "+=0.1",
+        )
+        .fromTo(
+          ".children",
+          { opacity: 0, y: 10 },
+          { opacity: 1, stagger: 0.1, y: 0, duration: 0.6, ease: "sine" },
+          "-=0.8",
+        )
+        .from(".horizontalLine", { width: "0%", duration: 1 }, "+=0.1");
 
-      gsap.from('#title-project',{
+      gsap.from("#title-project", {
         scrollTrigger: {
-          trigger: '#title-project',
-          markers: true,
-          start: 'top bottom',
-          toggleActions: 'restart',
-          once: false
+          trigger: "#title-project",
+          // markers: true,
+          start: "top bottom",
+          toggleActions: "restart",
+          once: false,
         },
         y: 70,
-        duration: '1'
-      })
+        duration: "1",
+      });
 
-      gsap.from('#title-about',{
+      gsap.from("#title-about", {
         scrollTrigger: {
-          trigger: '#title-about',
-          markers: true,
-          start: 'top bottom',
-          toggleActions: 'restart',
-          once: false
+          trigger: "#title-about",
+          // markers: true,
+          start: "top bottom",
+          toggleActions: "restart",
+          once: false,
         },
         y: 70,
-        duration: '1'
-      })
+        duration: "1",
+      });
 
-      const xSet = gsap.quickSetter('#ball', "x", "px");
-      const ySet = gsap.quickSetter('#ball', "y", "px");
+      const xSet = gsap.quickSetter("#ball", "x", "px");
+      const ySet = gsap.quickSetter("#ball", "y", "px");
 
-      window.addEventListener("mousemove", e => {    
+      window.addEventListener("mousemove", (e) => {
         mouse.x = e.x;
-        mouse.y = e.y;  
+        mouse.y = e.y;
       });
 
       gsap.ticker.add(() => {
         // adjust speed for higher refresh monitors
-        const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio()); 
-        
+        const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio());
+
         pos.x += (mouse.x - pos.x) * dt;
         pos.y += (mouse.y - pos.y) * dt;
         xSet(pos.x);
         ySet(pos.y);
       });
-    }, ref)
+    }, ref);
 
-    return () =>{ 
-      ctx.revert()
-      window.removeEventListener('mousemove',()=>null)
-    }
+    return () => {
+      ctx.revert();
+      window.removeEventListener("mousemove", () => null);
+    };
   }, []);
-
 
   return (
     <div ref={ref}>
-    <div className='w-full h-full px-4'>
-      <div id='loader1' className='fixed top-0 left-0 bg-black w-full h-full z-[5]'></div>
-      <div id='loader2' className='fixed bottom-0 left-0 bg-[#ECECEC] w-full h-full z-[4]'></div>
-      <div ref={ballRef} 
-            id='ball' 
-            className='bg-[#ECECEC] rounded-full w-[20px] 
+      <div className="w-full h-full px-4">
+        <div
+          id="loader1"
+          className="fixed top-0 left-0 bg-black w-full h-full z-[5]"
+        ></div>
+        <div
+          id="loader2"
+          className="fixed bottom-0 left-0 bg-[#ECECEC] w-full h-full z-[4]"
+        ></div>
+        <div
+          ref={ballRef}
+          id="ball"
+          className="bg-[#ECECEC] rounded-full w-[20px] 
             h-[20px] fixed top-0 left-0 pointer-events-none 
-            mix-blend-difference z-[3]'>
-          <span className='text-black opacity-0 text-[12px] absolute left-[calc(50%-32px/2-12px)] top-[calc(50%-32px/2)]' ref={ballTextRef}>View Site</span>    
-      </div>
-      <header className='mix-blend-difference backdrop-blur-md shadow-md py-[20px] px-4 fixed top-0 left-0 w-full z-[2] '>
-        <div className='flex justify-end'>
-          <div className='flex gap-3'>
-            <SlideWraper>
-              <span>Rey Mooy</span>
-            </SlideWraper>
+            mix-blend-difference z-[3]"
+        >
+          <span
+            className="text-black opacity-0 text-[12px] absolute left-[calc(50%-32px/2-12px)] top-[calc(50%-32px/2)]"
+            ref={ballTextRef}
+          >
+            View Site
+          </span>
+        </div>
+        <header className="mix-blend-difference backdrop-blur-md shadow-md py-[20px] px-4 fixed top-0 left-0 w-full z-[2] ">
+          <div className="flex justify-end">
+            <div className="flex gap-3">
+              <SlideWraper>
+                <span>Rey Mooy</span>
+              </SlideWraper>
+            </div>
+          </div>
+        </header>
+        <div className="w-full h-screen pt-[3.5rem] max-w-[1200px] lg:mx-auto lg:my-0">
+          <section className="grid grid-cols-12 gap-4">
+            <div className="col-span-full col-start-1 w-fit">
+              <SlideWraper>
+                <h1 className="title text-[6rem] md:text-[10rem] lg:text-[18rem] font-bold leading-[0.7] lg:leading-[0.3]">
+                  rey
+                </h1>
+              </SlideWraper>
+            </div>
+            <div className="w-fit mt-10 lg:mt-0 col-span-12 lg:col-span-4 lg:col-start-1 lg:col-end-4 self-end">
+              <SlideWraper>
+                <p>
+                  i am a fullstack developer,<br></br> based in indonesia
+                </p>
+              </SlideWraper>
+            </div>
+            <div className="col-span-8 col-start-1 lg:col-start-4 col-end-13 w-fit row-start-2">
+              <SlideWraper>
+                <h1 className="title text-[6rem] md:text-[10rem] lg:text-[18rem] font-bold leading-[0.7] lg:leading-[0.3]">
+                  mooy
+                </h1>
+              </SlideWraper>
+            </div>
+          </section>
+
+          <div className="horizontalLine w-full bg-[#ECECEC] text-black h-[0.5px] my-[1.3rem]"></div>
+          <div className="grid grid-cols-12 gap-4">
+            <div className="grid-span-2 col-start-1 col-end-3 flex flex-col gap-4 w-fit">
+              <SlideWraper>
+                <AnimatedLink
+                  name="twitter"
+                  link="https://twitter.com/itzyaboirey"
+                />
+              </SlideWraper>
+              <SlideWraper>
+                <AnimatedLink
+                  name="instagram"
+                  link="https://www.instagram.com/_itzyaboirey/"
+                />
+              </SlideWraper>
+              <SlideWraper>
+                <AnimatedLink
+                  name="whatsapp"
+                  link="https://wa.me/+6281338047308"
+                />
+              </SlideWraper>
+            </div>
+            <div className="grid-span-2 col-start-5 lg:col-start-3 col-end-5 flex flex-col gap-4 w-fit">
+              <SlideWraper>
+                <AnimatedLink
+                  name="github"
+                  link="https://github.com/reymooy27"
+                />
+              </SlideWraper>
+              <SlideWraper>
+                <AnimatedLink
+                  name="linkedin"
+                  link="https://www.linkedin.com/in/rey-mooy-1a60a01a6/"
+                />
+              </SlideWraper>
+            </div>
+            <div className="grid-span-2 row-start-2 lg:row-start-1 col-start-1 lg:col-start-5 col-end-12 flex flex-col gap-4 w-fit">
+              <SlideWraper>
+                <AnimatedLink
+                  name="gdrrey@gmail.com"
+                  link="mailto:gdrrey@gmail.com"
+                />
+              </SlideWraper>
+              <SlideWraper>
+                <AnimatedLink name="curriculum vitae" link="" />
+              </SlideWraper>
+            </div>
           </div>
         </div>
-      </header>
-      <div className='w-full h-screen pt-[3.5rem] max-w-[1200px] lg:mx-auto lg:my-0'>
-        <section className='grid grid-cols-12 gap-4'>
-          <div className='col-span-full col-start-1 w-fit'>
-            <SlideWraper>
-              <h1 className='title text-[6rem] md:text-[10rem] lg:text-[18rem] font-bold leading-[0.7] lg:leading-[0.3]'>rey</h1>
-            </SlideWraper>
-          </div>
-          <div className='w-fit mt-10 lg:mt-0 col-span-12 lg:col-span-4 lg:col-start-1 lg:col-end-4 self-end'>
-            <SlideWraper>
-              <p>i am a fullstack developer,<br></br> based in indonesia</p>
-            </SlideWraper>
-          </div>
-          <div className='col-span-8 col-start-1 lg:col-start-4 col-end-13 w-fit row-start-2'>
-            <SlideWraper>
-              <h1 className='title text-[6rem] md:text-[10rem] lg:text-[18rem] font-bold leading-[0.7] lg:leading-[0.3]'>mooy</h1>
-            </SlideWraper>
-              
-          </div>
-        </section>
+      </div>
 
-        <div className='horizontalLine w-full bg-[#ECECEC] text-black h-[0.5px] my-[1.3rem]'></div>
-        <div className='grid grid-cols-12 gap-4'>
-          <div className='grid-span-2 col-start-1 col-end-3 flex flex-col gap-4 w-fit'>
-            <SlideWraper>
-              <AnimatedLink name='twitter' link='https://twitter.com/itzyaboirey'/>
-            </SlideWraper>
-            <SlideWraper>
-              <AnimatedLink name='instagram' link='https://www.instagram.com/_itzyaboirey/'/>
-            </SlideWraper>
-            <SlideWraper>
-              <AnimatedLink name='whatsapp' link='https://wa.me/+6281338047308'/>
-            </SlideWraper>
-          </div>
-          <div className='grid-span-2 col-start-5 lg:col-start-3 col-end-5 flex flex-col gap-4 w-fit'>
-            <SlideWraper>
-              <AnimatedLink name='github' link='https://github.com/reymooy27'/>
-            </SlideWraper>
-            <SlideWraper>
-              <AnimatedLink name='linkedin' link='https://www.linkedin.com/in/rey-mooy-1a60a01a6/'/>
-            </SlideWraper>
-          </div>
-          <div className='grid-span-2 row-start-2 lg:row-start-1 col-start-1 lg:col-start-5 col-end-12 flex flex-col gap-4 w-fit'>
-            <SlideWraper>
-              <AnimatedLink name='gdrrey@gmail.com' link='mailto:gdrrey@gmail.com'/>
-            </SlideWraper>
-            <SlideWraper>
-              <AnimatedLink name='curriculum vitae' link=''/>
-            </SlideWraper>
-          </div>
+      <div className="w-full h-full mt-10">
+        <div className="px-4">
+          <h1
+            className="text-[6rem] md:text-[10rem] lg:text-[18rem] text-center font-bold leading-none"
+            id="title-project"
+          >
+            projects
+          </h1>
         </div>
-      </div>
-
-    </div>
-
-    <div className='w-full h-full mt-10'>
-      <div className='px-4'>
-        <h1 className='text-[6rem] md:text-[10rem] lg:text-[18rem] text-center font-bold leading-none' id='title-project'>projects</h1>
-      </div>
-      <div className='projectWrapper relative bg-[#ECECEC] rounded-t-[50px] lg:rounded-t-[100px] rounded-b-[50px] w-full h-full pt-28 px-4 pb-28'>
-
-        <div className='w-full max-w-[1200px] lg:mx-auto flex flex-col'>
-          {data.map((project)=>(
-            <Project
-              mouseEnter={mouseEnter} 
-              mouseLeave={mouseLeave}
-              animatedLinkMouseEnter={animatedLinkMouseEnter}
-              animatedLinkMouseLeave={animatedLinkMouseLeave}
-              key={project.id} 
-              name={project.name} 
-              image={project.image} 
-              language={project.language}
-              techStack={project.techStack}
-              githubLink={project.githubLink}
-              siteLink={project.siteLink}
-              ref={underline}
+        <div className="projectWrapper relative bg-[#ECECEC] rounded-t-[50px] lg:rounded-t-[100px] rounded-b-[50px] w-full h-full pt-28 px-4 pb-28">
+          <div className="w-full max-w-[1200px] lg:mx-auto flex flex-col">
+            {data.map((project) => (
+              <Project
+                mouseEnter={mouseEnter}
+                mouseLeave={mouseLeave}
+                animatedLinkMouseEnter={animatedLinkMouseEnter}
+                animatedLinkMouseLeave={animatedLinkMouseLeave}
+                key={project.id}
+                name={project.name}
+                image={project.image}
+                language={project.language}
+                techStack={project.techStack}
+                githubLink={project.githubLink}
+                siteLink={project.siteLink}
+                ref={underline}
               />
-          ))}
-          <div className='grid grid-cols-12 gap-4 mt-[8rem] mb-[8rem] md:mb-[15rem]'>
-            <div className='col-start-1 col-end-13 md:col-end-4 md:row-start-1'>
-              <h1 className='text-black font-bold text-[1rem] lg:text-[1.5rem]'>another project</h1>
+            ))}
+            <div className="grid grid-cols-12 gap-4 mt-[8rem] mb-[8rem] md:mb-[15rem]">
+              <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1">
+                <h1 className="text-black font-bold text-[1rem] lg:text-[1.5rem]">
+                  another project
+                </h1>
+              </div>
+              <div className="col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1">
+                {data.map((project) => (
+                  <div
+                    key={project.id}
+                    className="border-b first:border-t border-black w-full py-2 pl-2"
+                  >
+                    <a target="_blank" href={project.siteLink}>
+                      <h1 className="text-black text-[1.5rem] lg:text-[2rem] font-bold ">
+                        {project.name}
+                      </h1>
+                    </a>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className='col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1'>
-              {data.map(project=>(
-                <div key={project.id} className='border-b first:border-t border-black w-full py-2 pl-2'>
-                  <a target="_blank" href={project.siteLink}>
-                    <h1 className='text-black text-[1.5rem] lg:text-[2rem] font-bold '>{project.name}</h1>
-                  </a>
-                </div>
-              ))}
+          </div>
+
+          <div className="absolute bottom-0 left-0 right-0 w-full mb-[-1.6rem] md:mb-[-2.7rem] lg:mb-[-5rem]">
+            <h1
+              className="text-[6rem] md:text-[10rem] lg:text-[18rem] text-center font-bold text-black leading-none"
+              id="title-about"
+            >
+              about
+            </h1>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-[8rem] px-4 lg:mx-auto w-full max-w-[1200px]">
+        <div className="grid grid-cols-12 gap-4 mb-[4rem]">
+          <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1">
+            <h1 className="font-bold text-[1rem] lg:text-[1.5rem]">
+              education
+            </h1>
+          </div>
+          <div className="col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1">
+            <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
+              <h1 className="text-[1rem]">2019-2023</h1>
+              <h1 className="text-[1rem] font-bold  col-start-2 col-end-4">
+                Universitas Citra Bangsa
+              </h1>
+            </div>
+            <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
+              <h1 className="text-[1rem]">2015-2017</h1>
+              <h1 className="text-[1rem] font-bold col-start-2 col-end-4">
+                SMA Negeri 1 Kupang
+              </h1>
             </div>
           </div>
         </div>
 
-        <div className='absolute bottom-0 left-0 right-0 w-full mb-[-1.6rem] md:mb-[-2.7rem] lg:mb-[-5rem]'>
-          <h1 className='text-[6rem] md:text-[10rem] lg:text-[18rem] text-center font-bold text-black leading-none' id='title-about'>about</h1>
+        <div className="grid grid-cols-12 gap-4 mb-[4rem]">
+          <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1">
+            <h1 className="font-bold text-[1rem] lg:text-[1.5rem]">
+              experience
+            </h1>
+          </div>
+          <div className="col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1">
+            <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
+              <h1 className="text-[1rem]">2023 - now</h1>
+              <h1 className="text-[1rem] font-bold  col-start-2">
+                Webminds Kupang
+              </h1>
+              <h1 className="text-[1rem] col-start-3">Freelance</h1>
+            </div>
+            <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
+              <h1 className="text-[1rem]">Feb 2023 - Mar 2023</h1>
+              <h1 className="text-[1rem] font-bold col-start-2">
+                Diskominfo Kota Kupang
+              </h1>
+              <h1 className="text-[1rem] col-start-3">Student Intern</h1>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-12 gap-4 pb-[8rem]">
+          <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1">
+            <h1 className="font-bold text-[1rem] lg:text-[1.5rem]">skills</h1>
+          </div>
+          <div className="col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1">
+            <div className="w-full grid md:grid-cols-5 gap-4">
+              <h1 className="text-[1rem] font-bold col-start-1">HTML</h1>
+              <h1 className="text-[1rem] font-bold col-start-2">CSS</h1>
+              <h1 className="text-[1rem] font-bold col-start-3">Javascript</h1>
+              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-4">
+                Typescript
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-5">
+                PHP
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-1">
+                Python
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-2">
+                ReactJS
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-3">
+                NextJS
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-4">
+                React Native
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-5">
+                Redux
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-1">
+                NodeJS
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-2">
+                ExpressJS
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-3">
+                Django
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-4">
+                MongoDB
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-5">
+                MySQL
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-1">Rest API</h1>
+              <h1 className="text-[1rem] font-bold col-start-2">Git</h1>
+              <h1 className="text-[1rem] font-bold col-start-3">Docker</h1>
+              {/* <h1 className="text-[1rem] font-bold col-start-3">Redux</h1> */}
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-    <div className='mt-[8rem] px-4 lg:mx-auto w-full max-w-[1200px]'>
-      <div className='grid grid-cols-12 gap-4 mb-[4rem]'>
-        <div className='col-start-1 col-end-13 md:col-end-4 md:row-start-1'>
-          <h1 className='font-bold text-[1rem] lg:text-[1.5rem]'>education</h1>
-        </div>
-        <div className='col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1'>
-          <div className='border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3'>
-            <h1 className='text-[1rem]'>2019-2023</h1>
-            <h1 className='text-[1rem] font-bold  col-start-2 col-end-4'>Universitas Citra Bangsa</h1>
-          </div>
-          <div className='border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3'>
-            <h1 className='text-[1rem]'>2015-2017</h1>
-            <h1 className='text-[1rem] font-bold col-start-2 col-end-4'>SMA Negeri 1 Kupang</h1>
-          </div>
-        </div>
-      </div>
-
-      <div className='grid grid-cols-12 gap-4 mb-[4rem]'>
-        <div className='col-start-1 col-end-13 md:col-end-4 md:row-start-1'>
-          <h1 className='font-bold text-[1rem] lg:text-[1.5rem]'>experience</h1>
-        </div>
-        <div className='col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1'>
-          <div className='border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3'>
-            <h1 className='text-[1rem]'>2023 - now</h1>
-            <h1 className='text-[1rem] font-bold  col-start-2 col-end-4'>Freelance</h1>
-          </div>
-          <div className='border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3'>
-            <h1 className='text-[1rem]'>Feb 2023 - Mar 2023</h1>
-            <h1 className='text-[1rem] font-bold col-start-2'>Diskominfo Kota Kupang</h1>
-            <h1 className='text-[1rem] col-start-3'>Student Intern</h1>
-          </div>
-        </div>
-      </div>
-
-      <div className='grid grid-cols-12 gap-4'>
-        <div className='col-start-1 col-end-13 md:col-end-4 md:row-start-1'>
-          <h1 className='font-bold text-[1rem] lg:text-[1.5rem]'>skills</h1>
-        </div>
-        <div className='col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1'>
-          <div className='w-full grid grid-cols-5 gap-4'>
-            <h1 className='text-[1rem] font-bold col-start-1'>Freelance</h1>
-            <h1 className='text-[1rem] font-bold col-start-2'>Freelance</h1>
-            <h1 className='text-[1rem] font-bold col-start-3'>Freelance</h1>
-            <h1 className='text-[1rem] font-bold col-start-4'>Freelance</h1>
-            <h1 className='text-[1rem] font-bold col-start-5'>Freelance</h1>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  )
+  );
 }
 
-export default App
-
-
-
+export default App;
