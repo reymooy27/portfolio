@@ -15,7 +15,6 @@ function App() {
   const ballTextRef = useRef(null);
   const underline = useRef(null);
 
-  // let q = gsap.utils.selector(ref);
   gsap.registerPlugin(TextPlugin, ScrollTrigger);
 
   const tl = gsap.timeline();
