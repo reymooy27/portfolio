@@ -13,7 +13,7 @@ import AnotherProject from "./components/AnotherProject";
 function App() {
   const ref = useRef(null);
   const ballRef = useRef<HTMLDivElement>(null);
-  const ballTextRef = useRef<HTMLSpanElement>(null);
+  const ballTextRef = useRef<HTMLHeadingElement>(null);
   const underline = useRef<HTMLDivElement>(null);
 
 
@@ -36,6 +36,7 @@ function App() {
     gsap.to(ballTextRef.current, { opacity: 1 });
 
     if (ballTextRef.current != null && ballRef.current != null) {
+      ballTextRef.current.style.marginTop = `40px`
       if (siteLink) {
         ballTextRef.current.innerText = "View Site"
       } else {
@@ -53,6 +54,7 @@ function App() {
     gsap.to(ballRef.current, { width: 20, height: 20 });
     gsap.to(ballTextRef.current, { opacity: 0 });
     if (!siteLink && ballTextRef.current != null) {
+      ballTextRef.current.style.marginTop = `0px`
       gsap.to(ballRef.current, { backgroundColor: "white" });
       ballTextRef.current.style.color = "black"
     }
@@ -172,12 +174,13 @@ function App() {
             h-[20px] fixed top-0 left-0 pointer-events-none 
             mix-blend-difference z-[3]"
         >
-          <span
-            className="text-black opacity-0 text-[12px] absolute left-[calc(50%-32px/2-12px)] top-[calc(50%-32px/2)]"
-            ref={ballTextRef}
-          >
-
-          </span>
+          <div className="pl-5">
+            <h1
+              className="text-black opacity-0 text-[12px]"
+              ref={ballTextRef}
+            >
+            </h1>
+          </div>
         </div>
         <header className="mix-blend-difference backdrop-blur-md shadow-md py-[20px] px-4 fixed top-0 left-0 w-full z-[2] ">
           <div className="flex justify-end">
@@ -307,6 +310,7 @@ function App() {
                     name={project.name}
                     siteLink={project.siteLink}
                     ballRef={ballRef}
+                    ballTextRef={ballTextRef}
                   />
                 ))}
               </div>
