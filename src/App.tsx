@@ -6,14 +6,15 @@ import { TextPlugin } from "gsap/TextPlugin";
 import SlideWraper from "./components/SlideWraper";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AnimatedLink from "./components/AnimatedLink";
-import data from "../pojectData";
+import { data, anotherProject } from "../pojectData";
 import Project from "./components/Project";
+import AnotherProject from "./components/AnotherProject";
 
 function App() {
   const ref = useRef(null);
   const ballRef = useRef<HTMLDivElement>(null);
-  const ballTextRef = useRef(null);
-  const underline = useRef(null);
+  const ballTextRef = useRef<HTMLSpanElement>(null);
+  const underline = useRef<HTMLDivElement>(null);
 
 
   gsap.registerPlugin(TextPlugin, ScrollTrigger);
@@ -24,22 +25,38 @@ function App() {
   const speed = 0.15;
 
   const mouseEnter = (siteLink: string | undefined) => {
-    if (siteLink) {
-      gsap.to(ballRef.current, {
-        width: 100,
-        height: 100,
-        backgroundColor: "white",
-      });
-      ballRef.current?.classList.remove("mix-blend-difference");
-      gsap.to(ballTextRef.current, { opacity: 1 });
+    console.log(siteLink)
+    // if (siteLink) {
+    gsap.to(ballRef.current, {
+      width: 100,
+      height: 100,
+      backgroundColor: "white",
+    });
+    ballRef.current?.classList.remove("mix-blend-difference");
+    gsap.to(ballTextRef.current, { opacity: 1 });
+
+    if (ballTextRef.current != null && ballRef.current != null) {
+      if (siteLink) {
+        ballTextRef.current.innerText = "View Site"
+      } else {
+        ballTextRef.current.innerText = "No Site"
+        ballTextRef.current.style.color = "white"
+        gsap.to(ballRef.current, { backgroundColor: "black" });
+      }
     }
+    // }
   };
   const mouseLeave = (siteLink: string | undefined) => {
-    if (siteLink) {
-      ballRef.current?.classList.add("mix-blend-difference");
-      gsap.to(ballRef.current, { width: 20, height: 20 });
-      gsap.to(ballTextRef.current, { opacity: 0 });
+    console.log(siteLink)
+    // if (siteLink) {
+    ballRef.current?.classList.add("mix-blend-difference");
+    gsap.to(ballRef.current, { width: 20, height: 20 });
+    gsap.to(ballTextRef.current, { opacity: 0 });
+    if (!siteLink && ballTextRef.current != null) {
+      gsap.to(ballRef.current, { backgroundColor: "white" });
+      ballTextRef.current.style.color = "black"
     }
+    // }
   };
 
   function animatedLinkMouseEnter() {
@@ -159,7 +176,7 @@ function App() {
             className="text-black opacity-0 text-[12px] absolute left-[calc(50%-32px/2-12px)] top-[calc(50%-32px/2)]"
             ref={ballTextRef}
           >
-            View Site
+
           </span>
         </div>
         <header className="mix-blend-difference backdrop-blur-md shadow-md py-[20px] px-4 fixed top-0 left-0 w-full z-[2] ">
@@ -275,6 +292,8 @@ function App() {
                 ref={underline}
               />
             ))}
+
+            {/* another project */}
             <div className="grid grid-cols-12 gap-4 mt-[8rem] mb-[8rem] md:mb-[15rem]">
               <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1">
                 <h1 className="text-black font-bold text-[1rem] lg:text-[1.5rem]">
@@ -282,22 +301,21 @@ function App() {
                 </h1>
               </div>
               <div className="col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1">
-                {data.map((project) => (
-                  <div
+                {anotherProject.map((project) => (
+                  <AnotherProject
                     key={project.id}
-                    className="border-b first:border-t border-black w-full py-2 pl-2"
-                  >
-                    <a target="_blank" href={project.siteLink}>
-                      <h1 className="text-black text-[1.5rem] lg:text-[2rem] font-bold ">
-                        {project.name}
-                      </h1>
-                    </a>
-                  </div>
+                    name={project.name}
+                    siteLink={project.siteLink}
+                    ballRef={ballRef}
+                  />
                 ))}
               </div>
             </div>
+            {/* another project */}
+
           </div>
 
+          {/* about */}
           <div className="absolute bottom-0 left-0 right-0 w-full mb-[-1.6rem] md:mb-[-2.7rem] lg:mb-[-5rem]">
             <h1
               className="text-[6rem] md:text-[10rem] lg:text-[18rem] text-center font-bold text-black leading-none"
@@ -332,6 +350,7 @@ function App() {
           </div>
         </div>
 
+        {/* experience */}
         <div className="grid grid-cols-12 gap-4 mb-[4rem]">
           <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1">
             <h1 className="font-bold text-[1rem] lg:text-[1.5rem]">
@@ -369,7 +388,9 @@ function App() {
             </div>
           </div>
         </div>
+        {/* experience */}
 
+        {/* skills */}
         <div className="grid grid-cols-12 gap-4 pb-[8rem]">
           <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1">
             <h1 className="font-bold text-[1rem] lg:text-[1.5rem]">skills</h1>
@@ -400,6 +421,8 @@ function App() {
             </div>
           </div>
         </div>
+        {/* skills */}
+
       </div>
     </div>
   );
