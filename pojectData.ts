@@ -6,25 +6,28 @@ const data = [
     language: 'Typescript',
     techStack: 'NextJS, Tailwind, Prisma, MySQL',
     githubLink: 'wefew',
-    siteLink: 'https://buku-tamu-inky.vercel.app/'
+    siteLink: 'https://buku-tamu-inky.vercel.app/',
+    datetime: "Mar 2023"
   },
   {
     id: 2,
-    name: 'Diskominfo Kota Kupang',
+    name: 'Satreskrim Atambua',
     image: './images-3.png',
     language: 'Typescript',
     techStack: 'NextJS, Tailwind, Prisma, MySQL',
     githubLink: 'ef',
-    siteLink: ''
+    siteLink: '',
+    datetime: "Jun 2023"
   },
   {
     id: 3,
-    name: 'Diskominfo Kota Kupang',
+    name: 'SMPN 6 Kupang Tengah',
     image: './images-4.png',
     language: 'Typescript',
     techStack: 'NextJS, Tailwind, Prisma, MySQL',
     githubLink: '',
-    siteLink: ''
+    siteLink: '',
+    datetime: "Jun 2023"
   },
 ]
 

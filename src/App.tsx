@@ -240,7 +240,7 @@ function App() {
                 />
               </SlideWraper>
               <SlideWraper>
-                <AnimatedLink name="curriculum vitae" link="" />
+                <AnimatedLink name="curriculum vitae" link="https://drive.google.com/file/d/1WNT4VcPt02ec0wBtl7k42s4IhHfcBFf7/view?usp=sharing" />
               </SlideWraper>
             </div>
           </div>
@@ -271,6 +271,7 @@ function App() {
                 techStack={project.techStack}
                 githubLink={project.githubLink}
                 siteLink={project.siteLink}
+                datetime={project.datetime}
                 ref={underline}
               />
             ))}
@@ -339,11 +340,25 @@ function App() {
           </div>
           <div className="col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1">
             <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
+              <h1 className="text-[1rem]">Oct 2024 - now</h1>
+              <h1 className="text-[1rem] font-bold  col-start-2">
+                Koding Next Kupang
+              </h1>
+              <h1 className="text-[1rem] col-start-3">Advanced Teacher</h1>
+            </div>
+            <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
+              <h1 className="text-[1rem]">Jan 2024 - May 2024</h1>
+              <h1 className="text-[1rem] font-bold  col-start-2">
+                Platon Indonesia
+              </h1>
+              <h1 className="text-[1rem] col-start-3">Fullstack Engineer</h1>
+            </div>
+            <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
               <h1 className="text-[1rem]">2023 - now</h1>
               <h1 className="text-[1rem] font-bold  col-start-2">
                 Webminds Kupang
               </h1>
-              <h1 className="text-[1rem] col-start-3">Freelance</h1>
+              <h1 className="text-[1rem] col-start-3">Freelance Developer</h1>
             </div>
             <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
               <h1 className="text-[1rem]">Feb 2023 - Mar 2023</h1>
@@ -364,45 +379,23 @@ function App() {
               <h1 className="text-[1rem] font-bold col-start-1">HTML</h1>
               <h1 className="text-[1rem] font-bold col-start-2">CSS</h1>
               <h1 className="text-[1rem] font-bold col-start-3">Javascript</h1>
-              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-4">
-                Typescript
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-5">
-                PHP
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-1">
-                Python
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-2">
-                ReactJS
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-3">
-                NextJS
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-4">
-                React Native
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-5">
-                Redux
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-1">
-                NodeJS
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-2">
-                ExpressJS
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-3">
-                Django
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-4">
-                MongoDB
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-5">
-                MySQL
-              </h1>
+              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-4">Typescript</h1>
+              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-5">Golang</h1>
+              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-1">Python</h1>
+              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-2">ReactJS</h1>
+              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-3">NextJS</h1>
+              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-4">React Native</h1>
+              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-5">Redux</h1>
+              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-1">NodeJS</h1>
+              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-2">ExpressJS</h1>
+              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-3">Django</h1>
+              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-4">MongoDB</h1>
+              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-5">MySQL</h1>
               <h1 className="text-[1rem] font-bold col-start-1">Rest API</h1>
               <h1 className="text-[1rem] font-bold col-start-2">Git</h1>
               <h1 className="text-[1rem] font-bold col-start-3">Docker</h1>
+              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-4">Linux</h1>
+              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-5">PostgreSQL</h1>
               {/* <h1 className="text-[1rem] font-bold col-start-3">Redux</h1> */}
             </div>
           </div>
