@@ -15,6 +15,8 @@ function App() {
   const ballRef = useRef<HTMLDivElement>(null);
   const ballTextRef = useRef<HTMLHeadingElement>(null);
   const underline = useRef<HTMLDivElement>(null);
+  const projectImage = useRef<HTMLImageElement>(null);
+  const projectImageRef = useRef<HTMLImageElement>(null);
 
 
   gsap.registerPlugin(TextPlugin, ScrollTrigger);
@@ -298,19 +300,26 @@ function App() {
 
             {/* another project */}
             <div className="grid grid-cols-12 gap-4 mt-[8rem] mb-[8rem] md:mb-[15rem]">
-              <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1">
+              <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1 relative">
                 <h1 className="text-black font-bold text-[1rem] lg:text-[1.5rem]">
                   another project
                 </h1>
+                <div ref={projectImage} className="mt-5 opacity-0 hidden lg:block absolute top-[2rem] left-[-10rem] shadow-[5px_8px_10px_5px_rgba(0,0,0,0.3)]">
+                  <img ref={projectImageRef} src="./images-5.png" alt="" className="w-full h-full object-cover" />
+                </div>
               </div>
               <div className="col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1">
-                {anotherProject.map((project) => (
+                {anotherProject.map((project, index) => (
                   <AnotherProject
                     key={project.id}
                     name={project.name}
                     siteLink={project.siteLink}
                     ballRef={ballRef}
                     ballTextRef={ballTextRef}
+                    index={index + 4}
+                    imageRef={projectImage}
+                    image={project.image}
+                    projectImageRef={projectImageRef}
                   />
                 ))}
               </div>
@@ -341,13 +350,16 @@ function App() {
           <div className="col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1">
             <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
               <h1 className="text-[1rem]">2019-2023</h1>
-              <h1 className="text-[1rem] font-bold  col-start-2 col-end-4">
+              <h1 className="text-[1rem] font-bold col-start-2">
                 Universitas Citra Bangsa
+              </h1>
+              <h1 className="text-[1rem] col-start-3">
+                Teknologi Informasi
               </h1>
             </div>
             <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
               <h1 className="text-[1rem]">2015-2017</h1>
-              <h1 className="text-[1rem] font-bold col-start-2 col-end-4">
+              <h1 className="text-[1rem] font-bold col-start-2">
                 SMA Negeri 1 Kupang
               </h1>
             </div>
