@@ -6,14 +6,17 @@ import { TextPlugin } from "gsap/TextPlugin";
 import SlideWraper from "./components/SlideWraper";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AnimatedLink from "./components/AnimatedLink";
-import data from "../pojectData";
+import { data, anotherProject } from "../pojectData";
 import Project from "./components/Project";
+import AnotherProject from "./components/AnotherProject";
 
 function App() {
   const ref = useRef(null);
   const ballRef = useRef<HTMLDivElement>(null);
-  const ballTextRef = useRef(null);
-  const underline = useRef(null);
+  const ballTextRef = useRef<HTMLHeadingElement>(null);
+  const underline = useRef<HTMLDivElement>(null);
+  const projectImage = useRef<HTMLImageElement>(null);
+  const projectImageRef = useRef<HTMLImageElement>(null);
 
 
   gsap.registerPlugin(TextPlugin, ScrollTrigger);
@@ -24,22 +27,40 @@ function App() {
   const speed = 0.15;
 
   const mouseEnter = (siteLink: string | undefined) => {
-    if (siteLink) {
-      gsap.to(ballRef.current, {
-        width: 100,
-        height: 100,
-        backgroundColor: "white",
-      });
-      ballRef.current?.classList.remove("mix-blend-difference");
-      gsap.to(ballTextRef.current, { opacity: 1 });
+    console.log(siteLink)
+    // if (siteLink) {
+    gsap.to(ballRef.current, {
+      width: 100,
+      height: 100,
+      backgroundColor: "white",
+    });
+    ballRef.current?.classList.remove("mix-blend-difference");
+    gsap.to(ballTextRef.current, { opacity: 1 });
+
+    if (ballTextRef.current != null && ballRef.current != null) {
+      ballTextRef.current.style.marginTop = `40px`
+      if (siteLink) {
+        ballTextRef.current.innerText = "View Site"
+      } else {
+        ballTextRef.current.innerText = "No Site"
+        ballTextRef.current.style.color = "white"
+        gsap.to(ballRef.current, { backgroundColor: "black" });
+      }
     }
+    // }
   };
   const mouseLeave = (siteLink: string | undefined) => {
-    if (siteLink) {
-      ballRef.current?.classList.add("mix-blend-difference");
-      gsap.to(ballRef.current, { width: 20, height: 20 });
-      gsap.to(ballTextRef.current, { opacity: 0 });
+    console.log(siteLink)
+    // if (siteLink) {
+    ballRef.current?.classList.add("mix-blend-difference");
+    gsap.to(ballRef.current, { width: 20, height: 20 });
+    gsap.to(ballTextRef.current, { opacity: 0 });
+    if (!siteLink && ballTextRef.current != null) {
+      ballTextRef.current.style.marginTop = `0px`
+      gsap.to(ballRef.current, { backgroundColor: "white" });
+      ballTextRef.current.style.color = "black"
     }
+    // }
   };
 
   function animatedLinkMouseEnter() {
@@ -155,12 +176,13 @@ function App() {
             h-[20px] fixed top-0 left-0 pointer-events-none 
             mix-blend-difference z-[3]"
         >
-          <span
-            className="text-black opacity-0 text-[12px] absolute left-[calc(50%-32px/2-12px)] top-[calc(50%-32px/2)]"
-            ref={ballTextRef}
-          >
-            View Site
-          </span>
+          <div className="pl-5">
+            <h1
+              className="text-black opacity-0 text-[12px]"
+              ref={ballTextRef}
+            >
+            </h1>
+          </div>
         </div>
         <header className="mix-blend-difference backdrop-blur-md shadow-md py-[20px] px-4 fixed top-0 left-0 w-full z-[2] ">
           <div className="flex justify-end">
@@ -275,29 +297,38 @@ function App() {
                 ref={underline}
               />
             ))}
+
+            {/* another project */}
             <div className="grid grid-cols-12 gap-4 mt-[8rem] mb-[8rem] md:mb-[15rem]">
-              <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1">
+              <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1 relative">
                 <h1 className="text-black font-bold text-[1rem] lg:text-[1.5rem]">
                   another project
                 </h1>
+                <div ref={projectImage} className="mt-5 opacity-0 hidden lg:block absolute top-[2rem] left-[-10rem] shadow-[5px_8px_10px_5px_rgba(0,0,0,0.3)]">
+                  <img ref={projectImageRef} src="./images-5.png" alt="" className="w-full h-full object-cover" />
+                </div>
               </div>
               <div className="col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1">
-                {data.map((project) => (
-                  <div
+                {anotherProject.map((project, index) => (
+                  <AnotherProject
                     key={project.id}
-                    className="border-b first:border-t border-black w-full py-2 pl-2"
-                  >
-                    <a target="_blank" href={project.siteLink}>
-                      <h1 className="text-black text-[1.5rem] lg:text-[2rem] font-bold ">
-                        {project.name}
-                      </h1>
-                    </a>
-                  </div>
+                    name={project.name}
+                    siteLink={project.siteLink}
+                    ballRef={ballRef}
+                    ballTextRef={ballTextRef}
+                    index={index + 4}
+                    imageRef={projectImage}
+                    image={project.image}
+                    projectImageRef={projectImageRef}
+                  />
                 ))}
               </div>
             </div>
+            {/* another project */}
+
           </div>
 
+          {/* about */}
           <div className="absolute bottom-0 left-0 right-0 w-full mb-[-1.6rem] md:mb-[-2.7rem] lg:mb-[-5rem]">
             <h1
               className="text-[6rem] md:text-[10rem] lg:text-[18rem] text-center font-bold text-black leading-none"
@@ -319,19 +350,23 @@ function App() {
           <div className="col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1">
             <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
               <h1 className="text-[1rem]">2019-2023</h1>
-              <h1 className="text-[1rem] font-bold  col-start-2 col-end-4">
+              <h1 className="text-[1rem] font-bold col-start-2">
                 Universitas Citra Bangsa
+              </h1>
+              <h1 className="text-[1rem] col-start-3">
+                Teknologi Informasi
               </h1>
             </div>
             <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
               <h1 className="text-[1rem]">2015-2017</h1>
-              <h1 className="text-[1rem] font-bold col-start-2 col-end-4">
+              <h1 className="text-[1rem] font-bold col-start-2">
                 SMA Negeri 1 Kupang
               </h1>
             </div>
           </div>
         </div>
 
+        {/* experience */}
         <div className="grid grid-cols-12 gap-4 mb-[4rem]">
           <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1">
             <h1 className="font-bold text-[1rem] lg:text-[1.5rem]">
@@ -369,7 +404,9 @@ function App() {
             </div>
           </div>
         </div>
+        {/* experience */}
 
+        {/* skills */}
         <div className="grid grid-cols-12 gap-4 pb-[8rem]">
           <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1">
             <h1 className="font-bold text-[1rem] lg:text-[1.5rem]">skills</h1>
@@ -400,6 +437,8 @@ function App() {
             </div>
           </div>
         </div>
+        {/* skills */}
+
       </div>
     </div>
   );

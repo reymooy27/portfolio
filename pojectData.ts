@@ -11,11 +11,11 @@ const data = [
   },
   {
     id: 2,
-    name: 'Satreskrim Atambua',
+    name: 'Satreskrim Malaka',
     image: './images-3.png',
     language: 'Typescript',
     techStack: 'NextJS, Tailwind, Prisma, MySQL',
-    githubLink: 'ef',
+    githubLink: '',
     siteLink: '',
     datetime: "Jun 2023"
   },
@@ -31,4 +31,34 @@ const data = [
   },
 ]
 
-export default data
+const anotherProject = [
+  {
+    id: 1,
+    name: 'Aplikasi Rental Mobil',
+    image: './images-2.png',
+    language: 'Javascript',
+    techStack: 'React Native, Expo, Firebase',
+    githubLink: '',
+    siteLink: '',
+    datetime: "Mar 2023"
+  },
+  {
+    id: 2,
+    name: 'Aplikasi Penjualan Daging Sapi (APDAS)',
+    image: './images-3.png',
+    language: 'Javascript',
+    techStack: 'React Native, Expo, Firebase',
+    githubLink: '',
+    siteLink: '',
+    datetime: "Jun 2023"
+  },
+]
+
+
+
+
+
+export {
+  data,
+  anotherProject
+} 
