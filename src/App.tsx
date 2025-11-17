@@ -1,14 +1,14 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
-import { TextPlugin } from "gsap/TextPlugin";
-import SlideWraper from "./components/SlideWraper";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { TextPlugin } from "gsap/TextPlugin";
+import { useLayoutEffect, useRef } from "react";
+import { anotherProject, data } from "../pojectData";
 import AnimatedLink from "./components/AnimatedLink";
-import { data, anotherProject } from "../pojectData";
-import Project from "./components/Project";
 import AnotherProject from "./components/AnotherProject";
+import Project from "./components/Project";
+import SlideWraper from "./components/SlideWraper";
 
 function App() {
   const ref = useRef(null);
@@ -18,7 +18,6 @@ function App() {
   const projectImage = useRef<HTMLImageElement>(null);
   const projectImageRef = useRef<HTMLImageElement>(null);
 
-
   gsap.registerPlugin(TextPlugin, ScrollTrigger);
 
   const tl = gsap.timeline();
@@ -27,7 +26,7 @@ function App() {
   const speed = 0.15;
 
   const mouseEnter = (siteLink: string | undefined) => {
-    console.log(siteLink)
+    console.log(siteLink);
     // if (siteLink) {
     gsap.to(ballRef.current, {
       width: 100,
@@ -38,27 +37,27 @@ function App() {
     gsap.to(ballTextRef.current, { opacity: 1 });
 
     if (ballTextRef.current != null && ballRef.current != null) {
-      ballTextRef.current.style.marginTop = `40px`
+      ballTextRef.current.style.marginTop = `40px`;
       if (siteLink) {
-        ballTextRef.current.innerText = "View Site"
+        ballTextRef.current.innerText = "View Site";
       } else {
-        ballTextRef.current.innerText = "No Site"
-        ballTextRef.current.style.color = "white"
+        ballTextRef.current.innerText = "No Site";
+        ballTextRef.current.style.color = "white";
         gsap.to(ballRef.current, { backgroundColor: "black" });
       }
     }
     // }
   };
   const mouseLeave = (siteLink: string | undefined) => {
-    console.log(siteLink)
+    console.log(siteLink);
     // if (siteLink) {
     ballRef.current?.classList.add("mix-blend-difference");
     gsap.to(ballRef.current, { width: 20, height: 20 });
     gsap.to(ballTextRef.current, { opacity: 0 });
     if (!siteLink && ballTextRef.current != null) {
-      ballTextRef.current.style.marginTop = `0px`
+      ballTextRef.current.style.marginTop = `0px`;
       gsap.to(ballRef.current, { backgroundColor: "white" });
-      ballTextRef.current.style.color = "black"
+      ballTextRef.current.style.color = "black";
     }
     // }
   };
@@ -89,23 +88,23 @@ function App() {
         .to(
           "#loader2",
           { scaleX: 0, duration: 1, transformOrigin: "right", ease: "sine" },
-          "-=0.1",
+          "-=0.1"
         )
         .from(
           ".slider",
           { scaleX: 0, duration: 1, transformOrigin: "left", ease: "sine" },
-          "+=0.4",
+          "+=0.4"
         )
         .to(
           ".slider",
           { scaleX: 0, duration: 0.3, transformOrigin: "right", ease: "sine" },
-          "+=0.1",
+          "+=0.1"
         )
         .fromTo(
           ".children",
           { opacity: 0, y: 10 },
           { opacity: 1, stagger: 0.1, y: 0, duration: 0.6, ease: "sine" },
-          "-=0.8",
+          "-=0.8"
         )
         .from(".horizontalLine", { width: "0%", duration: 1 }, "+=0.1");
 
@@ -172,16 +171,15 @@ function App() {
         <div
           ref={ballRef}
           id="ball"
-          className="bg-[#ECECEC] rounded-full w-[20px] 
-            h-[20px] fixed top-0 left-0 pointer-events-none 
+          className="bg-[#ECECEC] rounded-full w-[20px]
+            h-[20px] fixed top-0 left-0 pointer-events-none
             mix-blend-difference z-[3]"
         >
           <div className="pl-5">
             <h1
               className="text-black opacity-0 text-[12px]"
               ref={ballTextRef}
-            >
-            </h1>
+            ></h1>
           </div>
         </div>
         <header className="mix-blend-difference backdrop-blur-md shadow-md py-[20px] px-4 fixed top-0 left-0 w-full z-[2] ">
@@ -223,8 +221,8 @@ function App() {
             <div className="grid-span-2 col-start-1 col-end-3 flex flex-col gap-4 w-fit">
               <SlideWraper>
                 <AnimatedLink
-                  name="twitter"
-                  link="https://twitter.com/itzyaboirey"
+                  name="tiktok"
+                  link="https://www.tiktok.com/@reymooy"
                 />
               </SlideWraper>
               <SlideWraper>
@@ -253,16 +251,22 @@ function App() {
                   link="https://www.linkedin.com/in/rey-mooy-1a60a01a6/"
                 />
               </SlideWraper>
+              <SlideWraper>
+                <AnimatedLink
+                  name="twitter"
+                  link="https://twitter.com/itzyaboirey"
+                />
+              </SlideWraper>
             </div>
             <div className="grid-span-2 row-start-2 lg:row-start-1 col-start-1 lg:col-start-5 col-end-12 flex flex-col gap-4 w-fit">
               <SlideWraper>
-                <AnimatedLink
-                  name="gdrrey@gmail.com"
-                  link="mailto:gdrrey@gmail.com"
-                />
+                <AnimatedLink name="email" link="mailto:gdrrey@gmail.com" />
               </SlideWraper>
               <SlideWraper>
-                <AnimatedLink name="curriculum vitae" link="https://drive.google.com/file/d/1WNT4VcPt02ec0wBtl7k42s4IhHfcBFf7/view?usp=sharing" />
+                <AnimatedLink
+                  name="curriculum vitae"
+                  link="https://drive.google.com/file/d/1WNT4VcPt02ec0wBtl7k42s4IhHfcBFf7/view?usp=sharing"
+                />
               </SlideWraper>
             </div>
           </div>
@@ -304,8 +308,16 @@ function App() {
                 <h1 className="text-black font-bold text-[1rem] lg:text-[1.5rem]">
                   another project
                 </h1>
-                <div ref={projectImage} className="mt-5 opacity-0 hidden lg:block absolute top-[2rem] left-[-10rem] shadow-[5px_8px_10px_5px_rgba(0,0,0,0.3)]">
-                  <img ref={projectImageRef} src="./images-5.png" alt="" className="w-full h-full object-cover" />
+                <div
+                  ref={projectImage}
+                  className="mt-5 opacity-0 hidden lg:block absolute top-[2rem] left-[-10rem] shadow-[5px_8px_10px_5px_rgba(0,0,0,0.3)]"
+                >
+                  <img
+                    ref={projectImageRef}
+                    src="./images-5.png"
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
               <div className="col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1">
@@ -325,7 +337,6 @@ function App() {
               </div>
             </div>
             {/* another project */}
-
           </div>
 
           {/* about */}
@@ -353,9 +364,7 @@ function App() {
               <h1 className="text-[1rem] font-bold col-start-2">
                 Universitas Citra Bangsa
               </h1>
-              <h1 className="text-[1rem] col-start-3">
-                Teknologi Informasi
-              </h1>
+              <h1 className="text-[1rem] col-start-3">Teknologi Informasi</h1>
             </div>
             <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
               <h1 className="text-[1rem]">2015-2017</h1>
@@ -416,29 +425,56 @@ function App() {
               <h1 className="text-[1rem] font-bold col-start-1">HTML</h1>
               <h1 className="text-[1rem] font-bold col-start-2">CSS</h1>
               <h1 className="text-[1rem] font-bold col-start-3">Javascript</h1>
-              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-4">Typescript</h1>
-              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-5">Golang</h1>
-              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-1">Python</h1>
-              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-2">ReactJS</h1>
-              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-3">NextJS</h1>
-              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-4">React Native</h1>
-              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-5">Redux</h1>
-              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-1">NodeJS</h1>
-              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-2">ExpressJS</h1>
-              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-3">Django</h1>
-              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-4">MongoDB</h1>
-              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-5">MySQL</h1>
+              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-4">
+                Typescript
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-5">
+                Golang
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-1">
+                Python
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-2">
+                ReactJS
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-3">
+                NextJS
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-4">
+                React Native
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-5">
+                Redux
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-1">
+                NodeJS
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-2">
+                ExpressJS
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-3">
+                Django
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-4">
+                MongoDB
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-5">
+                MySQL
+              </h1>
               <h1 className="text-[1rem] font-bold col-start-1">Rest API</h1>
               <h1 className="text-[1rem] font-bold col-start-2">Git</h1>
               <h1 className="text-[1rem] font-bold col-start-3">Docker</h1>
-              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-4">Linux</h1>
-              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-5">PostgreSQL</h1>
+              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-4">
+                Linux
+              </h1>
+              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-5">
+                PostgreSQL
+              </h1>
               {/* <h1 className="text-[1rem] font-bold col-start-3">Redux</h1> */}
             </div>
           </div>
         </div>
         {/* skills */}
-
       </div>
     </div>
   );
