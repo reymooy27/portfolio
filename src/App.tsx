@@ -265,7 +265,7 @@ function App() {
               <SlideWraper>
                 <AnimatedLink
                   name="curriculum vitae"
-                  link="https://drive.google.com/file/d/1WNT4VcPt02ec0wBtl7k42s4IhHfcBFf7/view?usp=sharing"
+                  link="https://docs.google.com/document/d/11j6bfQ1HUJ34TVgC-pTbUFwsc2PZiNd3/edit?usp=drivesdk&ouid=114799728929387783781&rtpof=true&sd=true"
                 />
               </SlideWraper>
             </div>
