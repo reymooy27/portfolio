@@ -203,7 +203,7 @@ function App() {
             <div className="w-fit mt-10 lg:mt-0 col-span-12 lg:col-span-4 lg:col-start-1 lg:col-end-4 self-end">
               <SlideWraper>
                 <p>
-                  i am a fullstack developer,<br></br> based in indonesia
+                  i am a software engineer,<br></br> based in indonesia
                 </p>
               </SlideWraper>
             </div>
