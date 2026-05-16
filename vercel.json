@@ -1,5 +1,11 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "devCommand": "npm run dev"
+  "devCommand": "npm run dev",
+  "headers": [
+    {
+      "source": "/admin/config.yml",
+      "headers": [{ "key": "Content-Type", "value": "text/yaml" }]
+    }
+  ]
 }
