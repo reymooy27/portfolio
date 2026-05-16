@@ -1,10 +1,8 @@
-"use client";
-
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
 import { useLayoutEffect, useRef } from "react";
-import { anotherProject, data } from "../pojectData";
+import { anotherProject, data } from "./generated/projectData";
 import AnimatedLink from "./components/AnimatedLink";
 import AnotherProject from "./components/AnotherProject";
 import Project from "./components/Project";
