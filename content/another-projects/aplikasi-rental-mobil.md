@@ -1,9 +1,9 @@
 ---
 name: Aplikasi Rental Mobil
-image: /images-2.png
+image: /1724614629836.jpg
 language: Javascript
 techStack: React Native, Expo, Firebase
-githubLink:
-siteLink:
+githubLink: null
+siteLink: null
 datetime: Mar 2023
 ---
