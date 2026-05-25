@@ -16,6 +16,18 @@ function App() {
   const projectImage = useRef<HTMLDivElement>(null);
   const projectImageRef = useRef<HTMLImageElement>(null);
 
+  const onImageHover = (image: string) => {
+    if (!image || !projectImageRef.current || !projectImage.current) return;
+    projectImageRef.current.src = image;
+    gsap.to(projectImage.current, { opacity: 1, y: 20, duration: 0.2 });
+  };
+
+  const onImageLeave = () => {
+    if (projectImage.current) {
+      gsap.to(projectImage.current, { opacity: 0, y: 0, duration: 0.2 });
+    }
+  };
+
   gsap.registerPlugin(TextPlugin, ScrollTrigger);
 
   const tl = gsap.timeline();
@@ -320,12 +332,12 @@ function App() {
                     key={project.id}
                     name={project.name}
                     siteLink={project.siteLink}
+                    image={project.image}
                     ballRef={ballRef}
                     ballTextRef={ballTextRef}
                     index={index + 4}
-                    imageRef={projectImage}
-                    image={project.image}
-                    projectImageRef={projectImageRef}
+                    onHover={onImageHover}
+                    onLeave={onImageLeave}
                   />
                 ))}
               </div>
