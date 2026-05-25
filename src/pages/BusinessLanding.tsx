@@ -1,7 +1,7 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useEffect, useRef } from "react";
 import { data } from "../generated/projectData";
 import AnimatedLink from "../components/AnimatedLink";
 import Navbar from "../components/Navbar";
@@ -9,31 +9,31 @@ import Project from "../components/Project";
 
 const services = [
   {
+    num: "01",
     title: "Web Development",
     desc: "Website company profile, landing page, toko online, dan portal berita — responsive & modern.",
-    icon: "🌐",
   },
   {
+    num: "02",
     title: "Mobile Apps",
     desc: "Aplikasi Android & iOS menggunakan React Native untuk bisnis, layanan, dan komunitas.",
-    icon: "📱",
   },
   {
+    num: "03",
     title: "UI/UX Design",
     desc: "Desain antarmuka yang bersih, intuitif, dan fokus pada pengalaman pengguna terbaik.",
-    icon: "🎨",
   },
   {
+    num: "04",
     title: "CMS Development",
     desc: "Sistem manajemen konten custom atau berbasis WordPress agar Anda bisa update sendiri.",
-    icon: "⚙️",
   },
 ];
 
 const pricing = [
   {
     name: "Basic",
-    price: "Rp 2 - 5 Juta",
+    price: "Rp 2-5 Jt",
     features: [
       "1 - 3 halaman website",
       "Responsive mobile & desktop",
@@ -44,7 +44,7 @@ const pricing = [
   },
   {
     name: "Standard",
-    price: "Rp 5 - 10 Juta",
+    price: "Rp 5-10 Jt",
     features: [
       "5 - 7 halaman website",
       "CMS (bisa update sendiri)",
@@ -55,7 +55,7 @@ const pricing = [
   },
   {
     name: "Premium",
-    price: "Rp 10 - 25 Juta",
+    price: "Rp 10-25 Jt",
     features: [
       "Web app / e-commerce",
       "Admin dashboard",
@@ -98,11 +98,21 @@ function BusinessLanding() {
   const mouse = { x: pos.x, y: pos.y };
   const speed = 0.15;
 
+  // Manage body background class for the route
+  useEffect(() => {
+    document.body.style.backgroundColor = "#F6F5F2";
+    document.body.style.color = "#121212";
+    return () => {
+      document.body.style.backgroundColor = "";
+      document.body.style.color = "";
+    };
+  }, []);
+
   const mouseEnter = (siteLink: string | undefined) => {
     gsap.to(ballRef.current, {
       width: 100,
       height: 100,
-      backgroundColor: "white",
+      backgroundColor: "#121212",
     });
     ballRef.current?.classList.remove("mix-blend-difference");
     gsap.to(ballTextRef.current, { opacity: 1 });
@@ -111,10 +121,10 @@ function BusinessLanding() {
       ballTextRef.current.style.marginTop = "40px";
       if (siteLink) {
         ballTextRef.current.innerText = "View Site";
+        ballTextRef.current.style.color = "#F6F5F2";
       } else {
         ballTextRef.current.innerText = "No Site";
-        ballTextRef.current.style.color = "white";
-        gsap.to(ballRef.current, { backgroundColor: "black" });
+        ballTextRef.current.style.color = "#F6F5F2";
       }
     }
   };
@@ -125,8 +135,8 @@ function BusinessLanding() {
     gsap.to(ballTextRef.current, { opacity: 0 });
     if (!siteLink && ballTextRef.current != null) {
       ballTextRef.current.style.marginTop = "0px";
-      gsap.to(ballRef.current, { backgroundColor: "white" });
-      ballTextRef.current.style.color = "black";
+      gsap.to(ballRef.current, { backgroundColor: "#F6F5F2" });
+      ballTextRef.current.style.color = "#121212";
     }
   };
 
@@ -175,13 +185,13 @@ function BusinessLanding() {
       const scrollFade = (selector: string, extra = {}) => {
         gsap.fromTo(
           selector,
-          { opacity: 0, y: 50 },
+          { opacity: 0, y: 40 },
           {
             scrollTrigger: { trigger: selector, start: "top 85%" },
             opacity: 1,
             y: 0,
             duration: 0.8,
-            stagger: 0.15,
+            stagger: 0.1,
             ease: "power2.out",
             ...extra,
           }
@@ -194,9 +204,9 @@ function BusinessLanding() {
       scrollFade("#title-testimonials");
       scrollFade("#title-contact");
 
-      scrollFade(".service-card");
-      scrollFade(".pricing-card");
-      scrollFade(".testimonial-card");
+      scrollFade(".service-item");
+      scrollFade(".pricing-column");
+      scrollFade(".testimonial-item");
 
       const xSet = gsap.quickSetter("#ball", "x", "px");
       const ySet = gsap.quickSetter("#ball", "y", "px");
@@ -224,25 +234,26 @@ function BusinessLanding() {
   const featured = data.slice(0, 3);
 
   return (
-    <div ref={ref}>
+    <div ref={ref} className="bg-grain min-h-screen text-[#121212] selection:bg-neutral-900 selection:text-[#F6F5F2] relative overflow-hidden">
+      {/* Loaders */}
       <div
         id="loader1"
         className="fixed top-0 left-0 bg-black w-full h-full z-[5]"
       />
       <div
         id="loader2"
-        className="fixed bottom-0 left-0 bg-[#ECECEC] w-full h-full z-[4]"
+        className="fixed bottom-0 left-0 bg-[#F6F5F2] w-full h-full z-[4]"
       />
+      
+      {/* Custom Ball Cursor */}
       <div
         ref={ballRef}
         id="ball"
-        className="bg-[#ECECEC] rounded-full w-[20px]
-          h-[20px] fixed top-0 left-0 pointer-events-none
-          mix-blend-difference z-[3]"
+        className="bg-[#121212] rounded-full w-[20px] h-[20px] fixed top-0 left-0 pointer-events-none mix-blend-difference z-[3] hidden md:block"
       >
         <div className="pl-5">
           <h1
-            className="text-black opacity-0 text-[12px]"
+            className="text-[#F6F5F2] opacity-0 text-[12px] font-mono-spaced"
             ref={ballTextRef}
           />
         </div>
@@ -250,69 +261,104 @@ function BusinessLanding() {
 
       <Navbar />
 
-      {/* Hero */}
-      <section className="w-full min-h-screen flex items-center px-4 pt-[3.5rem]">
-        <div className="w-full max-w-[1200px] lg:mx-auto">
-          <h1 className="text-[3rem] md:text-[6rem] lg:text-[8rem] font-bold leading-[0.9]">
-            Bangun Digital
+      {/* Hero Section */}
+      <section className="w-full min-h-screen flex flex-col justify-between px-6 pt-[8rem] pb-[4rem] relative z-[2]">
+        {/* Hero Top Metadata */}
+        <div className="w-full max-w-[1200px] mx-auto flex justify-between items-center border-b border-neutral-300 pb-4">
+          <span className="font-mono-spaced text-[10px] text-neutral-500">WEBMIND KUPANG</span>
+          <span className="font-mono-spaced text-[10px] text-neutral-500">01 / HERO</span>
+          <span className="font-mono-spaced text-[10px] text-neutral-500">EST. 2023</span>
+        </div>
+
+        {/* Hero Main Copy */}
+        <div className="w-full max-w-[1200px] mx-auto flex-1 flex flex-col justify-center my-12">
+          <h1 className="font-editorial text-[3.8rem] md:text-[7.5rem] lg:text-[9.5rem] uppercase font-bold leading-[0.85] tracking-tight">
+            Bangun <span className="font-calligraphic font-medium italic lowercase normal-case">digital</span>
             <br />
-            Presence Anda
+            presence <span className="font-calligraphic font-medium italic lowercase normal-case">anda</span>
           </h1>
-          <p className="text-[1.2rem] md:text-[1.5rem] mt-6 max-w-[600px]">
-            Webminds Kupang — solusi website & aplikasi untuk bisnis Anda.
-            Dari landing page hingga e-commerce, kami bantu Anda go digital.
-          </p>
-          <div className="mt-8 flex gap-4">
+          
+          <div className="mt-12 grid grid-cols-12 gap-6 items-start">
+            <p className="col-span-12 md:col-span-7 lg:col-span-6 text-[1.1rem] md:text-[1.35rem] font-serif leading-relaxed text-neutral-700">
+              Webminds Kupang — partner teknologi terpercaya untuk bisnis Anda. 
+              Dari website portofolio interaktif hingga e-commerce berkinerja tinggi, 
+              kami menghadirkan solusi digital yang dirancang secara detail untuk audiens Anda.
+            </p>
+            <div className="col-span-12 md:col-span-5 lg:col-span-6 md:justify-self-end flex flex-col sm:flex-row gap-4 mt-6 md:mt-0 w-full sm:w-auto">
               <a
                 href="#contact"
-                className="inline-block bg-black text-[#ECECEC] px-8 py-3 rounded-full font-bold hover:opacity-80 transition"
+                className="font-mono-spaced text-[11px] text-center border border-neutral-900 px-8 py-4 bg-neutral-900 text-[#F6F5F2] hover:bg-transparent hover:text-neutral-900 transition-colors duration-300"
               >
-                Hubungi Kami
+                Mulai Kolaborasi
               </a>
               <a
                 href="#portfolio"
-                className="inline-block border border-black px-8 py-3 rounded-full font-bold hover:bg-black hover:text-[#ECECEC] transition"
+                className="font-mono-spaced text-[11px] text-center border border-neutral-900 px-8 py-4 text-neutral-900 hover:bg-neutral-900 hover:text-[#F6F5F2] transition-colors duration-300"
               >
-                Lihat Portfolio
+                Lihat Proyek
               </a>
             </div>
+          </div>
+        </div>
+
+        {/* Hero Bottom Info */}
+        <div className="w-full max-w-[1200px] mx-auto flex justify-between items-end border-t border-neutral-300 pt-6">
+          <div className="hidden lg:block">
+            <span className="font-mono-spaced text-[9px] text-neutral-400 block">LOCALIZATION</span>
+            <span className="text-[12px] font-serif text-neutral-700">Kupang, Nusa Tenggara Timur</span>
+          </div>
+          <div className="hidden lg:block text-right">
+            <span className="font-mono-spaced text-[9px] text-neutral-400 block">CURRENT CYCLE</span>
+            <span className="text-[12px] font-serif text-neutral-700">Q2 2026</span>
+          </div>
+          <div>
+            <span className="font-mono-spaced text-[9px] text-neutral-400 block">SCROLL TO DISCOVER</span>
+            <span className="text-[14px] font-serif text-neutral-700">↓</span>
+          </div>
         </div>
       </section>
 
-      {/* Services */}
-      <div className="w-full bg-[#ECECEC] text-black px-4 py-28">
-        <div className="w-full max-w-[1200px] lg:mx-auto">
-          <h1
-            id="title-services"
-            className="text-[4rem] md:text-[6rem] lg:text-[8rem] font-bold leading-none text-center"
-          >
-            services
-          </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
+      {/* Services Section */}
+      <section className="w-full border-t border-neutral-300 py-32 px-6 bg-transparent relative z-[2]">
+        <div className="w-full max-w-[1200px] mx-auto">
+          {/* Section Heading */}
+          <div className="grid grid-cols-12 gap-6 items-baseline mb-16">
+            <span className="col-span-12 lg:col-span-3 font-mono-spaced text-[11px] text-neutral-500">02 // SERVICES</span>
+            <h2 id="title-services" className="col-span-12 lg:col-span-9 font-editorial text-[3rem] md:text-[5rem] font-bold uppercase leading-none">
+              Layanan <span className="font-calligraphic font-medium italic lowercase normal-case">kami</span>
+            </h2>
+          </div>
+
+          {/* Architectural Table Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-neutral-300">
             {services.map((s) => (
               <div
                 key={s.title}
-                className="service-card bg-white rounded-2xl p-8 shadow-[5px_8px_10px_5px_rgba(0,0,0,0.05)] hover:shadow-[5px_8px_10px_5px_rgba(0,0,0,0.15)] transition"
+                className="service-item p-8 border-b border-neutral-300 md:border-r last:border-r-0 md:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:last:border-r-0 flex flex-col justify-between min-h-[300px] transition-all duration-500 hover:bg-neutral-100/50"
               >
-                <span className="text-[3rem]">{s.icon}</span>
-                <h3 className="text-[1.5rem] font-bold mt-4">{s.title}</h3>
-                <p className="text-[0.9rem] mt-2 leading-relaxed">{s.desc}</p>
+                <div>
+                  <span className="font-mono-spaced text-[11px] text-neutral-400 block mb-8">[{s.num}]</span>
+                  <h3 className="font-editorial text-[1.75rem] font-bold leading-tight mb-4">{s.title}</h3>
+                </div>
+                <p className="text-[0.95rem] font-serif text-neutral-600 leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Portfolio */}
-      <div className="w-full bg-white text-black px-4 py-28">
-        <div className="w-full max-w-[1200px] lg:mx-auto">
-          <h1
-            id="title-portfolio"
-            className="text-[4rem] md:text-[6rem] lg:text-[8rem] font-bold leading-none text-center"
-          >
-            portfolio
-          </h1>
-          <div className="flex flex-col mt-16" id="portfolio">
+      {/* Portfolio Section */}
+      <section id="portfolio" className="w-full border-t border-neutral-300 py-32 px-6 bg-transparent relative z-[2]">
+        <div className="w-full max-w-[1200px] mx-auto">
+          {/* Section Heading */}
+          <div className="grid grid-cols-12 gap-6 items-baseline mb-24">
+            <span className="col-span-12 lg:col-span-3 font-mono-spaced text-[11px] text-neutral-500">03 // SELECTED WORK</span>
+            <h2 id="title-portfolio" className="col-span-12 lg:col-span-9 font-editorial text-[3rem] md:text-[5rem] font-bold uppercase leading-none">
+              Portofolio <span className="font-calligraphic font-medium italic lowercase normal-case">pilihan</span>
+            </h2>
+          </div>
+
+          <div className="mt-12">
             {featured.map((project) => (
               <Project
                 mouseEnter={mouseEnter}
@@ -332,36 +378,49 @@ function BusinessLanding() {
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Pricing */}
-      <div className="w-full bg-[#ECECEC] text-black px-4 py-28">
-        <div className="w-full max-w-[1200px] lg:mx-auto">
-          <h1
-            id="title-pricing"
-            className="text-[4rem] md:text-[6rem] lg:text-[8rem] font-bold leading-none text-center"
-          >
-            pricing
-          </h1>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-            {pricing.map((pkg) => (
+      {/* Pricing Section */}
+      <section className="w-full border-t border-neutral-300 py-32 px-6 bg-transparent relative z-[2]">
+        <div className="w-full max-w-[1200px] mx-auto">
+          {/* Section Heading */}
+          <div className="grid grid-cols-12 gap-6 items-baseline mb-24">
+            <span className="col-span-12 lg:col-span-3 font-mono-spaced text-[11px] text-neutral-500">04 // INVESTMENT</span>
+            <h2 id="title-pricing" className="col-span-12 lg:col-span-9 font-editorial text-[3rem] md:text-[5rem] font-bold uppercase leading-none">
+              Pilihan <span className="font-calligraphic font-medium italic lowercase normal-case">paket</span>
+            </h2>
+          </div>
+
+          {/* Pricing Column Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 border-t border-neutral-300">
+            {pricing.map((pkg, idx) => (
               <div
                 key={pkg.name}
-                className="pricing-card bg-white rounded-2xl p-8 shadow-[5px_8px_10px_5px_rgba(0,0,0,0.05)] flex flex-col"
+                className="pricing-column p-8 md:p-12 border-b border-neutral-300 md:border-r last:border-r-0 flex flex-col justify-between min-h-[500px] transition-all duration-500 hover:bg-neutral-100/50"
               >
-                <h3 className="text-[1.5rem] font-bold">{pkg.name}</h3>
-                <p className="text-[2rem] font-bold mt-2">{pkg.price}</p>
-                <ul className="mt-6 space-y-3 flex-1">
-                  {pkg.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-[0.9rem]">
-                      <span className="text-green-600 font-bold mt-[1px]">✓</span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
+                <div>
+                  <div className="flex justify-between items-baseline mb-8">
+                    <span className="font-mono-spaced text-[11px] text-neutral-400">PLAN [0{idx+1}]</span>
+                    <h3 className="font-mono-spaced text-[12px] font-bold text-neutral-900">{pkg.name}</h3>
+                  </div>
+                  
+                  <p className="font-editorial text-[2.2rem] md:text-[2.8rem] font-bold leading-none my-6 text-neutral-900">{pkg.price}</p>
+                  
+                  <div className="border-t border-neutral-200 my-6 pt-6">
+                    <ul className="space-y-4">
+                      {pkg.features.map((f) => (
+                        <li key={f} className="flex items-start gap-3 text-[0.95rem] font-serif text-neutral-600">
+                          <span className="text-neutral-900 font-bold mt-[-2px]">•</span>
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
                 <a
                   href="#contact"
-                  className="block text-center bg-black text-[#ECECEC] px-6 py-3 rounded-full font-bold mt-8 hover:opacity-80 transition"
+                  className="block text-center font-mono-spaced text-[11px] border border-neutral-900 px-6 py-4 mt-8 hover:bg-neutral-900 hover:text-[#F6F5F2] transition-colors duration-300"
                 >
                   Pilih Paket
                 </a>
@@ -369,121 +428,158 @@ function BusinessLanding() {
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Testimonials */}
-      <div className="w-full bg-white text-black px-4 py-28">
-        <div className="w-full max-w-[1200px] lg:mx-auto">
-          <h1
-            id="title-testimonials"
-            className="text-[4rem] md:text-[6rem] lg:text-[8rem] font-bold leading-none text-center"
-          >
-            testimonials
-          </h1>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-            {testimonials.map((t) => (
+      {/* Testimonials Section */}
+      <section className="w-full border-t border-neutral-300 py-32 px-6 bg-transparent relative z-[2]">
+        <div className="w-full max-w-[1200px] mx-auto">
+          {/* Section Heading */}
+          <div className="grid grid-cols-12 gap-6 items-baseline mb-24">
+            <span className="col-span-12 lg:col-span-3 font-mono-spaced text-[11px] text-neutral-500">05 // FEEDBACK</span>
+            <h2 id="title-testimonials" className="col-span-12 lg:col-span-9 font-editorial text-[3rem] md:text-[5rem] font-bold uppercase leading-none">
+              Suara <span className="font-calligraphic font-medium italic lowercase normal-case">klien</span>
+            </h2>
+          </div>
+
+          {/* Clean Quote Blocks List */}
+          <div className="space-y-16 mt-16 max-w-[900px] mx-auto">
+            {testimonials.map((t, idx) => (
               <div
                 key={t.name}
-                className="testimonial-card border border-black/20 rounded-2xl p-8"
+                className="testimonial-item border-b border-neutral-300 pb-12 last:border-0"
               >
-                <p className="text-[0.95rem] leading-relaxed italic">"{t.text}"</p>
-                <div className="mt-6">
-                  <p className="font-bold">{t.name}</p>
-                  <p className="text-[0.85rem] opacity-60">{t.role}</p>
+                <span className="font-calligraphic text-[4rem] text-neutral-300 block h-6 leading-none">“</span>
+                <p className="text-[1.35rem] md:text-[1.65rem] font-serif leading-relaxed text-neutral-800 italic pr-8">
+                  {t.text}
+                </p>
+                <div className="mt-6 flex items-center justify-between">
+                  <div>
+                    <p className="font-mono-spaced text-[11px] font-bold text-neutral-900">{t.name}</p>
+                    <p className="text-[12px] font-serif text-neutral-500">{t.role}</p>
+                  </div>
+                  <span className="font-mono-spaced text-[10px] text-neutral-300">REF / 0{idx+1}</span>
                 </div>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Contact */}
-      <div
+      {/* Contact Section */}
+      <section
         id="contact"
-        className="w-full bg-black text-[#ECECEC] px-4 py-28"
+        className="w-full border-t border-neutral-300 py-32 px-6 bg-[#121212] text-[#F6F5F2] relative z-[2]"
       >
-        <div className="w-full max-w-[1200px] lg:mx-auto">
-          <h1
-            id="title-contact"
-            className="text-[4rem] md:text-[6rem] lg:text-[8rem] font-bold leading-none text-center"
-          >
-            contact
-          </h1>
-          <p className="text-center text-[1.2rem] mt-4 max-w-[500px] mx-auto">
-            Mulai proyek Anda bersama Webminds Kupang. Diskusikan kebutuhan Anda
-            — gratis!
-          </p>
+        <div className="w-full max-w-[1200px] mx-auto">
+          {/* Section Heading */}
+          <div className="grid grid-cols-12 gap-6 items-baseline mb-20">
+            <span className="col-span-12 lg:col-span-3 font-mono-spaced text-[11px] text-neutral-400">06 // INQUIRIES</span>
+            <h2 id="title-contact" className="col-span-12 lg:col-span-9 font-editorial text-[3rem] md:text-[5rem] font-bold uppercase leading-none">
+              Mulai <span className="font-calligraphic font-medium italic text-neutral-400 lowercase normal-case">kolaborasi</span>
+            </h2>
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16">
-            <div className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mt-12">
+            {/* Info Column */}
+            <div className="lg:col-span-5 flex flex-col justify-between min-h-[300px]">
               <div>
-                <p className="font-bold text-[1.2rem]">WhatsApp</p>
-                <a
-                  href="https://wa.me/+6281338047308"
-                  target="_blank"
-                  className="text-[0.95rem] opacity-80 hover:opacity-100 transition underline"
-                >
-                  +62 813-3804-7308
-                </a>
+                <p className="text-[1.2rem] md:text-[1.4rem] font-serif leading-relaxed text-neutral-300 max-w-[400px]">
+                  Punya ide proyek atau pertanyaan? Mari diskusikan kebutuhan digital Anda secara santai dan gratis.
+                </p>
               </div>
-              <div>
-                <p className="font-bold text-[1.2rem]">Email</p>
-                <a
-                  href="mailto:gdrrey@gmail.com"
-                  className="text-[0.95rem] opacity-80 hover:opacity-100 transition underline"
-                >
-                  gdrrey@gmail.com
-                </a>
-              </div>
-              <div className="flex gap-3">
-                <AnimatedLink
-                  name="instagram"
-                  link="https://www.instagram.com/_itzyaboirey/"
-                  underlineColor="#ECECEC"
-                />
-                <AnimatedLink
-                  name="github"
-                  link="https://github.com/reymooy27"
-                  underlineColor="#ECECEC"
-                />
+
+              <div className="space-y-8 mt-12 lg:mt-0">
+                <div>
+                  <span className="font-mono-spaced text-[9px] text-neutral-500 block mb-1">WHATSAPP</span>
+                  <a
+                    href="https://wa.me/+6281338047308"
+                    target="_blank"
+                    className="text-[1.1rem] font-serif text-[#F6F5F2] hover:opacity-75 transition-opacity underline decoration-[0.5px] underline-offset-4"
+                  >
+                    +62 813-3804-7308
+                  </a>
+                </div>
+                <div>
+                  <span className="font-mono-spaced text-[9px] text-neutral-500 block mb-1">EMAIL</span>
+                  <a
+                    href="mailto:gdrrey@gmail.com"
+                    className="text-[1.1rem] font-serif text-[#F6F5F2] hover:opacity-75 transition-opacity underline decoration-[0.5px] underline-offset-4"
+                  >
+                    gdrrey@gmail.com
+                  </a>
+                </div>
+                <div className="flex gap-6 pt-2">
+                  <AnimatedLink
+                    name="instagram"
+                    link="https://www.instagram.com/_itzyaboirey/"
+                    underlineColor="#F6F5F2"
+                  />
+                  <AnimatedLink
+                    name="github"
+                    link="https://github.com/reymooy27"
+                    underlineColor="#F6F5F2"
+                  />
+                </div>
               </div>
             </div>
 
+            {/* Form Column */}
             <form
               action="#"
-              className="space-y-4"
+              className="lg:col-span-7 space-y-8"
+              onSubmit={(e) => e.preventDefault()}
             >
-              <input
-                type="text"
-                placeholder="Nama"
-                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-[#ECECEC] placeholder:text-[#ECECEC]/50 focus:outline-none focus:border-white/50"
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-[#ECECEC] placeholder:text-[#ECECEC]/50 focus:outline-none focus:border-white/50"
-              />
-              <textarea
-                placeholder="Ceritakan kebutuhan Anda..."
-                rows={4}
-                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-[#ECECEC] placeholder:text-[#ECECEC]/50 focus:outline-none focus:border-white/50 resize-none"
-              />
-              <button
-                type="submit"
-                className="bg-[#ECECEC] text-black px-8 py-3 rounded-full font-bold hover:opacity-80 transition"
-              >
-                Kirim Pesan
-              </button>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="flex flex-col">
+                  <label className="font-mono-spaced text-[9px] text-neutral-400 mb-2">NAMA LENGKAP</label>
+                  <input
+                    type="text"
+                    placeholder="Masukkan nama Anda..."
+                    className="w-full py-4 bg-transparent border-b border-neutral-700 text-[#F6F5F2] placeholder:text-neutral-600 font-serif text-[1.1rem] focus:outline-none focus:border-neutral-200 transition-colors"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="font-mono-spaced text-[9px] text-neutral-400 mb-2">ALAMAT EMAIL</label>
+                  <input
+                    type="email"
+                    placeholder="Masukkan email Anda..."
+                    className="w-full py-4 bg-transparent border-b border-neutral-700 text-[#F6F5F2] placeholder:text-neutral-600 font-serif text-[1.1rem] focus:outline-none focus:border-neutral-200 transition-colors"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <label className="font-mono-spaced text-[9px] text-neutral-400 mb-2">PROYEK YANG INGIN DIBICARAKAN</label>
+                <textarea
+                  placeholder="Ceritakan tentang kebutuhan bisnis Anda..."
+                  rows={4}
+                  className="w-full py-4 bg-transparent border-b border-neutral-700 text-[#F6F5F2] placeholder:text-neutral-600 font-serif text-[1.1rem] focus:outline-none focus:border-neutral-200 transition-colors resize-none"
+                />
+              </div>
+              
+              <div className="pt-4 flex justify-end">
+                <button
+                  type="submit"
+                  className="font-mono-spaced text-[11px] border border-neutral-400 px-10 py-5 bg-[#F6F5F2] text-[#121212] hover:bg-transparent hover:text-[#F6F5F2] hover:border-[#F6F5F2] transition-all duration-300"
+                >
+                  Kirim Pesan
+                </button>
+              </div>
             </form>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Footer */}
-      <footer className="w-full px-4 py-8">
-        <div className="w-full max-w-[1200px] lg:mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-[0.85rem] opacity-60">
-          <p>© {new Date().getFullYear()} Webminds Kupang</p>
-          <p>Kupang, Nusa Tenggara Timur</p>
+      {/* Footer Section */}
+      <footer className="w-full px-6 py-12 bg-[#121212] text-[#F6F5F2] border-t border-neutral-800 relative z-[2]">
+        <div className="w-full max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex flex-col items-center md:items-start">
+            <span className="font-mono-spaced text-[10px] text-neutral-500 mb-1">COPYRIGHT</span>
+            <p className="text-[13px] font-serif text-neutral-400">© {new Date().getFullYear()} Webminds Kupang. All rights reserved.</p>
+          </div>
+          <div className="flex flex-col items-center md:items-end">
+            <span className="font-mono-spaced text-[10px] text-neutral-500 mb-1">ORIGIN</span>
+            <p className="text-[13px] font-serif text-neutral-400">Kupang, Nusa Tenggara Timur</p>
+          </div>
         </div>
       </footer>
     </div>
