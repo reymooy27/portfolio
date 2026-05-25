@@ -5,67 +5,68 @@ import matter from "gray-matter";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
-const contentDir = join(root, "content");
+const contentDir = join(root, "content", "projects");
 const outputDir = join(root, "src", "generated");
 const outputFile = join(outputDir, "projectData.ts");
 
-const COLLECTIONS = {
-  projects: { dir: "projects", exportName: "data" },
-  "another-projects": { dir: "another-projects", exportName: "anotherProject" },
-};
+function formatDate(dateStr) {
+  const d = new Date(dateStr + "T00:00:00Z");
+  return d.toLocaleDateString("en-US", { month: "long", year: "numeric", timeZone: "UTC" });
+}
 
-async function readCollection(name) {
-  const { dir } = COLLECTIONS[name];
-  const folder = join(contentDir, dir);
+async function generate() {
   let files;
   try {
-    files = await readdir(folder);
+    files = await readdir(contentDir);
   } catch {
-    return [];
+    files = [];
   }
 
   const items = [];
   for (const file of files) {
     if (!file.endsWith(".md")) continue;
-    const raw = await readFile(join(folder, file), "utf-8");
+    const raw = await readFile(join(contentDir, file), "utf-8");
     const { data } = matter(raw);
-    items.push(data);
+    items.push({
+      id: 0,
+      name: data.name ?? "",
+      image: data.image ?? "",
+      language: data.language ?? "",
+      techStack: data.techStack ?? "",
+      githubLink: data.githubLink ?? "",
+      siteLink: data.siteLink ?? "",
+      date: data.date ?? "",
+    });
   }
-  return items;
-}
 
-async function generate() {
-  const projects = await readCollection("projects");
-  const anotherProjects = await readCollection("another-projects");
+  items.sort((a, b) => {
+    const da = String(a.date ?? "");
+    const db = String(b.date ?? "");
+    if (!da) return 1;
+    if (!db) return -1;
+    return db.localeCompare(da);
+  });
 
-  const withIds = (items) =>
-    items.map((item, i) => ({
-      id: i + 1,
-      name: item.name ?? "",
-      image: item.image ?? "",
-      language: item.language ?? "",
-      techStack: item.techStack ?? "",
-      githubLink: item.githubLink ?? "",
-      siteLink: item.siteLink ?? "",
-      datetime: item.datetime ?? "",
-    }));
-
-  const data = withIds(projects);
-  const anotherProject = withIds(anotherProjects);
+  const data = items.map((item, i) => ({
+    id: i + 1,
+    name: item.name,
+    image: item.image,
+    language: item.language,
+    techStack: item.techStack,
+    githubLink: item.githubLink,
+    siteLink: item.siteLink,
+    date: item.date,
+    datetime: formatDate(item.date),
+  }));
 
   const code = `const data = ${JSON.stringify(data, null, 2)};
 
-const anotherProject = ${JSON.stringify(anotherProject, null, 2)};
-
-export {
-  data,
-  anotherProject
-};
+export { data };
 `;
 
   await mkdir(outputDir, { recursive: true });
   await writeFile(outputFile, code);
-  console.log(`Generated ${outputFile} (${data.length} projects, ${anotherProject.length} another projects)`);
+  console.log(`Generated ${outputFile} (${data.length} projects)`);
 }
 
 generate().catch((err) => {

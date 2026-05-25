@@ -2,7 +2,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
 import { useLayoutEffect, useRef } from "react";
-import { anotherProject, data } from "./generated/projectData";
+import { data } from "./generated/projectData";
 import AnimatedLink from "./components/AnimatedLink";
 import AnotherProject from "./components/AnotherProject";
 import Project from "./components/Project";
@@ -13,7 +13,7 @@ function App() {
   const ballRef = useRef<HTMLDivElement>(null);
   const ballTextRef = useRef<HTMLHeadingElement>(null);
   const underline = useRef<HTMLDivElement>(null);
-  const projectImage = useRef<HTMLImageElement>(null);
+  const projectImage = useRef<HTMLDivElement>(null);
   const projectImageRef = useRef<HTMLImageElement>(null);
 
   gsap.registerPlugin(TextPlugin, ScrollTrigger);
@@ -25,7 +25,6 @@ function App() {
 
   const mouseEnter = (siteLink: string | undefined) => {
     console.log(siteLink);
-    // if (siteLink) {
     gsap.to(ballRef.current, {
       width: 100,
       height: 100,
@@ -44,11 +43,9 @@ function App() {
         gsap.to(ballRef.current, { backgroundColor: "black" });
       }
     }
-    // }
   };
   const mouseLeave = (siteLink: string | undefined) => {
     console.log(siteLink);
-    // if (siteLink) {
     ballRef.current?.classList.add("mix-blend-difference");
     gsap.to(ballRef.current, { width: 20, height: 20 });
     gsap.to(ballTextRef.current, { opacity: 0 });
@@ -57,19 +54,15 @@ function App() {
       gsap.to(ballRef.current, { backgroundColor: "white" });
       ballTextRef.current.style.color = "black";
     }
-    // }
   };
 
   function animatedLinkMouseEnter() {
     gsap.set(underline.current, { scaleX: 1, width: "100%" });
-    // gsap.to(ballRef.current, {width: 60, height: 60, border: 2, borderColor: 'white', backgroundColor: 'transparent'})
     gsap.from(underline.current, { scaleX: "0", transformOrigin: "left" });
   }
 
   function animatedLinkMouseLeave() {
-    // gsap.to(ballRef.current, {width: 20, height: 20, backgroundColor: 'white',})
     gsap.to(underline.current, { scaleX: "0", transformOrigin: "right" });
-    // gsap.set(underline.current, {scaleX: 1})
   }
 
   useLayoutEffect(() => {
@@ -86,30 +79,29 @@ function App() {
         .to(
           "#loader2",
           { scaleX: 0, duration: 1, transformOrigin: "right", ease: "sine" },
-          "-=0.1"
+          "-=0.1",
         )
         .from(
           ".slider",
           { scaleX: 0, duration: 1, transformOrigin: "left", ease: "sine" },
-          "+=0.4"
+          "+=0.4",
         )
         .to(
           ".slider",
           { scaleX: 0, duration: 0.3, transformOrigin: "right", ease: "sine" },
-          "+=0.1"
+          "+=0.1",
         )
         .fromTo(
           ".children",
           { opacity: 0, y: 10 },
           { opacity: 1, stagger: 0.1, y: 0, duration: 0.6, ease: "sine" },
-          "-=0.8"
+          "-=0.8",
         )
         .from(".horizontalLine", { width: "0%", duration: 1 }, "+=0.1");
 
       gsap.from("#title-project", {
         scrollTrigger: {
           trigger: "#title-project",
-          // markers: true,
           start: "top bottom",
           toggleActions: "restart",
           once: false,
@@ -121,7 +113,6 @@ function App() {
       gsap.from("#title-about", {
         scrollTrigger: {
           trigger: "#title-about",
-          // markers: true,
           start: "top bottom",
           toggleActions: "restart",
           once: false,
@@ -139,7 +130,6 @@ function App() {
       });
 
       gsap.ticker.add(() => {
-        // adjust speed for higher refresh monitors
         const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio());
 
         pos.x += (mouse.x - pos.x) * dt;
@@ -154,6 +144,9 @@ function App() {
       window.removeEventListener("mousemove", () => null);
     };
   }, []);
+
+  const featured = data.slice(0, 3);
+  const rest = data.slice(3);
 
   return (
     <div ref={ref}>
@@ -282,25 +275,28 @@ function App() {
         </div>
         <div className="projectWrapper relative bg-[#ECECEC] rounded-t-[50px] lg:rounded-t-[100px] rounded-b-[50px] w-full h-full pt-28 px-4 pb-28">
           <div className="w-full max-w-[1200px] lg:mx-auto flex flex-col">
-            {data.map((project) => (
-              <Project
-                mouseEnter={mouseEnter}
-                mouseLeave={mouseLeave}
-                animatedLinkMouseEnter={animatedLinkMouseEnter}
-                animatedLinkMouseLeave={animatedLinkMouseLeave}
-                key={project.id}
-                name={project.name}
-                image={project.image}
-                language={project.language}
-                techStack={project.techStack}
-                githubLink={project.githubLink}
-                siteLink={project.siteLink}
-                datetime={project.datetime}
-                ref={underline}
-              />
-            ))}
+            {/* featured projects */}
+            <div className="flex flex-col">
+              {featured.map((project) => (
+                <Project
+                  mouseEnter={mouseEnter}
+                  mouseLeave={mouseLeave}
+                  animatedLinkMouseEnter={animatedLinkMouseEnter}
+                  animatedLinkMouseLeave={animatedLinkMouseLeave}
+                  key={project.id}
+                  name={project.name}
+                  image={project.image}
+                  language={project.language}
+                  techStack={project.techStack}
+                  githubLink={project.githubLink}
+                  siteLink={project.siteLink}
+                  datetime={project.datetime}
+                  ref={underline}
+                />
+              ))}
+            </div>
 
-            {/* another project */}
+            {/* other projects */}
             <div className="grid grid-cols-12 gap-4 mt-[8rem] mb-[8rem] md:mb-[15rem]">
               <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1 relative">
                 <h1 className="text-black font-bold text-[1rem] lg:text-[1.5rem]">
@@ -319,7 +315,7 @@ function App() {
                 </div>
               </div>
               <div className="col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1">
-                {anotherProject.map((project, index) => (
+                {rest.map((project, index) => (
                   <AnotherProject
                     key={project.id}
                     name={project.name}
@@ -334,7 +330,6 @@ function App() {
                 ))}
               </div>
             </div>
-            {/* another project */}
           </div>
 
           {/* about */}
@@ -468,7 +463,6 @@ function App() {
               <h1 className="text-[1rem] font-bold col-start-2 md:col-start-5">
                 PostgreSQL
               </h1>
-              {/* <h1 className="text-[1rem] font-bold col-start-3">Redux</h1> */}
             </div>
           </div>
         </div>

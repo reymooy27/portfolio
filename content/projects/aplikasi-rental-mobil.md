@@ -5,5 +5,5 @@ language: Javascript
 techStack: React Native, Expo, Firebase
 githubLink: null
 siteLink: null
-datetime: Mar 2023
+date: "2023-03-01"
 ---

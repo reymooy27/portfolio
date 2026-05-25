@@ -5,5 +5,5 @@ language: Typescript
 techStack: NextJS, Tailwind, Prisma, MySQL
 githubLink:
 siteLink:
-datetime: Jun 2023
+date: "2023-06-01"
 ---

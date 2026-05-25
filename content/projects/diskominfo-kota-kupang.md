@@ -5,5 +5,5 @@ language: Typescript
 techStack: NextJS, Tailwind, Prisma, MySQL
 githubLink: wefew
 siteLink: https://buku-tamu-inky.vercel.app/
-datetime: Mar 2023
+date: "2023-03-01"
 ---
