@@ -316,7 +316,7 @@ function App() {
                 </h1>
                 <div
                   ref={projectImage}
-                  className="mt-5 opacity-0 hidden lg:block absolute top-[2rem] left-[-10rem] shadow-[5px_8px_10px_5px_rgba(0,0,0,0.3)]"
+                  className="mt-5 opacity-0 absolute lg:top-[2rem] lg:left-[-10rem] top-0 left-0 shadow-[5px_8px_10px_5px_rgba(0,0,0,0.3)]"
                 >
                   <img
                     ref={projectImageRef}
