@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from "react";
 import { data } from "./generated/projectData";
 import AnimatedLink from "./components/AnimatedLink";
 import AnotherProject from "./components/AnotherProject";
+import Navbar from "./components/Navbar";
 import Project from "./components/Project";
 import SlideWraper from "./components/SlideWraper";
 
@@ -185,15 +186,7 @@ function App() {
             ></h1>
           </div>
         </div>
-        <header className="mix-blend-difference backdrop-blur-md shadow-md py-[20px] px-4 fixed top-0 left-0 w-full z-[2] ">
-          <div className="flex justify-end">
-            <div className="flex gap-3">
-              <SlideWraper>
-                <span>Rey Mooy</span>
-              </SlideWraper>
-            </div>
-          </div>
-        </header>
+        <Navbar />
         <div className="w-full h-screen pt-[3.5rem] max-w-[1200px] lg:mx-auto lg:my-0">
           <section className="grid grid-cols-12 gap-4">
             <div className="col-span-full col-start-1 w-fit">

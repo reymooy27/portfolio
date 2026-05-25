@@ -7,5 +7,9 @@
       "source": "/admin/config.yml",
       "headers": [{ "key": "Content-Type", "value": "text/yaml" }]
     }
+  ],
+  "rewrites": [
+    { "source": "/webminds", "destination": "/index.html" },
+    { "source": "/webminds/:path*", "destination": "/index.html" }
   ]
 }
