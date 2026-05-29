@@ -186,7 +186,6 @@ function BusinessLanding() {
       scale: 1,
       opacity: 1,
     });
-    ballRef.current?.classList.remove("mix-blend-difference");
     gsap.to(ballTextRef.current, { opacity: 1 });
 
     if (ballTextRef.current != null && ballRef.current != null) {
@@ -202,12 +201,11 @@ function BusinessLanding() {
   };
 
   const mouseLeave = (siteLink: string | undefined) => {
-    ballRef.current?.classList.add("mix-blend-difference");
     gsap.to(ballRef.current, {
       width: 20,
       height: 20,
       scale: 1,
-      border: "none",
+      border: "1px solid #121212",
     });
     gsap.to(ballTextRef.current, { opacity: 0 });
     if (!siteLink && ballTextRef.current != null) {
@@ -315,7 +313,6 @@ function BusinessLanding() {
             border: "1px solid #121212",
             duration: 0.3,
           });
-          ballRef.current?.classList.remove("mix-blend-difference");
         } else if (cursorType === "input") {
           gsap.to(ballRef.current, { scale: 0.2, opacity: 0, duration: 0.3 });
         } else if (cursorType === "text") {
@@ -324,13 +321,12 @@ function BusinessLanding() {
           gsap.to(ballRef.current, {
             scale: 1,
             opacity: 1,
-            backgroundColor: "#121212",
-            border: "none",
+            backgroundColor: "#F6F5F2",
+            border: "1px solid #121212",
             duration: 0.3,
             width: 20,
             height: 20,
           });
-          ballRef.current?.classList.add("mix-blend-difference");
         }
       };
 
@@ -363,7 +359,7 @@ function BusinessLanding() {
       <div
         ref={ballRef}
         id="ball"
-        className="bg-[#121212] rounded-full w-[20px] h-[20px] fixed top-0 left-0 pointer-events-none mix-blend-difference z-[3] hidden md:flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2"
+        className="bg-[#F6F5F2] rounded-full w-[20px] h-[20px] fixed top-0 left-0 pointer-events-none z-[3] hidden md:flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2 border border-[#121212]"
       >
         <div className="pl-5">
           <h1
