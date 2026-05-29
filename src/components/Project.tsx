@@ -74,7 +74,7 @@ const Project = forwardRef<HTMLDivElement, PropsType>((props) => {
                 onMouseLeave={() => props.mouseLeave(props?.siteLink)}
                 className={`shadow-[5px_8px_10px_5px_rgba(0,0,0,0.3)] object-cover filter ${props.grayscale ? "grayscale" : ""} contrast-100 hover:filter-none w-full h-full transition-all ease-in-out duration-1000`}
                 src={props.image}
-                alt=""
+                alt={props.name}
               />
             </a>
           ) : (

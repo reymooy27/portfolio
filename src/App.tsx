@@ -8,6 +8,7 @@ import AnotherProject from "./components/AnotherProject";
 import Navbar from "./components/Navbar";
 import Project from "./components/Project";
 import SlideWraper from "./components/SlideWraper";
+import SEO from "./components/SEO";
 
 function App() {
   const ref = useRef(null);
@@ -162,7 +163,9 @@ function App() {
   const rest = data.slice(3);
 
   return (
-    <div ref={ref}>
+    <>
+      <SEO title="Portfolio — Rey" ogUrl="https://webminds.vercel.app/reymooy" />
+      <div ref={ref}>
       <div className="w-full h-full px-4">
         <div
           id="loader1"
@@ -180,10 +183,10 @@ function App() {
             mix-blend-difference z-[3]"
         >
           <div className="pl-5">
-            <h1
+            <span
               className="text-black opacity-0 text-[12px]"
               ref={ballTextRef}
-            ></h1>
+            ></span>
           </div>
         </div>
         <Navbar />
@@ -206,7 +209,7 @@ function App() {
             <div className="col-span-8 col-start-1 lg:col-start-4 col-end-13 w-fit row-start-2">
               <SlideWraper>
                 <h1 className="title text-[6rem] md:text-[10rem] lg:text-[18rem] font-bold leading-[0.7] lg:leading-[0.3]">
-                  mooy
+                  rey
                 </h1>
               </SlideWraper>
             </div>
@@ -271,12 +274,12 @@ function App() {
 
       <div className="w-full h-full mt-10">
         <div className="px-4">
-          <h1
+          <h2
             className="text-[6rem] md:text-[10rem] lg:text-[18rem] text-center font-bold leading-none"
             id="title-project"
           >
             projects
-          </h1>
+          </h2>
         </div>
         <div className="projectWrapper relative bg-[#ECECEC] rounded-t-[50px] lg:rounded-t-[100px] rounded-b-[50px] w-full h-full pt-28 px-4 pb-28">
           <div className="w-full max-w-[1200px] lg:mx-auto flex flex-col">
@@ -304,9 +307,9 @@ function App() {
             {/* other projects */}
             <div className="grid grid-cols-12 gap-4 mt-[8rem] mb-[8rem] md:mb-[15rem]">
               <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1 relative">
-                <h1 className="text-black font-bold text-[1rem] lg:text-[1.5rem]">
+                <h3 className="text-black font-bold text-[1rem] lg:text-[1.5rem]">
                   another project
-                </h1>
+                </h3>
                 <div
                   ref={projectImage}
                   className="mt-5 opacity-0 absolute lg:top-[2rem] lg:left-[-10rem] top-0 left-0 shadow-[5px_8px_10px_5px_rgba(0,0,0,0.3)]"
@@ -314,7 +317,7 @@ function App() {
                   <img
                     ref={projectImageRef}
                     src="./images-5.png"
-                    alt=""
+                    alt="Project preview screenshot"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -339,12 +342,12 @@ function App() {
 
           {/* about */}
           <div className="absolute bottom-0 left-0 right-0 w-full mb-[-1.6rem] md:mb-[-2.7rem] lg:mb-[-5rem]">
-            <h1
+            <h2
               className="text-[6rem] md:text-[10rem] lg:text-[18rem] text-center font-bold text-black leading-none"
               id="title-about"
             >
               about
-            </h1>
+            </h2>
           </div>
         </div>
       </div>
@@ -352,23 +355,23 @@ function App() {
       <div className="mt-[8rem] px-4 lg:mx-auto w-full max-w-[1200px]">
         <div className="grid grid-cols-12 gap-4 mb-[4rem]">
           <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1">
-            <h1 className="font-bold text-[1rem] lg:text-[1.5rem]">
+            <h2 className="font-bold text-[1rem] lg:text-[1.5rem]">
               education
-            </h1>
+            </h2>
           </div>
           <div className="col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1">
             <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
-              <h1 className="text-[1rem]">2019-2023</h1>
-              <h1 className="text-[1rem] font-bold col-start-2">
+              <span className="text-[1rem]">2019-2023</span>
+              <span className="text-[1rem] font-bold col-start-2">
                 Universitas Citra Bangsa
-              </h1>
-              <h1 className="text-[1rem] col-start-3">Teknologi Informasi</h1>
+              </span>
+              <span className="text-[1rem] col-start-3">Teknologi Informasi</span>
             </div>
             <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
-              <h1 className="text-[1rem]">2015-2017</h1>
-              <h1 className="text-[1rem] font-bold col-start-2">
+              <span className="text-[1rem]">2015-2017</span>
+              <span className="text-[1rem] font-bold col-start-2">
                 SMA Negeri 1 Kupang
-              </h1>
+              </span>
             </div>
           </div>
         </div>
@@ -376,38 +379,38 @@ function App() {
         {/* experience */}
         <div className="grid grid-cols-12 gap-4 mb-[4rem]">
           <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1">
-            <h1 className="font-bold text-[1rem] lg:text-[1.5rem]">
+            <h2 className="font-bold text-[1rem] lg:text-[1.5rem]">
               experience
-            </h1>
+            </h2>
           </div>
           <div className="col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1">
             <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
-              <h1 className="text-[1rem]">Oct 2024 - now</h1>
-              <h1 className="text-[1rem] font-bold  col-start-2">
+              <span className="text-[1rem]">Oct 2024 - now</span>
+              <span className="text-[1rem] font-bold  col-start-2">
                 Koding Next Kupang
-              </h1>
-              <h1 className="text-[1rem] col-start-3">Advanced Teacher</h1>
+              </span>
+              <span className="text-[1rem] col-start-3">Advanced Teacher</span>
             </div>
             <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
-              <h1 className="text-[1rem]">Jan 2024 - May 2024</h1>
-              <h1 className="text-[1rem] font-bold  col-start-2">
+              <span className="text-[1rem]">Jan 2024 - May 2024</span>
+              <span className="text-[1rem] font-bold  col-start-2">
                 Platon Indonesia
-              </h1>
-              <h1 className="text-[1rem] col-start-3">Fullstack Engineer</h1>
+              </span>
+              <span className="text-[1rem] col-start-3">Fullstack Engineer</span>
             </div>
             <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
-              <h1 className="text-[1rem]">2023 - now</h1>
-              <h1 className="text-[1rem] font-bold  col-start-2">
+              <span className="text-[1rem]">2023 - now</span>
+              <span className="text-[1rem] font-bold  col-start-2">
                 Webminds Kupang
-              </h1>
-              <h1 className="text-[1rem] col-start-3">Freelance Developer</h1>
+              </span>
+              <span className="text-[1rem] col-start-3">Freelance Developer</span>
             </div>
             <div className="border-b first:border-t border-white w-full py-4 pl-2 grid grid-cols-3">
-              <h1 className="text-[1rem]">Feb 2023 - Mar 2023</h1>
-              <h1 className="text-[1rem] font-bold col-start-2">
+              <span className="text-[1rem]">Feb 2023 - Mar 2023</span>
+              <span className="text-[1rem] font-bold col-start-2">
                 Diskominfo Kota Kupang
-              </h1>
-              <h1 className="text-[1rem] col-start-3">Student Intern</h1>
+              </span>
+              <span className="text-[1rem] col-start-3">Student Intern</span>
             </div>
           </div>
         </div>
@@ -416,64 +419,65 @@ function App() {
         {/* skills */}
         <div className="grid grid-cols-12 gap-4 pb-[8rem]">
           <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1">
-            <h1 className="font-bold text-[1rem] lg:text-[1.5rem]">skills</h1>
+            <h2 className="font-bold text-[1rem] lg:text-[1.5rem]">skills</h2>
           </div>
           <div className="col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1">
             <div className="w-full grid md:grid-cols-5 gap-4">
-              <h1 className="text-[1rem] font-bold col-start-1">HTML</h1>
-              <h1 className="text-[1rem] font-bold col-start-2">CSS</h1>
-              <h1 className="text-[1rem] font-bold col-start-3">Javascript</h1>
-              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-4">
+              <span className="text-[1rem] font-bold col-start-1">HTML</span>
+              <span className="text-[1rem] font-bold col-start-2">CSS</span>
+              <span className="text-[1rem] font-bold col-start-3">Javascript</span>
+              <span className="text-[1rem] font-bold col-start-1 md:col-start-4">
                 Typescript
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-5">
+              </span>
+              <span className="text-[1rem] font-bold col-start-2 md:col-start-5">
                 Golang
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-1">
+              </span>
+              <span className="text-[1rem] font-bold col-start-3 md:col-start-1">
                 Python
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-2">
+              </span>
+              <span className="text-[1rem] font-bold col-start-1 md:col-start-2">
                 ReactJS
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-3">
+              </span>
+              <span className="text-[1rem] font-bold col-start-2 md:col-start-3">
                 NextJS
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-4">
+              </span>
+              <span className="text-[1rem] font-bold col-start-3 md:col-start-4">
                 React Native
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-5">
+              </span>
+              <span className="text-[1rem] font-bold col-start-1 md:col-start-5">
                 Redux
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-1">
+              </span>
+              <span className="text-[1rem] font-bold col-start-2 md:col-start-1">
                 NodeJS
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-2">
+              </span>
+              <span className="text-[1rem] font-bold col-start-3 md:col-start-2">
                 ExpressJS
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-3">
+              </span>
+              <span className="text-[1rem] font-bold col-start-1 md:col-start-3">
                 Django
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-4">
+              </span>
+              <span className="text-[1rem] font-bold col-start-2 md:col-start-4">
                 MongoDB
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-3 md:col-start-5">
+              </span>
+              <span className="text-[1rem] font-bold col-start-3 md:col-start-5">
                 MySQL
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-1">Rest API</h1>
-              <h1 className="text-[1rem] font-bold col-start-2">Git</h1>
-              <h1 className="text-[1rem] font-bold col-start-3">Docker</h1>
-              <h1 className="text-[1rem] font-bold col-start-1 md:col-start-4">
+              </span>
+              <span className="text-[1rem] font-bold col-start-1">Rest API</span>
+              <span className="text-[1rem] font-bold col-start-2">Git</span>
+              <span className="text-[1rem] font-bold col-start-3">Docker</span>
+              <span className="text-[1rem] font-bold col-start-1 md:col-start-4">
                 Linux
-              </h1>
-              <h1 className="text-[1rem] font-bold col-start-2 md:col-start-5">
+              </span>
+              <span className="text-[1rem] font-bold col-start-2 md:col-start-5">
                 PostgreSQL
-              </h1>
+              </span>
             </div>
           </div>
         </div>
         {/* skills */}
       </div>
     </div>
+    </>
   );
 }
 

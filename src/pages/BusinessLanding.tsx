@@ -6,6 +6,7 @@ import Lenis from "lenis";
 import { data } from "../generated/projectData";
 import AnimatedLink from "../components/AnimatedLink";
 import Project from "../components/Project";
+import SEO from "../components/SEO";
 
 const services = [
   {
@@ -341,10 +342,15 @@ function BusinessLanding() {
   const featured = data.slice(0, 3);
 
   return (
-    <div
-      ref={ref}
-      className="bg-grain min-h-screen text-[#121212] selection:bg-neutral-900 selection:text-[#F6F5F2] relative"
-    >
+    <>
+      <SEO
+        title="Jasa Pembuatan Website & Aplikasi"
+        ogUrl="https://webminds.vercel.app"
+      />
+      <div
+        ref={ref}
+        className="bg-grain min-h-screen text-[#121212] selection:bg-neutral-900 selection:text-[#F6F5F2] relative"
+      >
       {/* Loaders */}
       <div
         id="loader1"
@@ -362,7 +368,7 @@ function BusinessLanding() {
         className="bg-[#F6F5F2] rounded-full w-[20px] h-[20px] fixed top-0 left-0 pointer-events-none z-[3] hidden md:flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2 border border-[#121212]"
       >
         <div className="pl-5">
-          <h1
+          <span
             className="text-[#F6F5F2] opacity-0 text-[12px] font-mono-spaced whitespace-nowrap"
             ref={ballTextRef}
           />
@@ -838,6 +844,7 @@ function BusinessLanding() {
       </footer>
       </div>
     </div>
+    </>
   );
 }
 
