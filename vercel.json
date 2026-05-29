@@ -9,7 +9,9 @@
     }
   ],
   "rewrites": [
+    { "source": "/admin/:path*", "destination": "/admin/index.html" },
     { "source": "/webminds", "destination": "/index.html" },
-    { "source": "/webminds/:path*", "destination": "/index.html" }
+    { "source": "/webminds/:path*", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
