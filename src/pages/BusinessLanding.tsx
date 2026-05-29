@@ -2,6 +2,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
 import { useLayoutEffect, useEffect, useRef } from "react";
+import Lenis from "lenis";
 import { data } from "../generated/projectData";
 import AnimatedLink from "../components/AnimatedLink";
 import Project from "../components/Project";
@@ -93,9 +94,28 @@ function BusinessLanding() {
   gsap.registerPlugin(TextPlugin, ScrollTrigger);
 
   const tl = gsap.timeline();
-  const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-  const mouse = { x: pos.x, y: pos.y };
-  const speed = 0.15;
+
+  // Lenis Smooth Scroll Initialization
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+    });
+
+    lenis.on("scroll", ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
 
   // Manage body background class for the route
   useEffect(() => {
@@ -112,6 +132,9 @@ function BusinessLanding() {
       width: 100,
       height: 100,
       backgroundColor: "#121212",
+      border: "none",
+      scale: 1,
+      opacity: 1,
     });
     ballRef.current?.classList.remove("mix-blend-difference");
     gsap.to(ballTextRef.current, { opacity: 1 });
@@ -130,12 +153,18 @@ function BusinessLanding() {
 
   const mouseLeave = (siteLink: string | undefined) => {
     ballRef.current?.classList.add("mix-blend-difference");
-    gsap.to(ballRef.current, { width: 20, height: 20 });
+    gsap.to(ballRef.current, {
+      width: 20,
+      height: 20,
+      scale: 1,
+      border: "none",
+    });
     gsap.to(ballTextRef.current, { opacity: 0 });
     if (!siteLink && ballTextRef.current != null) {
       ballTextRef.current.style.marginTop = "0px";
       gsap.to(ballRef.current, { backgroundColor: "#F6F5F2" });
       ballTextRef.current.style.color = "#121212";
+      ballTextRef.current.innerText = "";
     }
   };
 
@@ -207,26 +236,59 @@ function BusinessLanding() {
       scrollFade(".pricing-column");
       scrollFade(".testimonial-item");
 
-      const xSet = gsap.quickSetter("#ball", "x", "px");
-      const ySet = gsap.quickSetter("#ball", "y", "px");
+      // Advanced Cursor Logic via quickTo
+      const xTo = gsap.quickTo("#ball", "x", { duration: 0.2, ease: "power3" });
+      const yTo = gsap.quickTo("#ball", "y", { duration: 0.2, ease: "power3" });
 
-      window.addEventListener("mousemove", (e) => {
-        mouse.x = e.x;
-        mouse.y = e.y;
-      });
+      const handleGlobalMouseMove = (e: MouseEvent) => {
+        xTo(e.clientX);
+        yTo(e.clientY);
 
-      gsap.ticker.add(() => {
-        const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio());
-        pos.x += (mouse.x - pos.x) * dt;
-        pos.y += (mouse.y - pos.y) * dt;
-        xSet(pos.x);
-        ySet(pos.y);
-      });
+        const target = e.target as HTMLElement;
+        const cursorType = target
+          .closest("[data-cursor]")
+          ?.getAttribute("data-cursor");
+
+        // Avoid overriding Project component mouseEnter
+        if (
+          ballTextRef.current?.innerText === "View Site" ||
+          ballTextRef.current?.innerText === "No Site"
+        ) {
+          return;
+        }
+
+        if (cursorType === "link") {
+          gsap.to(ballRef.current, {
+            scale: 2.5,
+            opacity: 0.5,
+            backgroundColor: "transparent",
+            border: "1px solid #121212",
+            duration: 0.3,
+          });
+          ballRef.current?.classList.remove("mix-blend-difference");
+        } else if (cursorType === "input") {
+          gsap.to(ballRef.current, { scale: 0.2, opacity: 0, duration: 0.3 });
+        } else if (cursorType === "text") {
+          gsap.to(ballRef.current, { scale: 0.5, opacity: 0.5, duration: 0.3 });
+        } else {
+          gsap.to(ballRef.current, {
+            scale: 1,
+            opacity: 1,
+            backgroundColor: "#121212",
+            border: "none",
+            duration: 0.3,
+            width: 20,
+            height: 20,
+          });
+          ballRef.current?.classList.add("mix-blend-difference");
+        }
+      };
+
+      window.addEventListener("mousemove", handleGlobalMouseMove);
     }, ref);
 
     return () => {
       ctx.revert();
-      window.removeEventListener("mousemove", () => null);
     };
   }, []);
 
@@ -240,22 +302,22 @@ function BusinessLanding() {
       {/* Loaders */}
       <div
         id="loader1"
-        className="fixed bottom-0 left-0 bg-white w-full h-full z-[5]"
+        className="fixed top-0 left-0 bg-[#F6F5F2] w-full h-full z-[5]"
       />
       <div
         id="loader2"
-        className="fixed top-0 left-0 bg-black w-full h-full z-[4]"
+        className="fixed bottom-0 left-0 bg-black w-full h-full z-[4]"
       />
 
       {/* Custom Ball Cursor */}
       <div
         ref={ballRef}
         id="ball"
-        className="bg-black rounded-full w-[20px] h-[20px] fixed top-0 left-0 pointer-events-none mix-blend-difference z-[3] hidden md:block"
+        className="bg-[#121212] rounded-full w-[20px] h-[20px] fixed top-0 left-0 pointer-events-none mix-blend-difference z-[3] hidden md:flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2"
       >
         <div className="pl-5">
           <h1
-            className="text-[#F6F5F2] opacity-0 text-[12px] font-mono-spaced"
+            className="text-[#F6F5F2] opacity-0 text-[12px] font-mono-spaced whitespace-nowrap"
             ref={ballTextRef}
           />
         </div>
@@ -278,13 +340,15 @@ function BusinessLanding() {
 
         {/* Hero Main Copy */}
         <div className="w-full max-w-[1200px] mx-auto flex-1 flex flex-col justify-center my-12">
-          <h1 className="font-editorial text-[3rem] md:text-[7.5rem] lg:text-[9.5rem] uppercase font-bold leading-[0.85] tracking-tight">
+          <h1
+            data-cursor="text"
+            className="font-editorial text-[3.8rem] md:text-[7.5rem] lg:text-[9.5rem] uppercase font-bold leading-[0.85] tracking-tight"
+          >
             Bangun{" "}
             <span className="font-calligraphic font-medium italic lowercase normal-case">
               digital
             </span>
-          </h1>
-          <h1 className="font-editorial text-[3rem] md:text-[7.5rem] lg:text-[9.5rem] uppercase font-bold leading-[1.2] tracking-tight">
+            <br />
             presence{" "}
             <span className="font-calligraphic font-medium italic lowercase normal-case">
               anda
@@ -301,12 +365,14 @@ function BusinessLanding() {
             <div className="col-span-12 md:col-span-5 lg:col-span-6 md:justify-self-end flex flex-col sm:flex-row gap-4 mt-6 md:mt-0 w-full sm:w-auto">
               <a
                 href="#contact"
+                data-cursor="link"
                 className="font-mono-spaced text-[11px] text-center border border-neutral-900 px-8 py-4 bg-neutral-900 text-[#F6F5F2] hover:bg-transparent hover:text-neutral-900 transition-colors duration-300"
               >
                 Mulai Kolaborasi
               </a>
               <a
                 href="#portfolio"
+                data-cursor="link"
                 className="font-mono-spaced text-[11px] text-center border border-neutral-900 px-8 py-4 text-neutral-900 hover:bg-neutral-900 hover:text-[#F6F5F2] transition-colors duration-300"
               >
                 Lihat Proyek
@@ -321,8 +387,16 @@ function BusinessLanding() {
             <span className="font-mono-spaced text-[9px] text-neutral-400 block">
               LOCALIZATION
             </span>
-            <span className="text-[14px] font-serif text-neutral-700">
+            <span className="text-[12px] font-serif text-neutral-700">
               Kupang, Nusa Tenggara Timur
+            </span>
+          </div>
+          <div className="hidden lg:block text-right">
+            <span className="font-mono-spaced text-[9px] text-neutral-400 block">
+              CURRENT CYCLE
+            </span>
+            <span className="text-[12px] font-serif text-neutral-700">
+              Q2 2026
             </span>
           </div>
           <div>
@@ -358,6 +432,7 @@ function BusinessLanding() {
             {services.map((s) => (
               <div
                 key={s.title}
+                data-cursor="text"
                 className="service-item p-8 border-b border-neutral-300 md:border-r last:border-r-0 md:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:last:border-r-0 flex flex-col justify-between min-h-[300px] transition-all duration-500 hover:bg-neutral-100/50"
               >
                 <div>
@@ -415,7 +490,6 @@ function BusinessLanding() {
                 siteLink={project.siteLink}
                 datetime={project.datetime}
                 ref={underline}
-                grayscale={false}
               />
             ))}
           </div>
@@ -458,7 +532,10 @@ function BusinessLanding() {
                     </h3>
                   </div>
 
-                  <p className="font-editorial text-[2.2rem] md:text-[2.8rem] font-bold leading-none my-6 text-neutral-900">
+                  <p
+                    data-cursor="text"
+                    className="font-editorial text-[2.2rem] md:text-[2.8rem] font-bold leading-none my-6 text-neutral-900"
+                  >
                     {pkg.price}
                   </p>
 
@@ -481,6 +558,7 @@ function BusinessLanding() {
 
                 <a
                   href="#contact"
+                  data-cursor="link"
                   className="block text-center font-mono-spaced text-[11px] border border-neutral-900 px-6 py-4 mt-8 hover:bg-neutral-900 hover:text-[#F6F5F2] transition-colors duration-300"
                 >
                   Pilih Paket
@@ -515,6 +593,7 @@ function BusinessLanding() {
             {testimonials.map((t, idx) => (
               <div
                 key={t.name}
+                data-cursor="text"
                 className="testimonial-item border-b border-neutral-300 pb-12 last:border-0"
               >
                 <span className="font-calligraphic text-[4rem] text-neutral-300 block h-6 leading-none">
@@ -582,6 +661,7 @@ function BusinessLanding() {
                   <a
                     href="https://wa.me/+6281338047308"
                     target="_blank"
+                    data-cursor="link"
                     className="text-[1.1rem] font-serif text-[#F6F5F2] hover:opacity-75 transition-opacity underline decoration-[0.5px] underline-offset-4"
                   >
                     +62 813-3804-7308
@@ -593,22 +673,27 @@ function BusinessLanding() {
                   </span>
                   <a
                     href="mailto:gdrrey@gmail.com"
+                    data-cursor="link"
                     className="text-[1.1rem] font-serif text-[#F6F5F2] hover:opacity-75 transition-opacity underline decoration-[0.5px] underline-offset-4"
                   >
                     gdrrey@gmail.com
                   </a>
                 </div>
                 <div className="flex gap-6 pt-2">
-                  <AnimatedLink
-                    name="instagram"
-                    link="https://www.instagram.com/_itzyaboirey/"
-                    underlineColor="#F6F5F2"
-                  />
-                  <AnimatedLink
-                    name="github"
-                    link="https://github.com/reymooy27"
-                    underlineColor="#F6F5F2"
-                  />
+                  <span data-cursor="link">
+                    <AnimatedLink
+                      name="instagram"
+                      link="https://www.instagram.com/_itzyaboirey/"
+                      underlineColor="#F6F5F2"
+                    />
+                  </span>
+                  <span data-cursor="link">
+                    <AnimatedLink
+                      name="github"
+                      link="https://github.com/reymooy27"
+                      underlineColor="#F6F5F2"
+                    />
+                  </span>
                 </div>
               </div>
             </div>
@@ -626,6 +711,7 @@ function BusinessLanding() {
                   </label>
                   <input
                     type="text"
+                    data-cursor="input"
                     placeholder="Masukkan nama Anda..."
                     className="w-full py-4 bg-transparent border-b border-neutral-700 text-[#F6F5F2] placeholder:text-neutral-600 font-serif text-[1.1rem] focus:outline-none focus:border-neutral-200 transition-colors"
                   />
@@ -636,6 +722,7 @@ function BusinessLanding() {
                   </label>
                   <input
                     type="email"
+                    data-cursor="input"
                     placeholder="Masukkan email Anda..."
                     className="w-full py-4 bg-transparent border-b border-neutral-700 text-[#F6F5F2] placeholder:text-neutral-600 font-serif text-[1.1rem] focus:outline-none focus:border-neutral-200 transition-colors"
                   />
@@ -646,6 +733,7 @@ function BusinessLanding() {
                   PROYEK YANG INGIN DIBICARAKAN
                 </label>
                 <textarea
+                  data-cursor="input"
                   placeholder="Ceritakan tentang kebutuhan bisnis Anda..."
                   rows={4}
                   className="w-full py-4 bg-transparent border-b border-neutral-700 text-[#F6F5F2] placeholder:text-neutral-600 font-serif text-[1.1rem] focus:outline-none focus:border-neutral-200 transition-colors resize-none"
@@ -655,6 +743,7 @@ function BusinessLanding() {
               <div className="pt-4 flex justify-end">
                 <button
                   type="submit"
+                  data-cursor="link"
                   className="font-mono-spaced text-[11px] border border-neutral-400 px-10 py-5 bg-[#F6F5F2] text-[#121212] hover:bg-transparent hover:text-[#F6F5F2] hover:border-[#F6F5F2] transition-all duration-300"
                 >
                   Kirim Pesan
