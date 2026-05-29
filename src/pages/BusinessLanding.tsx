@@ -115,15 +115,13 @@ function BusinessLanding() {
 
   // Lenis Smooth Scroll Initialization
   useEffect(() => {
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
-
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
+      touchMultiplier: 1.5,
     });
 
     lenisRef.current = lenis;
@@ -137,8 +135,6 @@ function BusinessLanding() {
     return () => {
       lenis.destroy();
       lenisRef.current = null;
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
     };
   }, []);
 
