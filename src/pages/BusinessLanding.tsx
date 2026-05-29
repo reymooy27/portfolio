@@ -1,7 +1,7 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
-import { useLayoutEffect, useEffect, useRef } from "react";
+import { useLayoutEffect, useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
 import { data } from "../generated/projectData";
 import AnimatedLink from "../components/AnimatedLink";
@@ -27,6 +27,16 @@ const services = [
     num: "04",
     title: "CMS Development",
     desc: "Sistem manajemen konten custom atau berbasis WordPress agar Anda bisa update sendiri.",
+  },
+  {
+    num: "05",
+    title: "AI & Machine Learning",
+    desc: "Integrasi AI untuk chatbot, recommendation system, computer vision, dan analisis data cerdas.",
+  },
+  {
+    num: "06",
+    title: "Automation",
+    desc: "Otomatisasi workflow bisnis dengan RPA, email marketing, CRM integration, dan smart scheduling.",
   },
 ];
 
@@ -90,6 +100,10 @@ function BusinessLanding() {
   const ballRef = useRef<HTMLDivElement>(null);
   const ballTextRef = useRef<HTMLHeadingElement>(null);
   const underline = useRef<HTMLDivElement>(null);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [project, setProject] = useState("");
 
   gsap.registerPlugin(TextPlugin, ScrollTrigger);
 
@@ -358,9 +372,9 @@ function BusinessLanding() {
           <div className="mt-12 grid grid-cols-12 gap-6 items-start">
             <p className="col-span-12 md:col-span-7 lg:col-span-6 text-[1.1rem] md:text-[1.35rem] font-serif leading-relaxed text-neutral-700">
               Webminds Kupang — partner teknologi terpercaya untuk bisnis Anda.
-              Dari website portofolio interaktif hingga e-commerce berkinerja
-              tinggi, kami menghadirkan solusi digital yang dirancang secara
-              detail untuk audiens Anda.
+              Dari landing page interaktif hingga e-commerce berkinerja tinggi,
+              termasuk solusi AI dan automation, kami menghadirkan solusi
+              digital yang dirancang secara detail untuk audiens Anda.
             </p>
             <div className="col-span-12 md:col-span-5 lg:col-span-6 md:justify-self-end flex flex-col sm:flex-row gap-4 mt-6 md:mt-0 w-full sm:w-auto">
               <a
@@ -702,7 +716,14 @@ function BusinessLanding() {
             <form
               action="#"
               className="lg:col-span-7 space-y-8"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={(e) => {
+                e.preventDefault();
+                const msg = `Halo Webminds Kupang,%0A%0ASaya *${name}*%0AEmail: ${email}%0A%0A${project}%0A%0ATolong infokan lebih lanjut. Terima kasih.`;
+                window.open(
+                  `https://wa.me/+6281338047308?text=${msg}`,
+                  "_blank",
+                );
+              }}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="flex flex-col">
@@ -713,6 +734,8 @@ function BusinessLanding() {
                     type="text"
                     data-cursor="input"
                     placeholder="Masukkan nama Anda..."
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     className="w-full py-4 bg-transparent border-b border-neutral-700 text-[#F6F5F2] placeholder:text-neutral-600 font-serif text-[1.1rem] focus:outline-none focus:border-neutral-200 transition-colors"
                   />
                 </div>
@@ -724,6 +747,8 @@ function BusinessLanding() {
                     type="email"
                     data-cursor="input"
                     placeholder="Masukkan email Anda..."
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full py-4 bg-transparent border-b border-neutral-700 text-[#F6F5F2] placeholder:text-neutral-600 font-serif text-[1.1rem] focus:outline-none focus:border-neutral-200 transition-colors"
                   />
                 </div>
@@ -736,6 +761,8 @@ function BusinessLanding() {
                   data-cursor="input"
                   placeholder="Ceritakan tentang kebutuhan bisnis Anda..."
                   rows={4}
+                  value={project}
+                  onChange={(e) => setProject(e.target.value)}
                   className="w-full py-4 bg-transparent border-b border-neutral-700 text-[#F6F5F2] placeholder:text-neutral-600 font-serif text-[1.1rem] focus:outline-none focus:border-neutral-200 transition-colors resize-none"
                 />
               </div>
