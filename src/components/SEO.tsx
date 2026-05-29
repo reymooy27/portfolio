@@ -8,7 +8,7 @@ type SEOProps = {
   includeStructuredData?: boolean;
 };
 
-const BASE_URL = "https://webminds.vercel.app";
+const BASE_URL = "https://webmindkupang.my.id";
 const DEFAULT_TITLE = "Webminds Kupang — Jasa Pembuatan Website & Aplikasi di NTT";
 const DEFAULT_DESC =
   "Webminds Kupang — partner teknologi terpercaya di Kupang, NTT. Layanan web development, mobile apps, UI/UX design, CMS, AI, dan automation untuk bisnis Anda.";

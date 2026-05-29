@@ -164,7 +164,7 @@ function App() {
 
   return (
     <>
-      <SEO title="Portfolio — Rey" ogUrl="https://webminds.vercel.app/reymooy" />
+      <SEO title="Portfolio — Rey" ogUrl="https://webmindkupang.my.id/reymooy" />
       <div ref={ref}>
       <div className="w-full h-full px-4">
         <div

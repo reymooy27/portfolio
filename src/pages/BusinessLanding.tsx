@@ -346,7 +346,7 @@ function BusinessLanding() {
     <>
       <SEO
         title="Jasa Pembuatan Website & Aplikasi"
-        ogUrl="https://webminds.vercel.app"
+        ogUrl="https://webmindkupang.my.id"
       />
       <Helmet>
         <script type="application/ld+json">

@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://webminds.vercel.app/sitemap.xml
+Sitemap: https://webmindkupang.my.id/sitemap.xml
