@@ -47,32 +47,33 @@ const pricing = [
     features: [
       "1 - 3 halaman website",
       "Responsive mobile & desktop",
-      "Form kontak",
+      "Form kontak & basic SEO",
       "Free domain .com (1 tahun)",
       "Hosting 3 bulan gratis",
     ],
   },
   {
     name: "Standard",
-    price: "Rp 5-10 Jt",
+    price: "Rp 5-12 Jt",
     features: [
-      "5 - 7 halaman website",
-      "CMS (bisa update sendiri)",
-      "Integrasi media sosial",
-      "Basic SEO optimasi",
+      "5 - 10 halaman website + CMS",
+      "Integrasi media sosial & email",
+      "Basic automation (email marketing)",
+      "AI chatbot sederhana",
       "Free domain + hosting 6 bulan",
     ],
   },
   {
     name: "Premium",
-    price: "Rp 10-25 Jt",
+    price: "Rp 12-30 Jt",
     features: [
-      "Web app / e-commerce",
-      "Admin dashboard",
-      "Database & API integration",
-      "Advanced SEO",
+      "Web app / e-commerce full fitur",
+      "Admin dashboard & API integration",
+      "AI chatbot & recommendation system",
+      "Workflow automation (RPA/CRM)",
+      "Advanced SEO & analytics",
       "Free domain + hosting 1 tahun",
-      "Prioritas support",
+      "Prioritas support 24/7",
     ],
   },
 ];
@@ -342,7 +343,7 @@ function BusinessLanding() {
         {/* Hero Top Metadata */}
         <div className="w-full max-w-[1200px] mx-auto flex justify-between items-center border-b border-neutral-300 pb-4">
           <span className="font-mono-spaced text-[10px] text-neutral-500">
-            WEBMIND KUPANG
+            WEBMINDS KUPANG
           </span>
           <span className="font-mono-spaced text-[10px] text-neutral-500">
             01 / HERO
@@ -356,14 +357,14 @@ function BusinessLanding() {
         <div className="w-full max-w-[1200px] mx-auto flex-1 flex flex-col justify-center my-12">
           <h1
             data-cursor="text"
-            className="font-editorial text-[3.8rem] md:text-[7.5rem] lg:text-[9.5rem] uppercase font-bold leading-[0.85] tracking-tight"
+            className="font-editorial text-[2.3rem] md:text-[7.5rem] lg:text-[7.5rem] uppercase font-bold leading-[0.85] tracking-tight"
           >
-            Bangun{" "}
+            Solusi{" "}
             <span className="font-calligraphic font-medium italic lowercase normal-case">
-              digital
+              digital cerdas
             </span>
             <br />
-            presence{" "}
+            untuk bisnis{" "}
             <span className="font-calligraphic font-medium italic lowercase normal-case">
               anda
             </span>
@@ -503,6 +504,7 @@ function BusinessLanding() {
                 githubLink={project.githubLink}
                 siteLink={project.siteLink}
                 datetime={project.datetime}
+                webminds
                 ref={underline}
               />
             ))}

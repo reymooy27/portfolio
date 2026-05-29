@@ -11,6 +11,7 @@ type PropsType = {
   siteLink?: string | undefined;
   datetime: string;
   grayscale?: boolean;
+  webminds?: boolean;
   mouseEnter: (siteLink: string | undefined) => void;
   mouseLeave: (siteLink: string | undefined) => void;
   animatedLinkMouseEnter: () => void;
@@ -61,7 +62,9 @@ const Project = forwardRef<HTMLDivElement, PropsType>((props) => {
           <h1 className="text-[1rem] lg:text-[1.5rem] text-black font-bold leading-none">
             {props.name}
           </h1>
-          <span className="text-[12px] text-black">{props.datetime}</span>
+          {!props.webminds && (
+            <span className="text-[12px] text-black">{props.datetime}</span>
+          )}
         </div>
         <div ref={projectImageRef} className="img w-fulll lg:w-[40rem] pt-4">
           {props.siteLink ? (
