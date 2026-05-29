@@ -31,7 +31,15 @@ const server = createServer((req, res) => {
 server.listen(PORT, async () => {
   console.log(`Server running on http://localhost:${PORT}`);
 
-  const browser = await chromium.launch({ headless: true });
+  let browser;
+  try {
+    browser = await chromium.launch({ headless: true });
+  } catch (err) {
+    console.warn("Prerender skipped — Playwright browser not available:", err.message);
+    server.close();
+    return;
+  }
+
   const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
 
   for (const route of ROUTES) {
