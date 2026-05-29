@@ -106,6 +106,9 @@ function BusinessLanding() {
   const [email, setEmail] = useState("");
   const [project, setProject] = useState("");
 
+  const contentRef = useRef<HTMLDivElement>(null);
+  const lenisRef = useRef<Lenis | null>(null);
+
   gsap.registerPlugin(TextPlugin, ScrollTrigger);
 
   const tl = gsap.timeline();
@@ -123,6 +126,7 @@ function BusinessLanding() {
       smoothWheel: true,
     });
 
+    lenisRef.current = lenis;
     lenis.on("scroll", ScrollTrigger.update);
 
     gsap.ticker.add((time) => {
@@ -132,8 +136,38 @@ function BusinessLanding() {
 
     return () => {
       lenis.destroy();
+      lenisRef.current = null;
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
+    };
+  }, []);
+
+  // Infinite scroll — clone content and teleport scroll at boundary
+  useEffect(() => {
+    const contentEl = contentRef.current;
+    const lenis = lenisRef.current;
+    if (!contentEl || !lenis) return;
+
+    const clone = contentEl.cloneNode(true) as HTMLElement;
+    clone.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
+    contentEl.parentNode?.appendChild(clone);
+    lenis.resize();
+
+    const handleScroll = (e: Lenis) => {
+      const originalHeight = contentEl.scrollHeight;
+      if (e.scroll >= originalHeight) {
+        lenis.scrollTo(e.scroll - originalHeight, { immediate: true });
+      }
+    };
+    lenis.on("scroll", handleScroll);
+
+    const onResize = () => lenis.resize();
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      lenis.off("scroll", handleScroll);
+      window.removeEventListener("resize", onResize);
+      clone.remove();
     };
   }, []);
 
@@ -343,8 +377,9 @@ function BusinessLanding() {
         </div>
       </div>
 
-      {/* Hero Section */}
-      <section className="w-full min-h-screen flex flex-col justify-between px-6 pt-[8rem] pb-[4rem] relative z-[2]">
+      <div ref={contentRef}>
+        {/* Hero Section */}
+        <section className="w-full min-h-screen flex flex-col justify-between px-6 pt-[8rem] pb-[4rem] relative z-[2]">
         {/* Hero Top Metadata */}
         <div className="w-full max-w-[1200px] mx-auto flex justify-between items-center border-b border-neutral-300 pb-4">
           <span className="font-mono-spaced text-[10px] text-neutral-500">
@@ -809,6 +844,7 @@ function BusinessLanding() {
           </div>
         </div>
       </footer>
+      </div>
     </div>
   );
 }
