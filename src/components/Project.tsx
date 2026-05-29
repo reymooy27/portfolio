@@ -10,6 +10,7 @@ type PropsType = {
   githubLink: string;
   siteLink?: string | undefined;
   datetime: string;
+  grayscale?: boolean;
   mouseEnter: (siteLink: string | undefined) => void;
   mouseLeave: (siteLink: string | undefined) => void;
   animatedLinkMouseEnter: () => void;
@@ -68,7 +69,7 @@ const Project = forwardRef<HTMLDivElement, PropsType>((props) => {
               <img
                 onMouseEnter={() => props.mouseEnter(props?.siteLink)}
                 onMouseLeave={() => props.mouseLeave(props?.siteLink)}
-                className="shadow-[5px_8px_10px_5px_rgba(0,0,0,0.3)] object-cover filter grayscale contrast-100 hover:filter-none w-full h-full transition-all ease-in-out duration-1000"
+                className={`shadow-[5px_8px_10px_5px_rgba(0,0,0,0.3)] object-cover filter ${props.grayscale ? "grayscale" : ""} contrast-100 hover:filter-none w-full h-full transition-all ease-in-out duration-1000`}
                 src={props.image}
                 alt=""
               />
@@ -94,4 +95,3 @@ const Project = forwardRef<HTMLDivElement, PropsType>((props) => {
 });
 
 export default Project;
-

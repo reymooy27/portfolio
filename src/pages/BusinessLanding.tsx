@@ -4,7 +4,6 @@ import { TextPlugin } from "gsap/TextPlugin";
 import { useLayoutEffect, useEffect, useRef } from "react";
 import { data } from "../generated/projectData";
 import AnimatedLink from "../components/AnimatedLink";
-import Navbar from "../components/Navbar";
 import Project from "../components/Project";
 
 const services = [
@@ -155,31 +154,31 @@ function BusinessLanding() {
 
       tl.to("#loader1", {
         scaleX: 0,
-        duration: 1,
+        duration: 0.8,
         transformOrigin: "right",
         ease: "sine",
         delay: 1,
       })
         .to(
           "#loader2",
-          { scaleX: 0, duration: 1, transformOrigin: "right", ease: "sine" },
-          "-=0.1"
+          { scaleX: 0, duration: 0.6, transformOrigin: "right", ease: "sine" },
+          "-=0.1",
         )
         .from(
           ".slider",
           { scaleX: 0, duration: 1, transformOrigin: "left", ease: "sine" },
-          "+=0.4"
+          "+=0.4",
         )
         .to(
           ".slider",
           { scaleX: 0, duration: 0.3, transformOrigin: "right", ease: "sine" },
-          "+=0.1"
+          "+=0.1",
         )
         .fromTo(
           ".children",
           { opacity: 0, y: 10 },
           { opacity: 1, stagger: 0.1, y: 0, duration: 0.6, ease: "sine" },
-          "-=0.8"
+          "-=0.8",
         );
 
       const scrollFade = (selector: string, extra = {}) => {
@@ -194,7 +193,7 @@ function BusinessLanding() {
             stagger: 0.1,
             ease: "power2.out",
             ...extra,
-          }
+          },
         );
       };
 
@@ -234,22 +233,25 @@ function BusinessLanding() {
   const featured = data.slice(0, 3);
 
   return (
-    <div ref={ref} className="bg-grain min-h-screen text-[#121212] selection:bg-neutral-900 selection:text-[#F6F5F2] relative overflow-hidden">
+    <div
+      ref={ref}
+      className="bg-grain min-h-screen text-[#121212] selection:bg-neutral-900 selection:text-[#F6F5F2] relative overflow-hidden"
+    >
       {/* Loaders */}
       <div
         id="loader1"
-        className="fixed top-0 left-0 bg-black w-full h-full z-[5]"
+        className="fixed bottom-0 left-0 bg-white w-full h-full z-[5]"
       />
       <div
         id="loader2"
-        className="fixed bottom-0 left-0 bg-[#F6F5F2] w-full h-full z-[4]"
+        className="fixed top-0 left-0 bg-black w-full h-full z-[4]"
       />
-      
+
       {/* Custom Ball Cursor */}
       <div
         ref={ballRef}
         id="ball"
-        className="bg-[#121212] rounded-full w-[20px] h-[20px] fixed top-0 left-0 pointer-events-none mix-blend-difference z-[3] hidden md:block"
+        className="bg-black rounded-full w-[20px] h-[20px] fixed top-0 left-0 pointer-events-none mix-blend-difference z-[3] hidden md:block"
       >
         <div className="pl-5">
           <h1
@@ -259,30 +261,42 @@ function BusinessLanding() {
         </div>
       </div>
 
-      <Navbar />
-
       {/* Hero Section */}
       <section className="w-full min-h-screen flex flex-col justify-between px-6 pt-[8rem] pb-[4rem] relative z-[2]">
         {/* Hero Top Metadata */}
         <div className="w-full max-w-[1200px] mx-auto flex justify-between items-center border-b border-neutral-300 pb-4">
-          <span className="font-mono-spaced text-[10px] text-neutral-500">WEBMIND KUPANG</span>
-          <span className="font-mono-spaced text-[10px] text-neutral-500">01 / HERO</span>
-          <span className="font-mono-spaced text-[10px] text-neutral-500">EST. 2023</span>
+          <span className="font-mono-spaced text-[10px] text-neutral-500">
+            WEBMIND KUPANG
+          </span>
+          <span className="font-mono-spaced text-[10px] text-neutral-500">
+            01 / HERO
+          </span>
+          <span className="font-mono-spaced text-[10px] text-neutral-500">
+            EST. 2023
+          </span>
         </div>
 
         {/* Hero Main Copy */}
         <div className="w-full max-w-[1200px] mx-auto flex-1 flex flex-col justify-center my-12">
-          <h1 className="font-editorial text-[3.8rem] md:text-[7.5rem] lg:text-[9.5rem] uppercase font-bold leading-[0.85] tracking-tight">
-            Bangun <span className="font-calligraphic font-medium italic lowercase normal-case">digital</span>
-            <br />
-            presence <span className="font-calligraphic font-medium italic lowercase normal-case">anda</span>
+          <h1 className="font-editorial text-[3rem] md:text-[7.5rem] lg:text-[9.5rem] uppercase font-bold leading-[0.85] tracking-tight">
+            Bangun{" "}
+            <span className="font-calligraphic font-medium italic lowercase normal-case">
+              digital
+            </span>
           </h1>
-          
+          <h1 className="font-editorial text-[3rem] md:text-[7.5rem] lg:text-[9.5rem] uppercase font-bold leading-[1.2] tracking-tight">
+            presence{" "}
+            <span className="font-calligraphic font-medium italic lowercase normal-case">
+              anda
+            </span>
+          </h1>
+
           <div className="mt-12 grid grid-cols-12 gap-6 items-start">
             <p className="col-span-12 md:col-span-7 lg:col-span-6 text-[1.1rem] md:text-[1.35rem] font-serif leading-relaxed text-neutral-700">
-              Webminds Kupang — partner teknologi terpercaya untuk bisnis Anda. 
-              Dari website portofolio interaktif hingga e-commerce berkinerja tinggi, 
-              kami menghadirkan solusi digital yang dirancang secara detail untuk audiens Anda.
+              Webminds Kupang — partner teknologi terpercaya untuk bisnis Anda.
+              Dari website portofolio interaktif hingga e-commerce berkinerja
+              tinggi, kami menghadirkan solusi digital yang dirancang secara
+              detail untuk audiens Anda.
             </p>
             <div className="col-span-12 md:col-span-5 lg:col-span-6 md:justify-self-end flex flex-col sm:flex-row gap-4 mt-6 md:mt-0 w-full sm:w-auto">
               <a
@@ -304,15 +318,17 @@ function BusinessLanding() {
         {/* Hero Bottom Info */}
         <div className="w-full max-w-[1200px] mx-auto flex justify-between items-end border-t border-neutral-300 pt-6">
           <div className="hidden lg:block">
-            <span className="font-mono-spaced text-[9px] text-neutral-400 block">LOCALIZATION</span>
-            <span className="text-[12px] font-serif text-neutral-700">Kupang, Nusa Tenggara Timur</span>
-          </div>
-          <div className="hidden lg:block text-right">
-            <span className="font-mono-spaced text-[9px] text-neutral-400 block">CURRENT CYCLE</span>
-            <span className="text-[12px] font-serif text-neutral-700">Q2 2026</span>
+            <span className="font-mono-spaced text-[9px] text-neutral-400 block">
+              LOCALIZATION
+            </span>
+            <span className="text-[14px] font-serif text-neutral-700">
+              Kupang, Nusa Tenggara Timur
+            </span>
           </div>
           <div>
-            <span className="font-mono-spaced text-[9px] text-neutral-400 block">SCROLL TO DISCOVER</span>
+            <span className="font-mono-spaced text-[9px] text-neutral-400 block">
+              SCROLL TO DISCOVER
+            </span>
             <span className="text-[14px] font-serif text-neutral-700">↓</span>
           </div>
         </div>
@@ -323,9 +339,17 @@ function BusinessLanding() {
         <div className="w-full max-w-[1200px] mx-auto">
           {/* Section Heading */}
           <div className="grid grid-cols-12 gap-6 items-baseline mb-16">
-            <span className="col-span-12 lg:col-span-3 font-mono-spaced text-[11px] text-neutral-500">02 // SERVICES</span>
-            <h2 id="title-services" className="col-span-12 lg:col-span-9 font-editorial text-[3rem] md:text-[5rem] font-bold uppercase leading-none">
-              Layanan <span className="font-calligraphic font-medium italic lowercase normal-case">kami</span>
+            <span className="col-span-12 lg:col-span-3 font-mono-spaced text-[11px] text-neutral-500">
+              02 // SERVICES
+            </span>
+            <h2
+              id="title-services"
+              className="col-span-12 lg:col-span-9 font-editorial text-[3rem] md:text-[5rem] font-bold uppercase leading-none"
+            >
+              Layanan{" "}
+              <span className="font-calligraphic font-medium italic lowercase normal-case">
+                kami
+              </span>
             </h2>
           </div>
 
@@ -337,10 +361,16 @@ function BusinessLanding() {
                 className="service-item p-8 border-b border-neutral-300 md:border-r last:border-r-0 md:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:last:border-r-0 flex flex-col justify-between min-h-[300px] transition-all duration-500 hover:bg-neutral-100/50"
               >
                 <div>
-                  <span className="font-mono-spaced text-[11px] text-neutral-400 block mb-8">[{s.num}]</span>
-                  <h3 className="font-editorial text-[1.75rem] font-bold leading-tight mb-4">{s.title}</h3>
+                  <span className="font-mono-spaced text-[11px] text-neutral-400 block mb-8">
+                    [{s.num}]
+                  </span>
+                  <h3 className="font-editorial text-[1.75rem] font-bold leading-tight mb-4">
+                    {s.title}
+                  </h3>
                 </div>
-                <p className="text-[0.95rem] font-serif text-neutral-600 leading-relaxed">{s.desc}</p>
+                <p className="text-[0.95rem] font-serif text-neutral-600 leading-relaxed">
+                  {s.desc}
+                </p>
               </div>
             ))}
           </div>
@@ -348,13 +378,24 @@ function BusinessLanding() {
       </section>
 
       {/* Portfolio Section */}
-      <section id="portfolio" className="w-full border-t border-neutral-300 py-32 px-6 bg-transparent relative z-[2]">
+      <section
+        id="portfolio"
+        className="w-full border-t border-neutral-300 py-32 px-6 bg-transparent relative z-[2]"
+      >
         <div className="w-full max-w-[1200px] mx-auto">
           {/* Section Heading */}
           <div className="grid grid-cols-12 gap-6 items-baseline mb-24">
-            <span className="col-span-12 lg:col-span-3 font-mono-spaced text-[11px] text-neutral-500">03 // SELECTED WORK</span>
-            <h2 id="title-portfolio" className="col-span-12 lg:col-span-9 font-editorial text-[3rem] md:text-[5rem] font-bold uppercase leading-none">
-              Portofolio <span className="font-calligraphic font-medium italic lowercase normal-case">pilihan</span>
+            <span className="col-span-12 lg:col-span-3 font-mono-spaced text-[11px] text-neutral-500">
+              03 // SELECTED WORK
+            </span>
+            <h2
+              id="title-portfolio"
+              className="col-span-12 lg:col-span-9 font-editorial text-[3rem] md:text-[5rem] font-bold uppercase leading-none"
+            >
+              Portofolio{" "}
+              <span className="font-calligraphic font-medium italic lowercase normal-case">
+                pilihan
+              </span>
             </h2>
           </div>
 
@@ -374,6 +415,7 @@ function BusinessLanding() {
                 siteLink={project.siteLink}
                 datetime={project.datetime}
                 ref={underline}
+                grayscale={false}
               />
             ))}
           </div>
@@ -385,9 +427,17 @@ function BusinessLanding() {
         <div className="w-full max-w-[1200px] mx-auto">
           {/* Section Heading */}
           <div className="grid grid-cols-12 gap-6 items-baseline mb-24">
-            <span className="col-span-12 lg:col-span-3 font-mono-spaced text-[11px] text-neutral-500">04 // INVESTMENT</span>
-            <h2 id="title-pricing" className="col-span-12 lg:col-span-9 font-editorial text-[3rem] md:text-[5rem] font-bold uppercase leading-none">
-              Pilihan <span className="font-calligraphic font-medium italic lowercase normal-case">paket</span>
+            <span className="col-span-12 lg:col-span-3 font-mono-spaced text-[11px] text-neutral-500">
+              04 // INVESTMENT
+            </span>
+            <h2
+              id="title-pricing"
+              className="col-span-12 lg:col-span-9 font-editorial text-[3rem] md:text-[5rem] font-bold uppercase leading-none"
+            >
+              Pilihan{" "}
+              <span className="font-calligraphic font-medium italic lowercase normal-case">
+                paket
+              </span>
             </h2>
           </div>
 
@@ -400,17 +450,28 @@ function BusinessLanding() {
               >
                 <div>
                   <div className="flex justify-between items-baseline mb-8">
-                    <span className="font-mono-spaced text-[11px] text-neutral-400">PLAN [0{idx+1}]</span>
-                    <h3 className="font-mono-spaced text-[12px] font-bold text-neutral-900">{pkg.name}</h3>
+                    <span className="font-mono-spaced text-[11px] text-neutral-400">
+                      PLAN [0{idx + 1}]
+                    </span>
+                    <h3 className="font-mono-spaced text-[12px] font-bold text-neutral-900">
+                      {pkg.name}
+                    </h3>
                   </div>
-                  
-                  <p className="font-editorial text-[2.2rem] md:text-[2.8rem] font-bold leading-none my-6 text-neutral-900">{pkg.price}</p>
-                  
+
+                  <p className="font-editorial text-[2.2rem] md:text-[2.8rem] font-bold leading-none my-6 text-neutral-900">
+                    {pkg.price}
+                  </p>
+
                   <div className="border-t border-neutral-200 my-6 pt-6">
                     <ul className="space-y-4">
                       {pkg.features.map((f) => (
-                        <li key={f} className="flex items-start gap-3 text-[0.95rem] font-serif text-neutral-600">
-                          <span className="text-neutral-900 font-bold mt-[-2px]">•</span>
+                        <li
+                          key={f}
+                          className="flex items-start gap-3 text-[0.95rem] font-serif text-neutral-600"
+                        >
+                          <span className="text-neutral-900 font-bold mt-[-2px]">
+                            •
+                          </span>
                           {f}
                         </li>
                       ))}
@@ -435,9 +496,17 @@ function BusinessLanding() {
         <div className="w-full max-w-[1200px] mx-auto">
           {/* Section Heading */}
           <div className="grid grid-cols-12 gap-6 items-baseline mb-24">
-            <span className="col-span-12 lg:col-span-3 font-mono-spaced text-[11px] text-neutral-500">05 // FEEDBACK</span>
-            <h2 id="title-testimonials" className="col-span-12 lg:col-span-9 font-editorial text-[3rem] md:text-[5rem] font-bold uppercase leading-none">
-              Suara <span className="font-calligraphic font-medium italic lowercase normal-case">klien</span>
+            <span className="col-span-12 lg:col-span-3 font-mono-spaced text-[11px] text-neutral-500">
+              05 // FEEDBACK
+            </span>
+            <h2
+              id="title-testimonials"
+              className="col-span-12 lg:col-span-9 font-editorial text-[3rem] md:text-[5rem] font-bold uppercase leading-none"
+            >
+              Suara{" "}
+              <span className="font-calligraphic font-medium italic lowercase normal-case">
+                klien
+              </span>
             </h2>
           </div>
 
@@ -448,16 +517,24 @@ function BusinessLanding() {
                 key={t.name}
                 className="testimonial-item border-b border-neutral-300 pb-12 last:border-0"
               >
-                <span className="font-calligraphic text-[4rem] text-neutral-300 block h-6 leading-none">“</span>
+                <span className="font-calligraphic text-[4rem] text-neutral-300 block h-6 leading-none">
+                  “
+                </span>
                 <p className="text-[1.35rem] md:text-[1.65rem] font-serif leading-relaxed text-neutral-800 italic pr-8">
                   {t.text}
                 </p>
                 <div className="mt-6 flex items-center justify-between">
                   <div>
-                    <p className="font-mono-spaced text-[11px] font-bold text-neutral-900">{t.name}</p>
-                    <p className="text-[12px] font-serif text-neutral-500">{t.role}</p>
+                    <p className="font-mono-spaced text-[11px] font-bold text-neutral-900">
+                      {t.name}
+                    </p>
+                    <p className="text-[12px] font-serif text-neutral-500">
+                      {t.role}
+                    </p>
                   </div>
-                  <span className="font-mono-spaced text-[10px] text-neutral-300">REF / 0{idx+1}</span>
+                  <span className="font-mono-spaced text-[10px] text-neutral-300">
+                    REF / 0{idx + 1}
+                  </span>
                 </div>
               </div>
             ))}
@@ -473,9 +550,17 @@ function BusinessLanding() {
         <div className="w-full max-w-[1200px] mx-auto">
           {/* Section Heading */}
           <div className="grid grid-cols-12 gap-6 items-baseline mb-20">
-            <span className="col-span-12 lg:col-span-3 font-mono-spaced text-[11px] text-neutral-400">06 // INQUIRIES</span>
-            <h2 id="title-contact" className="col-span-12 lg:col-span-9 font-editorial text-[3rem] md:text-[5rem] font-bold uppercase leading-none">
-              Mulai <span className="font-calligraphic font-medium italic text-neutral-400 lowercase normal-case">kolaborasi</span>
+            <span className="col-span-12 lg:col-span-3 font-mono-spaced text-[11px] text-neutral-400">
+              06 // INQUIRIES
+            </span>
+            <h2
+              id="title-contact"
+              className="col-span-12 lg:col-span-9 font-editorial text-[3rem] md:text-[5rem] font-bold uppercase leading-none"
+            >
+              Mulai{" "}
+              <span className="font-calligraphic font-medium italic text-neutral-400 lowercase normal-case">
+                kolaborasi
+              </span>
             </h2>
           </div>
 
@@ -484,13 +569,16 @@ function BusinessLanding() {
             <div className="lg:col-span-5 flex flex-col justify-between min-h-[300px]">
               <div>
                 <p className="text-[1.2rem] md:text-[1.4rem] font-serif leading-relaxed text-neutral-300 max-w-[400px]">
-                  Punya ide proyek atau pertanyaan? Mari diskusikan kebutuhan digital Anda secara santai dan gratis.
+                  Punya ide proyek atau pertanyaan? Mari diskusikan kebutuhan
+                  digital Anda secara santai dan gratis.
                 </p>
               </div>
 
               <div className="space-y-8 mt-12 lg:mt-0">
                 <div>
-                  <span className="font-mono-spaced text-[9px] text-neutral-500 block mb-1">WHATSAPP</span>
+                  <span className="font-mono-spaced text-[9px] text-neutral-500 block mb-1">
+                    WHATSAPP
+                  </span>
                   <a
                     href="https://wa.me/+6281338047308"
                     target="_blank"
@@ -500,7 +588,9 @@ function BusinessLanding() {
                   </a>
                 </div>
                 <div>
-                  <span className="font-mono-spaced text-[9px] text-neutral-500 block mb-1">EMAIL</span>
+                  <span className="font-mono-spaced text-[9px] text-neutral-500 block mb-1">
+                    EMAIL
+                  </span>
                   <a
                     href="mailto:gdrrey@gmail.com"
                     className="text-[1.1rem] font-serif text-[#F6F5F2] hover:opacity-75 transition-opacity underline decoration-[0.5px] underline-offset-4"
@@ -531,7 +621,9 @@ function BusinessLanding() {
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="flex flex-col">
-                  <label className="font-mono-spaced text-[9px] text-neutral-400 mb-2">NAMA LENGKAP</label>
+                  <label className="font-mono-spaced text-[9px] text-neutral-400 mb-2">
+                    NAMA LENGKAP
+                  </label>
                   <input
                     type="text"
                     placeholder="Masukkan nama Anda..."
@@ -539,7 +631,9 @@ function BusinessLanding() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label className="font-mono-spaced text-[9px] text-neutral-400 mb-2">ALAMAT EMAIL</label>
+                  <label className="font-mono-spaced text-[9px] text-neutral-400 mb-2">
+                    ALAMAT EMAIL
+                  </label>
                   <input
                     type="email"
                     placeholder="Masukkan email Anda..."
@@ -548,14 +642,16 @@ function BusinessLanding() {
                 </div>
               </div>
               <div className="flex flex-col">
-                <label className="font-mono-spaced text-[9px] text-neutral-400 mb-2">PROYEK YANG INGIN DIBICARAKAN</label>
+                <label className="font-mono-spaced text-[9px] text-neutral-400 mb-2">
+                  PROYEK YANG INGIN DIBICARAKAN
+                </label>
                 <textarea
                   placeholder="Ceritakan tentang kebutuhan bisnis Anda..."
                   rows={4}
                   className="w-full py-4 bg-transparent border-b border-neutral-700 text-[#F6F5F2] placeholder:text-neutral-600 font-serif text-[1.1rem] focus:outline-none focus:border-neutral-200 transition-colors resize-none"
                 />
               </div>
-              
+
               <div className="pt-4 flex justify-end">
                 <button
                   type="submit"
@@ -573,12 +669,20 @@ function BusinessLanding() {
       <footer className="w-full px-6 py-12 bg-[#121212] text-[#F6F5F2] border-t border-neutral-800 relative z-[2]">
         <div className="w-full max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex flex-col items-center md:items-start">
-            <span className="font-mono-spaced text-[10px] text-neutral-500 mb-1">COPYRIGHT</span>
-            <p className="text-[13px] font-serif text-neutral-400">© {new Date().getFullYear()} Webminds Kupang. All rights reserved.</p>
+            <span className="font-mono-spaced text-[10px] text-neutral-500 mb-1">
+              COPYRIGHT
+            </span>
+            <p className="text-[13px] font-serif text-neutral-400">
+              © {new Date().getFullYear()} Webminds Kupang. All rights reserved.
+            </p>
           </div>
           <div className="flex flex-col items-center md:items-end">
-            <span className="font-mono-spaced text-[10px] text-neutral-500 mb-1">ORIGIN</span>
-            <p className="text-[13px] font-serif text-neutral-400">Kupang, Nusa Tenggara Timur</p>
+            <span className="font-mono-spaced text-[10px] text-neutral-500 mb-1">
+              ORIGIN
+            </span>
+            <p className="text-[13px] font-serif text-neutral-400">
+              Kupang, Nusa Tenggara Timur
+            </p>
           </div>
         </div>
       </footer>
