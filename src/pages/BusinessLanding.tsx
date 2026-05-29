@@ -112,6 +112,9 @@ function BusinessLanding() {
 
   // Lenis Smooth Scroll Initialization
   useEffect(() => {
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -129,6 +132,8 @@ function BusinessLanding() {
 
     return () => {
       lenis.destroy();
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, []);
 
@@ -312,7 +317,7 @@ function BusinessLanding() {
   return (
     <div
       ref={ref}
-      className="bg-grain min-h-screen text-[#121212] selection:bg-neutral-900 selection:text-[#F6F5F2] relative overflow-hidden"
+      className="bg-grain min-h-screen text-[#121212] selection:bg-neutral-900 selection:text-[#F6F5F2] relative"
     >
       {/* Loaders */}
       <div
