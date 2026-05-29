@@ -7,6 +7,7 @@ import { data } from "../generated/projectData";
 import AnimatedLink from "../components/AnimatedLink";
 import Project from "../components/Project";
 import SEO from "../components/SEO";
+import { Helmet } from "react-helmet-async";
 
 const services = [
   {
@@ -347,6 +348,65 @@ function BusinessLanding() {
         title="Jasa Pembuatan Website & Aplikasi"
         ogUrl="https://webminds.vercel.app"
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Product",
+                name: "Paket Basic — Webminds Kupang",
+                description: "1 - 3 halaman website, responsive, form kontak & basic SEO, free domain + hosting.",
+                offers: {
+                  "@type": "Offer",
+                  price: "2000000",
+                  priceCurrency: "IDR",
+                  priceValidUntil: "2027-12-31",
+                  availability: "https://schema.org/InStock",
+                },
+              },
+              {
+                "@type": "Product",
+                name: "Paket Standard — Webminds Kupang",
+                description: "5-10 halaman + CMS, integrasi sosial media & email, AI chatbot sederhana, basic automation.",
+                offers: {
+                  "@type": "Offer",
+                  price: "5000000",
+                  priceCurrency: "IDR",
+                  priceValidUntil: "2027-12-31",
+                  availability: "https://schema.org/InStock",
+                },
+              },
+              {
+                "@type": "Product",
+                name: "Paket Premium — Webminds Kupang",
+                description: "Web app/e-commerce full fitur, admin dashboard, AI chatbot & recommendation, RPA/CRM automation.",
+                offers: {
+                  "@type": "Offer",
+                  price: "12000000",
+                  priceCurrency: "IDR",
+                  priceValidUntil: "2027-12-31",
+                  availability: "https://schema.org/InStock",
+                },
+              },
+              ...testimonials.map((t) => ({
+                "@type": "Review",
+                author: { "@type": "Person", name: t.name },
+                reviewBody: t.text,
+                itemReviewed: {
+                  "@type": "Organization",
+                  name: "Webminds Kupang",
+                },
+                reviewRating: {
+                  "@type": "Rating",
+                  ratingValue: "5",
+                  bestRating: "5",
+                },
+              })),
+            ],
+          })}
+        </script>
+      </Helmet>
       <div
         ref={ref}
         className="bg-grain min-h-screen text-[#121212] selection:bg-neutral-900 selection:text-[#F6F5F2] relative"
