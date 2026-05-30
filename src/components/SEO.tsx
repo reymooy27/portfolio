@@ -12,7 +12,7 @@ const BASE_URL = "https://webmindkupang.my.id";
 const DEFAULT_TITLE = "Webminds Kupang — Jasa Pembuatan Website & Aplikasi di NTT";
 const DEFAULT_DESC =
   "Webminds Kupang — partner teknologi terpercaya di Kupang, NTT. Layanan web development, mobile apps, UI/UX design, CMS, AI, dan automation untuk bisnis Anda.";
-const DEFAULT_OG_IMAGE = "/og-image.png";
+const DEFAULT_OG_IMAGE = "/logo.jpg";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -21,7 +21,7 @@ const structuredData = {
       "@type": "Organization",
       name: "Webminds Kupang",
       url: BASE_URL,
-      logo: `${BASE_URL}/android-chrome-512x512.png`,
+      logo: `${BASE_URL}/logo.jpg`,
       description: "Jasa pembuatan website, aplikasi, dan solusi digital di Kupang, NTT.",
       foundingDate: "2023",
       founder: { "@type": "Person", name: "Rey" },
@@ -44,7 +44,7 @@ const structuredData = {
       url: BASE_URL,
       telephone: "+62-813-3804-7308",
       description: "Partner teknologi terpercaya di Kupang, NTT — Web Development, Mobile Apps, UI/UX Design, AI, dan Automation.",
-      image: `${BASE_URL}/android-chrome-512x512.png`,
+      image: `${BASE_URL}/logo.jpg`,
       areaServed: { "@type": "City", name: "Kupang" },
       priceRange: "Rp2.000.000 – Rp30.000.000",
       openingHours: "Mo-Fr 08:00-17:00",
