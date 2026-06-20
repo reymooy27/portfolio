@@ -22,7 +22,7 @@ function adminPlugin() {
           res.end(html);
           return;
         }
-        if (url === "/admin/config.yml" || url === "/api/admin-config") {
+        if (url === "/admin/config.yml") {
           res.setHeader("Content-Type", "text/yaml");
           res.end("local_backend: true\n" + config);
           return;
