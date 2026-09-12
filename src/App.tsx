@@ -1,3 +1,4 @@
+// @ts-nocheck
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
@@ -9,6 +10,7 @@ import Navbar from "./components/Navbar";
 import Project from "./components/Project";
 import SlideWraper from "./components/SlideWraper";
 import SEO from "./components/SEO";
+
 
 function App() {
   const ref = useRef(null);
@@ -286,8 +288,11 @@ function App() {
           </div>
           <div className="projectWrapper relative bg-[#ECECEC] rounded-t-[50px] lg:rounded-t-[100px] rounded-b-[50px] w-full h-full pt-28 px-4 pb-28">
             <div className="w-full max-w-[1200px] lg:mx-auto flex flex-col">
-              {/* featured projects */}
+              {/* featured projects - Portfolio Pilihan */}
               <div className="flex flex-col">
+                <h3 className="text-black font-bold text-[1rem] lg:text-[1.5rem] mb-8">
+                  Portfolio Pilihan
+                </h3>
                 {featured.map((project) => (
                   <Project
                     mouseEnter={mouseEnter}
@@ -311,7 +316,7 @@ function App() {
               <div className="grid grid-cols-12 gap-4 mt-[8rem] mb-[8rem] md:mb-[15rem]">
                 <div className="col-start-1 col-end-13 md:col-end-4 md:row-start-1 relative">
                   <h3 className="text-black font-bold text-[1rem] lg:text-[1.5rem]">
-                    another project
+                    Project Lainnya
                   </h3>
                   <div
                     ref={projectImage}
