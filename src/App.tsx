@@ -11,7 +11,6 @@ import Project from "./components/Project";
 import SlideWraper from "./components/SlideWraper";
 import SEO from "./components/SEO";
 
-
 function App() {
   const ref = useRef(null);
   const ballRef = useRef<HTMLDivElement>(null);
@@ -235,10 +234,16 @@ function App() {
                     link="https://www.instagram.com/_itzyaboirey/"
                   />
                 </SlideWraper>
+                {/* <SlideWraper> */}
+                {/*   <AnimatedLink */}
+                {/*     name="whatsapp" */}
+                {/*     link="https://wa.me/+6281338047308" */}
+                {/*   /> */}
+                {/* </SlideWraper> */}
                 <SlideWraper>
                   <AnimatedLink
-                    name="whatsapp"
-                    link="https://wa.me/+6281338047308"
+                    name="twitter"
+                    link="https://twitter.com/itzyaboirey"
                   />
                 </SlideWraper>
               </div>
@@ -253,12 +258,6 @@ function App() {
                   <AnimatedLink
                     name="linkedin"
                     link="https://www.linkedin.com/in/rey-mooy-1a60a01a6/"
-                  />
-                </SlideWraper>
-                <SlideWraper>
-                  <AnimatedLink
-                    name="twitter"
-                    link="https://twitter.com/itzyaboirey"
                   />
                 </SlideWraper>
               </div>
