@@ -5,6 +5,7 @@ import { TextPlugin } from "gsap/TextPlugin";
 import { useLayoutEffect, useRef } from "react";
 import { data } from "./generated/projectData";
 import AnimatedLink from "./components/AnimatedLink";
+import ActivityIsland from "./components/ActivityIsland";
 import AnotherProject from "./components/AnotherProject";
 import Navbar from "./components/Navbar";
 import Project from "./components/Project";
@@ -15,21 +16,21 @@ function App() {
   const ref = useRef(null);
   const ballRef = useRef<HTMLDivElement>(null);
   const ballTextRef = useRef<HTMLHeadingElement>(null);
-  const underline = useRef<HTMLDivElement>(null);
-  const projectImage = useRef<HTMLDivElement>(null);
-  const projectImageRef = useRef<HTMLImageElement>(null);
+   const underline = useRef<HTMLDivElement>(null);
+   const projectImage = useRef<HTMLDivElement>(null);
+   const projectImageRef = useRef<HTMLImageElement>(null);
 
-  const onImageHover = (image: string) => {
-    if (!image || !projectImageRef.current || !projectImage.current) return;
-    projectImageRef.current.src = image;
-    gsap.to(projectImage.current, { opacity: 1, y: 20, duration: 0.2 });
-  };
+   const onImageHover = (image: string) => {
+     if (!image || !projectImageRef.current || !projectImage.current) return;
+     projectImageRef.current.src = image;
+     gsap.to(projectImage.current, { opacity: 1, y: 20, duration: 0.2 });
+   };
 
-  const onImageLeave = () => {
-    if (projectImage.current) {
-      gsap.to(projectImage.current, { opacity: 0, y: 0, duration: 0.2 });
-    }
-  };
+   const onImageLeave = () => {
+     if (projectImage.current) {
+       gsap.to(projectImage.current, { opacity: 0, y: 0, duration: 0.2 });
+     }
+   };
 
   gsap.registerPlugin(TextPlugin, ScrollTrigger);
 
@@ -38,38 +39,32 @@ function App() {
   const mouse = { x: pos.x, y: pos.y };
   const speed = 0.15;
 
-  const mouseEnter = (siteLink: string | undefined) => {
-    console.log(siteLink);
-    gsap.to(ballRef.current, {
-      width: 100,
-      height: 100,
-      backgroundColor: "white",
-    });
-    ballRef.current?.classList.remove("mix-blend-difference");
-    gsap.to(ballTextRef.current, { opacity: 1 });
+   const mouseEnter = (label: string | undefined) => {
+     console.log(label);
+     gsap.to(ballRef.current, {
+       width: 100,
+       height: 100,
+       backgroundColor: "white",
+     });
+     ballRef.current?.classList.remove("mix-blend-difference");
+     gsap.to(ballTextRef.current, { opacity: 1 });
 
-    if (ballTextRef.current != null && ballRef.current != null) {
-      ballTextRef.current.style.marginTop = `40px`;
-      if (siteLink) {
-        ballTextRef.current.innerText = "View Site";
-      } else {
-        ballTextRef.current.innerText = "No Site";
-        ballTextRef.current.style.color = "white";
-        gsap.to(ballRef.current, { backgroundColor: "black" });
-      }
-    }
-  };
-  const mouseLeave = (siteLink: string | undefined) => {
-    console.log(siteLink);
-    ballRef.current?.classList.add("mix-blend-difference");
-    gsap.to(ballRef.current, { width: 20, height: 20 });
-    gsap.to(ballTextRef.current, { opacity: 0 });
-    if (!siteLink && ballTextRef.current != null) {
-      ballTextRef.current.style.marginTop = `0px`;
-      gsap.to(ballRef.current, { backgroundColor: "white" });
-      ballTextRef.current.style.color = "black";
-    }
-  };
+     if (ballTextRef.current != null && ballRef.current != null) {
+       ballTextRef.current.style.marginTop = `40px`;
+       ballTextRef.current.innerText = label ?? "View";
+     }
+   };
+   const mouseLeave = (label: string | undefined) => {
+     console.log(label);
+     ballRef.current?.classList.add("mix-blend-difference");
+     gsap.to(ballRef.current, { width: 20, height: 20 });
+     gsap.to(ballTextRef.current, { opacity: 0 });
+     if (!label && ballTextRef.current != null) {
+       ballTextRef.current.style.marginTop = `0px`;
+       gsap.to(ballRef.current, { backgroundColor: "white" });
+       ballTextRef.current.style.color = "black";
+     }
+   };
 
   function animatedLinkMouseEnter() {
     gsap.set(underline.current, { scaleX: 1, width: "100%" });
@@ -194,6 +189,7 @@ function App() {
             </div>
           </div>
           <Navbar />
+          <ActivityIsland />
           <div className="w-full h-screen pt-[3.5rem] max-w-[1200px] lg:mx-auto lg:my-0">
             <section className="grid grid-cols-12 gap-4">
               <div className="col-span-full col-start-1 w-fit">
@@ -298,8 +294,9 @@ function App() {
                     mouseLeave={mouseLeave}
                     animatedLinkMouseEnter={animatedLinkMouseEnter}
                     animatedLinkMouseLeave={animatedLinkMouseLeave}
-                    key={project.id}
-                    name={project.name}
+                       key={project.id}
+                       id={project.id}
+                       name={project.name}
                     image={project.image}
                     language={project.language}
                     techStack={project.techStack}
@@ -317,24 +314,24 @@ function App() {
                   <h3 className="text-black font-bold text-[1rem] lg:text-[1.5rem]">
                     Project Lainnya
                   </h3>
-                  <div
-                    ref={projectImage}
-                    className="mt-5 opacity-0 absolute lg:top-[2rem] lg:left-[-10rem] top-0 left-0 shadow-[5px_8px_10px_5px_rgba(0,0,0,0.3)]"
-                  >
-                    <img
-                      ref={projectImageRef}
-                      src="./images-5.png"
-                      alt="Project preview screenshot"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                   <div
+                     ref={projectImage}
+                     className="mt-5 opacity-0 absolute lg:top-[2rem] lg:left-[-10rem] top-0 left-0 shadow-[5px_8px_10px_5px_rgba(0,0,0,0.3)]"
+                   >
+                     <img
+                       ref={projectImageRef}
+                       src="./images-5.png"
+                       alt="Project preview screenshot"
+                       className="w-full h-full object-cover"
+                     />
+                   </div>
                 </div>
                 <div className="col-start-1 md:col-start-4 col-end-13 row-start-2 md:row-start-1">
                   {rest.map((project, index) => (
                     <AnotherProject
                       key={project.id}
+                      id={project.id}
                       name={project.name}
-                      siteLink={project.siteLink}
                       image={project.image}
                       ballRef={ballRef}
                       ballTextRef={ballTextRef}
