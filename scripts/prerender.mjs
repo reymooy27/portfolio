@@ -4,7 +4,18 @@ import { readFileSync, existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join, extname } from "node:path";
 
 const DIST = join(import.meta.dirname, "..", "dist");
-const ROUTES = ["/", "/reymooy"];
+const PROJECT_DATA = join(import.meta.dirname, "..", "src", "generated", "projectData.ts");
+
+// preredern detail routes dari data yang sudah di-generate (hindari import TS)
+function projectIds() {
+  try {
+    return readFileSync(PROJECT_DATA, "utf-8").match(/^\s*"id":\s*(\d+)/gm)
+      ?.map((s) => Number(s.match(/\d+/)[0])) ?? [];
+  } catch {
+    return [];
+  }
+}
+const ROUTES = ["/", "/reymooy", ...projectIds().map((id) => `/reymooy/project/${id}`)];
 const PORT = 4173;
 
 const MIME = {

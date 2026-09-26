@@ -1,10 +1,11 @@
-// @ts-nocheck
 import { gsap } from "gsap";
 import { forwardRef, useLayoutEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 // import AnimatedLink from "./AnimatedLink"
 
 type PropsType = {
-  name: string;
+   id: number | string;
+   name: string;
   image: string;
   language: string;
   techStack: string;
@@ -68,25 +69,15 @@ const Project = forwardRef<HTMLDivElement, PropsType>((props) => {
           )}
         </div>
         <div ref={projectImageRef} className="img w-fulll lg:w-[40rem] pt-4">
-          {props.siteLink ? (
-            <a target="_blank" href={props.siteLink}>
-              <img
-                onMouseEnter={() => props.mouseEnter(props?.siteLink)}
-                onMouseLeave={() => props.mouseLeave(props?.siteLink)}
-                className={`shadow-[5px_8px_10px_5px_rgba(0,0,0,0.3)] object-cover filter ${props.grayscale ? "grayscale" : ""} contrast-100 hover:filter-none w-full h-full transition-all ease-in-out duration-1000`}
-                src={props.image}
-                alt={props.name}
-              />
-            </a>
-          ) : (
+         <Link to={`/reymooy/project/${props.id}`} className="block">
             <img
-              onMouseEnter={() => props.mouseEnter(props?.siteLink)}
-              onMouseLeave={() => props.mouseLeave(props?.siteLink)}
-              className="shadow-[5px_8px_10px_5px_rgba(0,0,0,0.3)] object-cover filter grayscale contrast-100 hover:filter-none w-full h-full transition-all ease-in-out duration-1000"
-              src={props.image}
-              alt=""
+               onMouseEnter={() => props.mouseEnter("View Project")}
+               onMouseLeave={() => props.mouseLeave("")}
+               className={`shadow-[5px_8px_10px_5px_rgba(0,0,0,0.3)] object-cover filter grayscale contrast-100 hover:filter-none w-full h-full transition-all ease-in-out duration-1000`}
+               src={props.image}
+               alt={props.name}
             />
-          )}
+         </Link>
         </div>
         {/* <div ref={projectDetailsRef} className='details pt-6 flex flex-col'>
           <span className='uppercase text-gray-500'>Language <span className='uppercase text-black'>{props.language}</span></span>

@@ -1,10 +1,10 @@
-// @ts-nocheck
 import gsap from "gsap";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 type PropsType = {
+  id: number | string;
   name: string;
-  siteLink: string;
   image: string;
   ballRef: React.RefObject<HTMLDivElement> | null;
   ballTextRef: React.RefObject<HTMLHeadingElement> | null;
@@ -14,8 +14,8 @@ type PropsType = {
 };
 
 const AnotherProject = ({
+  id,
   name,
-  siteLink,
   image,
   ballRef,
   ballTextRef,
@@ -76,6 +76,7 @@ const AnotherProject = ({
     });
     ballRef.current.classList.add("mix-blend-difference");
     ballTextRef.current.style.cssText = "";
+    ballTextRef.current.innerHTML = "";
   };
 
   return (
@@ -85,18 +86,20 @@ const AnotherProject = ({
       onMouseLeave={handleLeave}
       className="border-b first:border-t border-black w-full py-2 pl-2 relative"
     >
-      <a target="_blank" href={siteLink || undefined} className="flex items-center gap-5">
-        <h1
-          ref={indexRef}
-          className="text-black font-bold text-[4em]"
-        >{`0${index}.`}</h1>
+      <Link
+        to={`/reymooy/project/${id}`}
+        className="flex items-center gap-5"
+      >
+        <h1 ref={indexRef} className="text-black font-bold text-[4em]">
+          {`${String(index).padStart(2, "0")}.`}
+        </h1>
         <h1
           ref={linkRef}
           className="text-black text-[1.5rem] lg:text-[2rem] font-bold"
         >
           {name}
         </h1>
-      </a>
+      </Link>
     </div>
   );
 };
