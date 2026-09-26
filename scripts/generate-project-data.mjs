@@ -10,7 +10,9 @@ const outputDir = join(root, "src", "generated");
 const outputFile = join(outputDir, "projectData.ts");
 
 function formatDate(dateStr) {
+  if (!dateStr) return "";
   const d = new Date(dateStr + "T00:00:00Z");
+  if (isNaN(d)) return "";
   return d.toLocaleDateString("en-US", { month: "long", year: "numeric", timeZone: "UTC" });
 }
 
@@ -34,9 +36,11 @@ async function generate() {
       language: data.language ?? "",
       techStack: data.techStack ?? "",
       githubLink: data.githubLink ?? "",
-      siteLink: data.siteLink ?? "",
-      date: data.date ?? "",
-    });
+     siteLink: data.siteLink ?? "",
+      // YAML parses unquoted dates (e.g. `date: 2026-09-11`) as Date objects; normalize to ISO string
+      date: data.date instanceof Date ? data.date.toISOString().slice(0, 10) : String(data.date ?? ""),
+     description: data.description ?? "",
+   });
   }
 
   items.sort((a, b) => {
@@ -54,10 +58,11 @@ async function generate() {
     language: item.language,
     techStack: item.techStack,
     githubLink: item.githubLink,
-    siteLink: item.siteLink,
-    date: item.date,
-    datetime: formatDate(item.date),
-  }));
+     siteLink: item.siteLink,
+     date: item.date,
+     description: item.description,
+     datetime: formatDate(item.date),
+   }));
 
   const code = `const data = ${JSON.stringify(data, null, 2)};
 
